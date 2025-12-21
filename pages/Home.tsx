@@ -213,12 +213,12 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'tech' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          <div className="absolute inset-0 opacity-5 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
-          <div className={`absolute inset-0 bg-cyan-950/20 transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
+          <div className={`absolute inset-0 bg-cyan-950/30 transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
           
           <div className="relative z-10 flex flex-col items-center">
             <Cpu className={`w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 transition-all duration-500 ${hoveredSection === 'tech' ? 'text-cyan-400 scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-3xl font-mono font-bold tracking-tight mb-2">SYSTEMS</h2>
+            <h2 className="text-xl md:text-3xl font-mono font-bold tracking-tight mb-2">TECH</h2>
             <div className={`h-[1px] bg-cyan-500 transition-all duration-500 ease-out ${hoveredSection === 'tech' ? 'w-24' : 'w-0'}`}></div>
             <p className="mt-4 text-cyan-200/40 font-mono text-[8px] md:text-[9px] tracking-[0.4em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               Automation • AI • Infra
@@ -236,12 +236,12 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'music' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          <div className="absolute inset-0 opacity-5 bg-[url('https://images.unsplash.com/photo-1614149162883-504ce4d13909?q=80&w=2068&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
-          <div className={`absolute inset-0 bg-fuchsia-950/20 transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
+          <div className={`absolute inset-0 bg-fuchsia-950/30 transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center">
             <Music className={`w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 transition-all duration-500 ${hoveredSection === 'music' ? 'text-fuchsia-400 scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-3xl font-display font-bold tracking-tight mb-2">AUDIO</h2>
+            <h2 className="text-xl md:text-3xl font-display font-bold tracking-tight mb-2">MUSIC</h2>
             <div className={`h-[1px] bg-fuchsia-500 transition-all duration-500 ease-out ${hoveredSection === 'music' ? 'w-24' : 'w-0'}`}></div>
             <p className="mt-4 text-fuchsia-200/40 font-display text-[8px] md:text-[9px] tracking-[0.4em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               Scoring • Production • Tone
@@ -259,12 +259,12 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'media' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          <div className="absolute inset-0 opacity-5 bg-[url('https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2025&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
           <div className={`absolute inset-0 bg-white/5 transition-opacity duration-500 ${hoveredSection === 'media' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center">
             <Aperture className={`w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 transition-all duration-500 ${hoveredSection === 'media' ? 'text-white scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-3xl font-serif font-bold tracking-tight mb-2">VISUALS</h2>
+            <h2 className="text-xl md:text-3xl font-serif font-bold tracking-tight mb-2">MEDIA</h2>
             <div className={`h-[1px] bg-white transition-all duration-500 ease-out ${hoveredSection === 'media' ? 'w-24' : 'w-0'}`}></div>
             <p className="mt-4 text-zinc-400 font-serif text-[8px] md:text-[9px] tracking-[0.4em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               Strategy • Story • Identity
@@ -282,12 +282,12 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'business' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          <div className="absolute inset-0 opacity-5 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
-          <div className={`absolute inset-0 bg-emerald-950/20 transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
+          <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" />
+          <div className={`absolute inset-0 bg-emerald-950/30 transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center">
             <TrendingUp className={`w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 transition-all duration-500 ${hoveredSection === 'business' ? 'text-emerald-400 scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-3xl font-sans font-bold tracking-tight mb-2">STRATEGY</h2>
+            <h2 className="text-xl md:text-3xl font-sans font-bold tracking-tight mb-2">BUSINESS</h2>
             <div className={`h-[1px] bg-emerald-500 transition-all duration-500 ease-out ${hoveredSection === 'business' ? 'w-24' : 'w-0'}`}></div>
             <p className="mt-4 text-emerald-200/40 font-sans text-[8px] md:text-[9px] tracking-[0.4em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               Niche • Growth • Scale
