@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Cpu, Music, Aperture, ArrowRight, ChevronDown, Command, TrendingUp } from 'lucide-react';
+import { Cpu, Music, Aperture, ArrowRight, ChevronDown, Command, TrendingUp, Menu, X } from 'lucide-react';
 
 const Home: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const departmentRef = useRef<HTMLDivElement>(null);
 
@@ -21,6 +22,8 @@ const Home: React.FC = () => {
     departmentRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const navLinks = ['tech', 'music', 'media', 'business'];
+
   return (
     <div className="min-h-screen w-full bg-[#050505] text-white font-sans selection:bg-white selection:text-black overflow-x-hidden">
       
@@ -30,15 +33,15 @@ const Home: React.FC = () => {
         {/* TOP NAVIGATION */}
         <nav className="absolute top-0 left-0 w-full z-50 flex justify-between items-center p-6 md:p-12 pointer-events-auto">
             {/* Logo Lockup */}
-            <div className="flex items-center group cursor-default select-none">
+            <div className="flex items-center group cursor-default select-none relative z-50">
                 <span className="text-lg md:text-xl font-serif font-bold tracking-[0.15em] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
                     PureCreativity
                 </span>
             </div>
 
-            {/* Nav Links */}
-            <div className="flex items-center gap-6 md:gap-10">
-               {['tech', 'music', 'media', 'business'].map((dept) => (
+            {/* Desktop Nav Links */}
+            <div className="hidden md:flex items-center gap-6 md:gap-10">
+               {navLinks.map((dept) => (
                   <Link 
                     key={dept}
                     to={`/${dept}`}
@@ -55,6 +58,30 @@ const Home: React.FC = () => {
                      `}></span>
                   </Link>
                ))}
+            </div>
+
+            {/* Mobile Hamburger */}
+            <button 
+              className="md:hidden z-50 text-white p-2 focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+               <div className="flex flex-col gap-8 text-center">
+                  {navLinks.map((dept) => (
+                    <Link 
+                      key={dept}
+                      to={`/${dept}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-2xl font-serif font-bold uppercase tracking-[0.3em] text-zinc-400 hover:text-white transition-colors"
+                    >
+                      {dept}
+                    </Link>
+                  ))}
+               </div>
             </div>
         </nav>
 
