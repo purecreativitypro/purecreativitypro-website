@@ -19,7 +19,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       active: "text-cyan-400 border-b border-cyan-500 pb-1",
       container: "gap-4 md:gap-8",
       icon: "text-cyan-500",
-      mobileMenu: "bg-slate-950/98 text-cyan-400 font-mono"
+      mobileMenu: "bg-slate-950 text-cyan-400 font-mono"
     },
     music: {
       background: "bg-indigo-950/80 border-b border-fuchsia-500/20 backdrop-blur-md shadow-[0_0_30px_rgba(192,38,211,0.2)]",
@@ -28,7 +28,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       active: "text-white drop-shadow-[0_0_5px_rgba(232,121,249,0.8)] border-b-2 border-fuchsia-500 pb-1",
       container: "gap-6 md:gap-10",
       icon: "text-fuchsia-400",
-      mobileMenu: "bg-indigo-950/98 text-fuchsia-100 font-display"
+      mobileMenu: "bg-indigo-950 text-fuchsia-100 font-display"
     },
     media: {
       background: "bg-white/90 border-b border-zinc-200 backdrop-blur-md shadow-sm", 
@@ -37,7 +37,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       active: "text-black border-b-2 border-orange-500 pb-1",
       container: "gap-4 md:gap-8",
       icon: "text-black",
-      mobileMenu: "bg-white/98 text-black font-serif"
+      mobileMenu: "bg-white text-black font-serif"
     },
     business: {
       background: "bg-zinc-950/95 border-b border-emerald-900/30 backdrop-blur-md",
@@ -46,7 +46,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       active: "text-emerald-400 bg-emerald-500/10 rounded px-3 py-1",
       container: "gap-4 md:gap-8",
       icon: "text-emerald-500",
-      mobileMenu: "bg-zinc-950/98 text-white font-sans"
+      mobileMenu: "bg-zinc-950 text-white font-sans"
     }
   };
 
@@ -60,7 +60,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-4 transition-all duration-300">
+    <nav className="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-4 transition-all duration-300">
       {/* Dynamic Background Layer - Fades out when menu is open to prevent overlap/cutoff issues */}
       <div className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} ${currentTheme.background}`} />
 

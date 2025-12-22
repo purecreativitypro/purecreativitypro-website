@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
+import ScannerModal from '../components/ScannerModal';
 import { Target, TrendingUp, Users, Lightbulb, BarChart3, ArrowRight, CheckCircle2, Search, PenTool, Rocket, HelpCircle, Layers } from 'lucide-react';
 
 const Business: React.FC = () => {
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden">
       <Navigation theme="business" />
+      <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="business" />
 
       {/* Hero Section */}
       <div className="relative pt-32 pb-24 container mx-auto px-6 max-w-6xl">
@@ -27,9 +31,12 @@ const Business: React.FC = () => {
                     START YOUR BLUEPRINT
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <a href="#" className="text-sm font-bold text-zinc-400 hover:text-emerald-400 transition-colors flex items-center gap-2">
+                  <button 
+                    onClick={() => setIsScannerOpen(true)}
+                    className="text-sm font-bold text-zinc-400 hover:text-emerald-400 transition-colors flex items-center gap-2"
+                  >
                     Take the 10-minute Clarity Scan <ArrowRight size={14}/>
-                  </a>
+                  </button>
               </div>
            </div>
            
@@ -215,8 +222,8 @@ const Business: React.FC = () => {
           </div>
       </div>
 
-      <footer className="py-8 text-center text-zinc-600 text-xs font-mono bg-black">
-        PureCreativity.Business // GROWTH_ENGINE
+      <footer className="bg-zinc-950 py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-emerald-900/10 uppercase">
+        PureCreativity.Business // The Blueprint
       </footer>
 
     </div>

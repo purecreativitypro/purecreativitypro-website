@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { Mic2, Music as MusicIcon, Radio, Disc, Sliders, Headphones, ArrowRight, X, Play, HelpCircle, Check } from 'lucide-react';
 
@@ -33,22 +34,33 @@ const Music: React.FC = () => {
         </h1>
         
         {/* Subhead */}
-        <p className="text-xl md:text-2xl text-indigo-200 max-w-3xl font-light mb-12 leading-relaxed">
+        <p className="text-xl md:text-2xl text-indigo-200 max-w-3xl font-light mb-6 leading-relaxed">
           For artists, creators, and brands who need music that actually fits. We produce instrumentals, compose original themes, and score visuals — so your audience feels what you’re trying to say.
         </p>
         
+        {/* Best For Line */}
+        <p className="text-fuchsia-300/80 text-sm font-bold tracking-wide uppercase mb-12">
+            Best for: creator intros/outros, brand sonic identity, ad beds, film/content scoring, artist production.
+        </p>
+        
         {/* CTAs */}
-        <div className="flex flex-col md:flex-row gap-6">
-            <button className="relative px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold tracking-widest hover:bg-fuchsia-500 transition-all shadow-[0_0_30px_rgba(192,38,211,0.5)] hover:shadow-[0_0_50px_rgba(192,38,211,0.7)] group overflow-hidden active:scale-95">
-              <span className="relative z-10 flex items-center gap-2">
-                LISTEN TO REEL <Headphones size={20} className="animate-bounce md:animate-none" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </button>
+        <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col md:flex-row gap-6">
+                <button className="relative px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold tracking-widest hover:bg-fuchsia-500 transition-all shadow-[0_0_30px_rgba(192,38,211,0.5)] hover:shadow-[0_0_50px_rgba(192,38,211,0.7)] group overflow-hidden active:scale-95">
+                  <span className="relative z-10 flex items-center gap-2">
+                    LISTEN TO REEL <Headphones size={20} className="animate-bounce md:animate-none" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </button>
 
-            <button className="px-8 py-4 rounded-full border border-fuchsia-500/50 text-fuchsia-100 font-bold tracking-widest hover:bg-fuchsia-500/10 transition-all hover:border-fuchsia-500 active:scale-95 flex items-center gap-2">
-               REQUEST A CUSTOM TRACK <ArrowRight size={18} />
-            </button>
+                <button className="px-8 py-4 rounded-full border border-fuchsia-500/50 text-fuchsia-100 font-bold tracking-widest hover:bg-fuchsia-500/10 transition-all hover:border-fuchsia-500 active:scale-95 flex items-center gap-2">
+                   REQUEST A CUSTOM TRACK <ArrowRight size={18} />
+                </button>
+            </div>
+            {/* Secondary Blueprint CTA */}
+            <Link to="/business" className="text-indigo-300/60 text-xs hover:text-white transition-colors flex items-center gap-2 mt-2">
+                Not sure where to start? Start with the Blueprint <ArrowRight size={14} />
+            </Link>
         </div>
       </div>
 
@@ -228,6 +240,10 @@ const Music: React.FC = () => {
                </div>
            </div>
        </div>
+
+       <footer className="bg-indigo-950 py-12 text-center text-indigo-400 text-xs tracking-[0.3em] font-display border-t border-fuchsia-500/10 uppercase">
+         PureCreativity.Music // Sonic Identity
+       </footer>
 
     </div>
   );

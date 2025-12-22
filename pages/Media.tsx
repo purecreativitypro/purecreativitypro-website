@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import ScannerModal from '../components/ScannerModal';
 import { Wand2, Layers, Repeat, Megaphone, Palette, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Media: React.FC = () => {
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-zinc-50 text-black font-sans selection:bg-orange-500/30 selection:text-orange-900 relative overflow-x-hidden">
+    <div className="min-h-screen bg-zinc-5 text-black font-sans selection:bg-orange-500/30 selection:text-orange-900 relative overflow-x-hidden">
       <Navigation theme="media" />
+      <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="media" />
 
       {/* HERO SECTION */}
       <div className="relative bg-zinc-900 text-white pt-32 pb-24 px-6 rounded-b-[3rem] shadow-2xl overflow-hidden">
@@ -25,21 +30,37 @@ const Media: React.FC = () => {
                         <span className="italic text-zinc-400">ENHANCE.</span><br />
                         CONVERT.
                     </h1>
-                    <p className="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-10 border-l-2 border-orange-500 pl-6">
+                    <p className="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-4 border-l-2 border-orange-500 pl-6">
                         We turn ideas and raw assets into scroll-stopping content using AI + design tools — from ebooks and ads to reels and brand visuals — so your business looks premium and performs.
                     </p>
+                    
+                    {/* Alignment Line */}
+                    <p className="text-zinc-400 text-sm pl-6 mb-10 italic">
+                        Once your offer is clear, we build the content machine around it.
+                    </p>
+
                     <div className="flex flex-col sm:flex-row gap-4 items-start">
                         <button className="bg-white text-black px-8 py-4 rounded-full font-bold tracking-wide hover:bg-orange-500 hover:text-white transition-all flex items-center gap-2 group active:scale-95">
                             START A PROJECT
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </button>
-                        <button className="px-8 py-4 rounded-full border border-zinc-700 text-white font-bold tracking-wide hover:border-orange-500 hover:text-orange-500 transition-all active:scale-95">
+                        <button 
+                            onClick={() => setIsScannerOpen(true)}
+                            className="px-8 py-4 rounded-full border border-zinc-700 text-white font-bold tracking-wide hover:border-orange-500 hover:text-orange-500 transition-all active:scale-95"
+                        >
                             GET A FREE CONTENT SCAN
                         </button>
                     </div>
-                    <p className="text-zinc-500 text-xs mt-6 tracking-wide font-mono uppercase">
-                        Bring an idea or bring footage. We’ll handle the creative.
-                    </p>
+                    
+                    {/* Secondary Blueprint CTA */}
+                    <div className="mt-6 flex flex-col gap-2">
+                        <p className="text-zinc-500 text-xs tracking-wide font-mono uppercase">
+                            Bring an idea or bring footage. We’ll handle the creative.
+                        </p>
+                        <Link to="/business" className="text-zinc-400 text-xs hover:text-orange-500 transition-colors inline-flex items-center gap-1 w-fit">
+                            Not sure where to start? Start with the Blueprint <ArrowRight size={12} />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,6 +117,12 @@ const Media: React.FC = () => {
 
       {/* SERVICES SECTION */}
       <div className="py-24 px-6 container mx-auto max-w-6xl">
+          {/* Best For Line */}
+          <div className="mb-12 text-center text-sm font-serif italic text-zinc-500">
+             <span className="font-bold text-orange-600 not-italic mr-2 font-sans text-xs tracking-widest uppercase">Best for:</span> 
+             content created from scratch, AI enhancement, repurposing packs, campaign creative, brand consistency.
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <ServiceCard 
                   icon={<Wand2 size={24} />} 
@@ -170,7 +197,10 @@ const Media: React.FC = () => {
                   ))}
               </div>
               <div className="text-center">
-                  <button className="bg-black text-white px-10 py-4 rounded-full font-bold tracking-wide hover:bg-white hover:text-black transition-all shadow-xl active:scale-95">
+                  <button 
+                    onClick={() => setIsScannerOpen(true)}
+                    className="bg-black text-white px-10 py-4 rounded-full font-bold tracking-wide hover:bg-white hover:text-black transition-all shadow-xl active:scale-95"
+                  >
                       GET A FREE CONTENT SCAN
                   </button>
               </div>
@@ -239,7 +269,10 @@ const Media: React.FC = () => {
       <div className="bg-black text-white py-32 px-6 text-center">
           <div className="container mx-auto max-w-4xl">
               <h2 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
-              <button className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95">
+              <button 
+                onClick={() => setIsScannerOpen(true)}
+                className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95"
+              >
                   START A PROJECT
               </button>
               <p className="mt-6 text-zinc-500 text-xs tracking-widest uppercase">Tell us what you’re launching — we’ll build the content.</p>

@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import ScannerModal from '../components/ScannerModal';
 import { Terminal, Bot, Code2, Smartphone, Zap, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Tech: React.FC = () => {
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-950 text-cyan-400 font-mono selection:bg-cyan-900 selection:text-white relative overflow-x-hidden">
       <Navigation theme="tech" />
+      <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="tech" />
       
       {/* Grid Background Effect - Optimized */}
       <div 
@@ -30,28 +35,51 @@ const Tech: React.FC = () => {
             {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
             <span className="text-cyan-400 animate-pulse md:animate-none">Run Your Business on Smart Systems.</span>
           </h1>
-          <p className="text-slate-400 max-w-2xl text-lg mb-8 leading-relaxed">
+          <p className="text-slate-400 max-w-2xl text-lg mb-4 leading-relaxed">
             You’re building something real — but your time is getting eaten by admin, follow-ups, and duct-taped tools.
             PureCreativity Tech designs simple automations and lightweight web apps that remove friction, protect your data, and give you hours back every week.
           </p>
-          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+          
+          {/* Alignment Line */}
+          <p className="text-cyan-200/80 font-mono text-sm mb-8">
+             &gt; Already have an offer? We’ll build the system that runs it.
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col">
                 <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95">
                     <Terminal size={18} />
-                    <span>&gt; START A PROJECT</span>
+                    <span>START A PROJECT</span>
                     <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
                 </button>
-                <span className="text-xs text-slate-500 mt-2 font-mono ml-1">Free 10-minute systems scan</span>
+                <button 
+                  onClick={() => setIsScannerOpen(true)}
+                  className="text-xs text-slate-500 mt-2 font-mono ml-1 hover:text-cyan-400 transition-colors text-left"
+                >
+                  &gt; Initialize 10-minute systems scan
+                </button>
             </div>
-            <a href="#" className="text-cyan-300 hover:text-white transition-colors flex items-center gap-2 text-sm border-b border-transparent hover:border-cyan-300 pb-0.5">
-                See what we build <ArrowRight size={14} />
+            <a href="#" className="group text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 text-sm md:mt-3.5 pb-0.5">
+                <span className="border-b border-transparent group-hover:border-cyan-400 transition-colors">See what we build</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
+          
+          {/* Secondary Blueprint CTA */}
+          <Link to="/business" className="mt-6 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              Not sure where to start? Start with the Blueprint <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
 
       {/* Services Matrix */}
       <div className="container mx-auto px-6 max-w-6xl py-16">
+        {/* Best For Line */}
+        <div className="mb-10 text-xs font-mono text-slate-500 tracking-wide border-b border-cyan-900/30 pb-4 inline-block">
+            <span className="text-cyan-500 font-bold mr-2">&gt; BEST FOR:</span> 
+            automations, client portals, payments, internal workflows, lightweight SaaS/PWAs.
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           <ServiceCard 
@@ -173,8 +201,11 @@ const Tech: React.FC = () => {
               ))}
           </div>
           <div className="mt-12 text-center">
-              <button className="group bg-cyan-600 text-white px-8 py-3 font-bold hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 inline-flex items-center gap-2">
-                  &gt; BOOK A SYSTEMS CALL
+              <button 
+                onClick={() => setIsScannerOpen(true)}
+                className="group bg-cyan-600 text-white px-8 py-3 font-bold hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 inline-flex items-center gap-2"
+              >
+                  &gt; RUN SYSTEMS SCAN
               </button>
           </div>
       </div>
@@ -199,8 +230,8 @@ const Tech: React.FC = () => {
           </div>
       </div>
 
-      <footer className="py-8 text-center text-slate-600 text-xs font-mono border-t border-slate-900">
-        PureCreativity.Tech // SYSTEM.END
+      <footer className="bg-slate-950 py-12 text-center text-slate-600 text-xs tracking-[0.3em] font-mono border-t border-cyan-900/10 uppercase">
+        PureCreativity.Tech // Code is Leverage
       </footer>
     </div>
   );

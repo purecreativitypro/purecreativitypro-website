@@ -177,7 +177,7 @@ const Home: React.FC = () => {
       <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 perspective-1000">
         
         {/* TOP NAVIGATION */}
-        <nav className="absolute top-0 left-0 w-full z-50 pointer-events-auto">
+        <nav className="absolute top-0 left-0 w-full z-[100] pointer-events-auto">
             {/* Header Bar with Blend Mode */}
             <div className="relative z-50 flex justify-between items-center p-6 md:p-12 mix-blend-plus-lighter">
                 {/* Logo Lockup */}
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Mobile Menu Overlay - PERFORMANCE FIX: Removed backdrop-blur-xl */}
-            <div className={`fixed inset-0 z-40 bg-[#050505]/98 flex flex-col items-center justify-center transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`fixed inset-0 z-40 bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                <div className="flex flex-col gap-10 text-center">
                   {navLinks.map((dept) => (
                     <Link 
@@ -292,6 +292,12 @@ const Home: React.FC = () => {
           </div>
 
           <div className="mt-12 md:mt-24 flex flex-col items-center text-center max-w-2xl px-6 relative z-30">
+             
+             {/* Glue Statement */}
+             <p className="text-white/80 text-xs md:text-sm font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
+                Business defines the plan. Tech builds the system. Media ships the content. Music sets the tone.
+             </p>
+
              {/* Refined Mobile Subheading */}
              <div className="flex flex-col items-center mb-8 md:mb-10 font-mono uppercase">
                 <span className="text-white/60 text-[9px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6">
@@ -346,6 +352,11 @@ const Home: React.FC = () => {
                    EXPLORE THE HUB <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </span>
              </button>
+
+             {/* Start Here Option */}
+             <Link to="/business" className="mt-6 text-[10px] md:text-xs text-zinc-500 hover:text-white transition-colors tracking-widest uppercase border-b border-transparent hover:border-white pb-1 group flex items-center gap-1">
+                Not sure which studio you need? Start with the Blueprint <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform"/>
+             </Link>
           </div>
         </div>
       </section>
@@ -516,18 +527,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* 3. REFINED FOOTER */}
-      <footer className="py-12 md:py-20 bg-[#050505] border-t border-white/5 flex flex-col items-center justify-center px-6">
-        <div className="text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.8em] uppercase text-zinc-700 font-bold mb-8 text-center">
-          PureCreativity // Established 2024
-        </div>
-        <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-[8px] md:text-[9px] text-zinc-500 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase">
-          <span className="hover:text-white transition-colors cursor-default whitespace-nowrap">New York</span>
-          <span className="hover:text-white transition-colors cursor-default whitespace-nowrap">London</span>
-          <span className="hover:text-white transition-colors cursor-default whitespace-nowrap">Tokyo</span>
-          <span className="hover:text-white transition-colors cursor-default whitespace-nowrap">Zurich</span>
-        </div>
-        <div className="mt-8 md:mt-16 text-[8px] md:text-[9px] text-zinc-800 tracking-widest text-center">
-          © {new Date().getFullYear()} ALL RIGHTS RESERVED
+      <footer className="bg-[#050505] py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
+        <div className="mb-4">PureCreativity // The Convergence Hub</div>
+        <div className="text-[9px] opacity-50 flex justify-center gap-6 font-light">
+          <span>NY</span><span>LDN</span><span>TKY</span><span>ZRH</span>
         </div>
       </footer>
 
