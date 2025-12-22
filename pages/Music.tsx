@@ -53,9 +53,14 @@ const Music: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </button>
 
-                <button className="px-8 py-4 rounded-full border border-fuchsia-500/50 text-fuchsia-100 font-bold tracking-widest hover:bg-fuchsia-500/10 transition-all hover:border-fuchsia-500 active:scale-95 flex items-center gap-2">
+                <a 
+                  href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-4 rounded-full border border-fuchsia-500/50 text-fuchsia-100 font-bold tracking-widest hover:bg-fuchsia-500/10 transition-all hover:border-fuchsia-500 active:scale-95 flex items-center gap-2 cursor-pointer"
+                >
                    REQUEST A CUSTOM TRACK <ArrowRight size={18} />
-                </button>
+                </a>
             </div>
             {/* Secondary Blueprint CTA */}
             <Link to="/business" className="text-indigo-300/60 text-xs hover:text-white transition-colors flex items-center gap-2 mt-2">
@@ -182,9 +187,14 @@ const Music: React.FC = () => {
             ))}
          </div>
          <div className="flex justify-center">
-            <button className="px-8 py-4 rounded-full bg-white text-indigo-950 font-bold tracking-widest hover:bg-fuchsia-50 transition-all hover:scale-105 shadow-lg active:scale-95">
+            <a 
+              href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 rounded-full bg-white text-indigo-950 font-bold tracking-widest hover:bg-fuchsia-50 transition-all hover:scale-105 shadow-lg active:scale-95 cursor-pointer"
+            >
                 REQUEST A CUSTOM TRACK
-            </button>
+            </a>
          </div>
       </div>
       

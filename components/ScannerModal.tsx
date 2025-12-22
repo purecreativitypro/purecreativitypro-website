@@ -276,9 +276,14 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
                     </div>
 
                     <div className="flex flex-col gap-3">
-                         <button onClick={onClose} className={`${config.button} px-8 py-4 rounded-lg tracking-widest font-bold uppercase text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg`}>
-                            GO TO KIT
-                         </button>
+                         <a 
+                           href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className={`${config.button} px-8 py-4 rounded-lg tracking-widest font-bold uppercase text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg block w-full text-center cursor-pointer`}
+                         >
+                            BOOK CONSULTATION
+                         </a>
                     </div>
                 </div>
             )}

@@ -27,10 +27,15 @@ const Business: React.FC = () => {
                 Whether you’re still choosing your side hustle or you’re ready to level up, we help you find the right direction, build an offer that fits you, and assemble the systems + content to grow it predictably.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                  <button className="bg-emerald-600 text-white px-8 py-4 rounded font-bold tracking-wide hover:bg-emerald-500 transition-all shadow-[0_0_20px_rgba(5,150,105,0.3)] flex items-center gap-3 group">
+                  <a 
+                    href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-emerald-600 text-white px-8 py-4 rounded font-bold tracking-wide hover:bg-emerald-500 transition-all shadow-[0_0_20px_rgba(5,150,105,0.3)] flex items-center gap-3 group cursor-pointer"
+                  >
                     START YOUR BLUEPRINT
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </a>
                   <button 
                     onClick={() => setIsScannerOpen(true)}
                     className="text-sm font-bold text-zinc-400 hover:text-emerald-400 transition-colors flex items-center gap-2"

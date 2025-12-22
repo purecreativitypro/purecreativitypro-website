@@ -40,10 +40,15 @@ const Media: React.FC = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 items-start">
-                        <button className="bg-white text-black px-8 py-4 rounded-full font-bold tracking-wide hover:bg-orange-500 hover:text-white transition-all flex items-center gap-2 group active:scale-95">
+                        <a 
+                            href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white text-black px-8 py-4 rounded-full font-bold tracking-wide hover:bg-orange-500 hover:text-white transition-all flex items-center gap-2 group active:scale-95 cursor-pointer"
+                        >
                             START A PROJECT
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
+                        </a>
                         <button 
                             onClick={() => setIsScannerOpen(true)}
                             className="px-8 py-4 rounded-full border border-zinc-700 text-white font-bold tracking-wide hover:border-orange-500 hover:text-orange-500 transition-all active:scale-95"
@@ -269,12 +274,14 @@ const Media: React.FC = () => {
       <div className="bg-black text-white py-32 px-6 text-center">
           <div className="container mx-auto max-w-4xl">
               <h2 className="text-3xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
-              <button 
-                onClick={() => setIsScannerOpen(true)}
-                className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95"
+              <a 
+                href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95 cursor-pointer"
               >
                   START A PROJECT
-              </button>
+              </a>
               <p className="mt-6 text-zinc-500 text-xs tracking-widest uppercase">Tell us what you’re launching — we’ll build the content.</p>
           </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
@@ -6,6 +6,41 @@ import { Terminal, Bot, Code2, Smartphone, Zap, Database, ArrowRight, CheckCircl
 
 const Tech: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [codeStep, setCodeStep] = useState(0);
+  const codeRef = useRef<HTMLDivElement>(null);
+  const [startTyping, setStartTyping] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                setStartTyping(true);
+            }
+        },
+        { threshold: 0.4 }
+    );
+    if (codeRef.current) observer.observe(codeRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (startTyping && codeStep < 8) { // Go to 8 to show final cursor state
+        const timeout = setTimeout(() => {
+            setCodeStep(prev => prev + 1);
+        }, 500); 
+        return () => clearTimeout(timeout);
+    }
+  }, [startTyping, codeStep]);
+
+  const codeLines = [
+    { id: "01", content: <><span className="text-purple-400">const</span> <span className="text-blue-400">businessGrowth</span> = <span className="text-yellow-300">async</span> () ={'>'} {'{'}</> },
+    { id: "02", content: <><span className="ml-4 text-slate-300">await</span> <span className="text-green-400">PureCreativity</span>.optimize({'{'}</> },
+    { id: "03", content: <><span className="ml-8 text-cyan-300">efficiency</span>: <span className="text-orange-400">"MAXIMUM"</span>,</> },
+    { id: "04", content: <><span className="ml-8 text-cyan-300">techStack</span>: <span className="text-orange-400">["AI", "React", "Cloud"]</span></> },
+    { id: "05", content: <><span className="ml-4">{'}'});</span></> },
+    { id: "06", content: <><span className="text-slate-300">return</span> <span className="text-green-400">profit</span>;</> },
+    { id: "07", content: <>{'}'}</> }
+  ];
 
   return (
     <div className="min-h-screen bg-slate-950 text-cyan-400 font-mono selection:bg-cyan-900 selection:text-white relative overflow-x-hidden">
@@ -47,11 +82,16 @@ const Tech: React.FC = () => {
 
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex flex-col">
-                <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95">
+                <a 
+                  href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95 cursor-pointer"
+                >
                     <Terminal size={18} />
                     <span>START A PROJECT</span>
                     <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
-                </button>
+                </a>
                 <button 
                   onClick={() => setIsScannerOpen(true)}
                   className="text-xs text-slate-500 mt-2 font-mono ml-1 hover:text-cyan-400 transition-colors text-left"
@@ -113,7 +153,10 @@ const Tech: React.FC = () => {
       <div className="border-t border-cyan-900/30 bg-slate-900/50 py-20 relative">
         <div className="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/2">
-             <div className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-2xl relative overflow-hidden group">
+             <div 
+                ref={codeRef}
+                className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-2xl relative overflow-hidden group min-h-[220px]"
+             >
                 {/* Mobile scanline effect */}
                 <div className="absolute inset-0 bg-cyan-500/10 h-1 w-full animate-[float_3s_ease-in-out_infinite] md:hidden pointer-events-none opacity-50"></div>
                 
@@ -122,36 +165,29 @@ const Tech: React.FC = () => {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
+
                 <div className="space-y-2 font-mono text-sm overflow-x-auto">
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">01</span>
-                    <span className="text-purple-400">const</span> <span className="text-blue-400">businessGrowth</span> = <span className="text-yellow-300">async</span> () ={'>'} {'{'}
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">02</span>
-                    <span className="ml-4 text-slate-300">await</span> <span className="text-green-400">PureCreativity</span>.optimize({'{'}
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">03</span>
-                    <span className="ml-8 text-cyan-300">efficiency</span>: <span className="text-orange-400">"MAXIMUM"</span>,
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">04</span>
-                    <span className="ml-8 text-cyan-300">techStack</span>: <span className="text-orange-400">["AI", "React", "Cloud"]</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">05</span>
-                    <span className="ml-4">{'}'});</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">06</span>
-                    <span className="text-slate-300">return</span> <span className="text-green-400">profit</span>;
-                  </div>
-                  <div className="flex">
-                    <span className="text-slate-500 mr-4">07</span>
-                    <span>{'}'}</span>
-                  </div>
+                    {codeLines.map((line, i) => (
+                        <div key={line.id} className={`flex ${i < codeStep ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+                            <span className="text-slate-500 mr-4 select-none">{line.id}</span>
+                            <div className="relative">
+                                {line.content}
+                                {/* Cursor: Show on current typing line OR at end of last line if done */}
+                                {(i === codeStep - 1 && codeStep <= 7) && (
+                                    <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 align-middle animate-pulse"></span>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                    {/* Idle Cursor at end */}
+                    {codeStep > 7 && (
+                        <div className="flex">
+                            <span className="text-slate-500 mr-4 select-none">08</span>
+                            <span className="inline-block w-2 h-4 bg-cyan-500 animate-pulse"></span>
+                        </div>
+                    )}
                 </div>
+
              </div>
           </div>
           <div className="w-full md:w-1/2">
@@ -172,9 +208,14 @@ const Tech: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <button className="text-cyan-400 font-bold hover:text-white transition-colors flex items-center gap-2">
+            <a 
+              href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-400 font-bold hover:text-white transition-colors flex items-center gap-2 cursor-pointer"
+            >
                 &gt; REQUEST A BUILD QUOTE
-            </button>
+            </a>
           </div>
         </div>
       </div>

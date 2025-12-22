@@ -231,9 +231,14 @@ const Learn: React.FC = () => {
              </div>
 
              <div className="mt-16">
-               <button className="text-amber-400 font-bold tracking-wide hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto border-b border-amber-400/30 pb-1 hover:border-white">
+               <a 
+                 href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="text-amber-400 font-bold tracking-wide hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto border-b border-amber-400/30 pb-1 hover:border-white cursor-pointer"
+               >
                   START YOUR BLUEPRINT <ArrowRight size={14} />
-               </button>
+               </a>
              </div>
          </div>
       </div>
@@ -245,9 +250,14 @@ const Learn: React.FC = () => {
             <p className="text-neutral-400 text-lg mb-8">
                Start with the Blueprint and we’ll point you to the right path.
             </p>
-            <button className="bg-white text-black px-10 py-5 rounded-full font-bold tracking-wide hover:bg-amber-400 transition-all shadow-2xl active:scale-95">
+            <a 
+               href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="bg-white text-black px-10 py-5 rounded-full font-bold tracking-wide hover:bg-amber-400 transition-all shadow-2xl active:scale-95 cursor-pointer inline-block"
+            >
                START YOUR BLUEPRINT
-            </button>
+            </a>
          </div>
       </div>
 
