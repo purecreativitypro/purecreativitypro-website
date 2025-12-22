@@ -92,8 +92,9 @@ const Media: React.FC = () => {
                     alt="Editorial" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-500"></div>
-                <div className="absolute bottom-0 left-0 p-10 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-8 group-hover:translate-y-0">
+                {/* On Mobile: Always visible gradient and text. On Desktop: Hover only. */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-black/30 md:group-hover:bg-transparent transition-colors duration-500"></div>
+                <div className="absolute bottom-0 left-0 p-10 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-8 md:group-hover:translate-y-0">
                     <h3 className="text-4xl font-serif italic mb-2">Editorial</h3>
                     <p className="font-sans text-xs tracking-widest uppercase opacity-80">Brand Campaign / New York</p>
                 </div>
@@ -109,7 +110,9 @@ const Media: React.FC = () => {
                     alt="Landscape" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
-                 <div className="absolute bottom-0 left-0 p-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                 {/* On Mobile: Always visible gradient and text. On Desktop: Hover only. */}
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-transparent transition-colors duration-500"></div>
+                 <div className="absolute bottom-0 left-0 p-8 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
                     <h3 className="text-3xl font-serif italic">Adventure</h3>
                     <p className="font-sans text-xs tracking-widest uppercase opacity-80">Social Content / Iceland</p>
                 </div>
@@ -125,7 +128,8 @@ const Media: React.FC = () => {
                     alt="Abstract" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
-                <div className="absolute bottom-0 left-0 p-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-transparent transition-colors duration-500"></div>
+                <div className="absolute bottom-0 left-0 p-8 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
                     <h3 className="text-3xl font-serif italic">Vision</h3>
                     <p className="font-sans text-xs tracking-widest uppercase opacity-80">Product Photography / Studio</p>
                 </div>
@@ -144,7 +148,8 @@ const Media: React.FC = () => {
                          <p className="font-sans font-bold uppercase tracking-[0.2em] text-sm">View Comprehensive Case Study <ArrowUpRight className="inline-block ml-1" /></p>
                     </div>
                 </div>
-                <div className="absolute top-6 right-6 text-white/50 font-sans text-[10px] tracking-[0.5em] uppercase">Featured Project 2025</div>
+                {/* On mobile, standard strategy text is hidden, show a simplified tag */}
+                <div className="absolute bottom-6 left-6 md:top-6 md:right-6 md:left-auto md:bottom-auto text-white md:text-white/50 font-sans text-lg md:text-[10px] tracking-[0.2em] md:tracking-[0.5em] uppercase font-bold md:font-normal bg-black/50 md:bg-transparent p-2 md:p-0">Featured Project 2025</div>
             </div>
 
         </div>

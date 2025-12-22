@@ -22,7 +22,7 @@ const Music: React.FC = () => {
         
         <button className="relative px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold tracking-widest hover:bg-fuchsia-500 transition-all shadow-[0_0_30px_rgba(192,38,211,0.5)] hover:shadow-[0_0_50px_rgba(192,38,211,0.7)] group overflow-hidden">
           <span className="relative z-10 flex items-center gap-2">
-            LISTEN TO REEL <Headphones size={20} />
+            LISTEN TO REEL <Headphones size={20} className="animate-bounce md:animate-none" />
           </span>
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         </button>
@@ -132,7 +132,9 @@ const Music: React.FC = () => {
            ].map((track, i) => (
              <div key={i} className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
                <div className="flex items-center gap-4">
-                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-fuchsia-500 transition-colors">
+                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-fuchsia-500 transition-colors relative">
+                   {/* Mobile pulse on play button */}
+                   <div className="absolute inset-0 rounded-full border border-fuchsia-500/50 animate-ping md:hidden opacity-50" style={{ animationDelay: `${i * 1.5}s` }}></div>
                    <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
                  </div>
                  <div>

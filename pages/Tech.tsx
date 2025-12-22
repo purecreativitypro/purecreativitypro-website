@@ -19,14 +19,15 @@ const Tech: React.FC = () => {
           </h4>
           <h1 className="text-4xl md:text-7xl font-bold mb-6 text-white leading-tight">
             Efficient Systems for <br />
-            <span className="text-cyan-400">The Modern Entrepreneur</span>
+            {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
+            <span className="text-cyan-400 animate-pulse md:animate-none">The Modern Entrepreneur</span>
           </h1>
           <p className="text-slate-400 max-w-2xl text-lg mb-8 leading-relaxed">
             PureCreativity Tech specializes in bridging the gap between ambition and execution. 
             We build intelligent web applications, automate workflows, and consult on AI integration 
             to reclaim your time.
           </p>
-          <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3">
+          <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95">
             <Terminal size={18} />
             <span>INITIALIZE_PROJECT</span>
             <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
@@ -43,6 +44,7 @@ const Tech: React.FC = () => {
             title="AI & Automation"
             code="consulting.init()"
             description="We analyze your business bottlenecks and implement custom AI agents and automation scripts to handle repetitive tasks."
+            delay={0}
           />
           
           <ServiceCard 
@@ -50,6 +52,7 @@ const Tech: React.FC = () => {
             title="PWA Development"
             code="app.build({ mobile: true })"
             description="Next-gen Progressive Web Apps that work offline, load instantly, and provide a native experience without the app store hassle."
+            delay={1}
           />
 
           <ServiceCard 
@@ -57,6 +60,7 @@ const Tech: React.FC = () => {
             title="SaaS Solutions"
             code="scale.up()"
             description="Robust, scalable Software as a Service platforms built on modern React architectures tailored for side-hustlers."
+            delay={2}
           />
 
         </div>
@@ -66,7 +70,10 @@ const Tech: React.FC = () => {
       <div className="border-t border-cyan-900/30 bg-slate-900/50 py-20 relative">
         <div className="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/2">
-             <div className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-2xl">
+             <div className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-2xl relative overflow-hidden group">
+                {/* Mobile scanline effect */}
+                <div className="absolute inset-0 bg-cyan-500/10 h-1 w-full animate-[float_3s_ease-in-out_infinite] md:hidden pointer-events-none opacity-50"></div>
+                
                 <div className="flex gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -132,9 +139,13 @@ const Tech: React.FC = () => {
   );
 };
 
-const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; code: string; description: string }> = ({ icon, title, code, description }) => (
-  <div className="bg-slate-900 border border-slate-800 p-6 hover:border-cyan-500/50 transition-colors group cursor-default">
-    <div className="mb-4 p-3 bg-slate-950 inline-block rounded border border-slate-800 group-hover:text-cyan-400">{icon}</div>
+const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; code: string; description: string; delay: number }> = ({ icon, title, code, description, delay }) => (
+  // Added conditional animation for mobile: animate-pulse on the border-color to simulate scanning
+  <div 
+    className="bg-slate-900 border border-slate-800 p-6 hover:border-cyan-500/50 transition-colors group cursor-default md:animate-none animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+    style={{ animationDelay: `${delay * 1}s` }}
+  >
+    <div className="mb-4 p-3 bg-slate-950 inline-block rounded border border-slate-800 group-hover:text-cyan-400 transition-colors">{icon}</div>
     <div className="font-mono text-xs text-slate-500 mb-2">{code}</div>
     <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
     <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
