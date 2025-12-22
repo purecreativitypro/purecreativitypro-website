@@ -19,11 +19,11 @@ const Business: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   PURECREATIVITY BUSINESS — THE ENTREPRENEURSHIP STUDIO
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
                 Turn your talent into income — <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-600">with a plan you can actually follow.</span>
               </h1>
-              <p className="text-zinc-400 text-lg leading-relaxed mb-10 border-l-2 border-emerald-500/20 pl-6">
+              <p className="text-zinc-300 text-xl md:text-2xl leading-relaxed mb-10 border-l-2 border-emerald-500/20 pl-6 font-light">
                 Whether you’re still choosing your side hustle or you’re ready to level up, we help you find the right direction, build an offer that fits you, and assemble the systems + content to grow it predictably.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -157,7 +157,7 @@ const Business: React.FC = () => {
       <div className="container mx-auto px-6 max-w-6xl py-12">
           <div className="grid md:grid-cols-3 gap-8">
               {[
-                  { title: "Find Your Business Path", desc: "If you don’t know what to build, we’ll help you pick a direction that fits your skills, lifestyle, and market demand.", icon: <Search /> },
+                  { title: "Find Your Business Path", desc: "If you don’t know what to build, we’ll help you pick a direction that fits you skills, lifestyle, and market demand.", icon: <Search /> },
                   { title: "Build an Offer That Sells", desc: "We shape your product/service into something clear, valuable, and easy to say yes to — with a simple delivery plan.", icon: <Target /> },
                   { title: "Build the Engine", desc: "We assemble the assets and systems that create predictable growth: content, follow-up, automation, and simple metrics.", icon: <Rocket /> }
               ].map((item, i) => (

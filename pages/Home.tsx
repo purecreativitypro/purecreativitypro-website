@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play } from 'lucide-react';
+import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen } from 'lucide-react';
 
 const Home: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     let cycleInterval: ReturnType<typeof setInterval> | undefined;
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        const sections = ['tech', 'music', 'media', 'business'];
+        const sections = ['tech', 'music', 'media', 'business', 'learn'];
         let currentIndex = 0;
         
         // Start cycling if not already running
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
     departmentRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const navLinks = ['tech', 'music', 'media', 'business'];
+  const navLinks = ['tech', 'music', 'media', 'business', 'learn'];
 
   // Calculate 3D Tilt for Hero based on mouse position
   // We reduce the multiplier to make it more subtle but keeping the interactive feel
@@ -202,6 +202,7 @@ const Home: React.FC = () => {
                             ${dept === 'music' ? 'group-hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]' : ''}
                             ${dept === 'media' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' : ''}
                             ${dept === 'business' ? 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]' : ''}
+                            ${dept === 'learn' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : ''}
                          `}>
                            {dept}
                          </span>
@@ -210,6 +211,7 @@ const Home: React.FC = () => {
                             ${dept === 'music' ? 'bg-fuchsia-400 shadow-[0_0_10px_rgba(232,121,249,1)]' : ''}
                             ${dept === 'media' ? 'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]' : ''}
                             ${dept === 'business' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]' : ''}
+                            ${dept === 'learn' ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]' : ''}
                          `}></span>
                       </Link>
                    ))}
@@ -246,7 +248,7 @@ const Home: React.FC = () => {
              {/* 1. Grain Overlay for Authenticity/Texture */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_pattern_with_intensity_0.4.png')] z-10 mix-blend-overlay"></div>
 
-             {/* 2. The 4 Pillars Converging (Auras) */}
+             {/* 2. The Pillars Converging (Auras) */}
              <div className="absolute inset-0 flex items-center justify-center" 
                   style={{ transform: `translate(${tiltY * 2}px, ${tiltX * 2}px)` }}>
                  
@@ -340,6 +342,15 @@ const Home: React.FC = () => {
                    >
                        Business
                    </button>
+                   <span className="text-white/20 text-[8px]">•</span>
+                   <button 
+                       onClick={scrollToDepartments} 
+                       onMouseEnter={() => setHoveredSection('learn')}
+                       onMouseLeave={() => setHoveredSection(null)}
+                       className="uppercase text-amber-300 font-bold drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] hover:scale-110 transition-transform cursor-pointer"
+                   >
+                       Learn
+                   </button>
                 </div>
              </div>
 
@@ -373,6 +384,7 @@ const Home: React.FC = () => {
             ${hoveredSection === 'music' ? 'from-fuchsia-900/40 via-black to-black' : ''}
             ${hoveredSection === 'media' ? 'from-orange-900/40 via-black to-black' : ''}
             ${hoveredSection === 'business' ? 'from-emerald-900/40 via-black to-black' : ''}
+            ${hoveredSection === 'learn' ? 'from-amber-900/40 via-black to-black' : ''}
           `} />
         </div>
 
@@ -385,12 +397,12 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* TECH Section - Mobile: 25vh, Desktop: Flex */}
+        {/* TECH Section */}
         <Link
           to="/tech"
           onMouseEnter={() => setHoveredSection('tech')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[25%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'tech' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'tech' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -425,7 +437,7 @@ const Home: React.FC = () => {
           to="/music"
           onMouseEnter={() => setHoveredSection('music')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[25%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'music' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'music' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -460,7 +472,7 @@ const Home: React.FC = () => {
           to="/media"
           onMouseEnter={() => setHoveredSection('media')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[25%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'media' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'media' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -495,7 +507,7 @@ const Home: React.FC = () => {
           to="/business"
           onMouseEnter={() => setHoveredSection('business')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[25%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden bg-black
+          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'business' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'business' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -524,6 +536,42 @@ const Home: React.FC = () => {
             </div>
           </div>
         </Link>
+
+        {/* LEARN Section */}
+        <Link
+          to="/learn"
+          onMouseEnter={() => setHoveredSection('learn')}
+          onMouseLeave={() => setHoveredSection(null)}
+          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden bg-black
+            ${hoveredSection === 'learn' ? 'md:flex-[2.5]' : 'md:flex-1'}
+            ${hoveredSection && hoveredSection !== 'learn' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
+          `}
+        >
+          <ElectricBorder hex="#fbbf24" isActive={hoveredSection === 'learn'} />
+          
+          <img 
+            src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=70&w=800&auto=format&fit=crop" 
+            alt="Learn Background"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          />
+          <div className={`absolute inset-0 bg-gradient-to-t from-amber-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'learn' ? 'opacity-100' : 'opacity-0'}`} />
+
+          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
+            <BookOpen className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'learn' ? 'text-amber-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
+            <h2 className="text-xl md:text-4xl font-display font-bold tracking-tight mb-1 md:mb-2 text-white">LEARN</h2>
+            
+            <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'learn' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
+                <p className="text-amber-200 font-sans text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
+                  Guides • Kits • Start
+                </p>
+                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-amber-400 border border-amber-500/30 px-2 md:px-3 py-1 rounded bg-amber-950/30">
+                   <span>BROWSE KITS</span> <ArrowRight size={10} />
+                </div>
+            </div>
+          </div>
+        </Link>
+
       </section>
 
       {/* 3. REFINED FOOTER */}

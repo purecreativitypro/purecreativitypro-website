@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, Loader2, Terminal, BarChart3, Wand2, AlertTriangle, ArrowRight, BrainCircuit, Scan } from 'lucide-react';
+import { X, Check, Loader2, Terminal, BarChart3, Wand2, AlertTriangle, ArrowRight, BrainCircuit, Scan, BookOpen } from 'lucide-react';
 
-export type ScannerTheme = 'tech' | 'media' | 'business';
+export type ScannerTheme = 'tech' | 'media' | 'business' | 'learn';
 
 interface ScannerModalProps {
   isOpen: boolean;
@@ -73,6 +73,22 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         { q: 'Is your offer scalable?', options: ['Yes (Digital/Product)', 'Service (Time for Money)', 'Hybrid', 'Not yet defined'] },
         { q: 'How predictable is your revenue?', options: ['Consistent Growth', 'Flat / Stable', 'Feast or Famine', 'Just starting'] }
       ]
+    },
+    learn: {
+      color: 'amber',
+      bg: 'bg-neutral-950',
+      border: 'border-amber-500',
+      text: 'text-amber-400',
+      button: 'bg-amber-500 hover:bg-amber-400 text-black font-bold',
+      icon: <BookOpen size={48} />,
+      title: 'SKILL PATH FINDER',
+      desc: 'Identify your best starting point based on your goals and interests.',
+      processingSteps: ['Analyzing interest vector...', 'Scanning skill gap...', 'Matching with available kits...', 'Generating learning path...'],
+      questions: [
+        { q: 'What is your primary goal?', options: ['Make extra income', 'Save time / Automate', 'Create better content', 'Learn a new hobby'] },
+        { q: 'Which area excites you most?', options: ['AI & Tech Automation', 'Video & Media Production', 'Music & Audio', 'Business Strategy'] },
+        { q: 'What is your experience level?', options: ['Total Beginner', 'Dabbled a bit', 'Intermediate', 'Pro'] }
+      ]
     }
   }[theme];
 
@@ -105,9 +121,8 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
     }, 800); // 800ms per step
   };
 
-  // Determine result copy based on answers (simplified logic for demo)
+  // Determine result copy based on answers
   const getResult = () => {
-    // A simple logic: the higher the answer index, the more help they need.
     const score = answers.reduce((a, b) => a + b, 0);
     const maxScore = (config.questions.length * 3); // Max index is 3
     const percentage = Math.round(((maxScore - score) / maxScore) * 100);
@@ -115,7 +130,24 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
     let diagnosis = "";
     let action = "";
 
-    if (theme === 'tech') {
+    if (theme === 'learn') {
+      // Special logic for Learn: Recommendation based on Interest (Question 2 / Index 1)
+      const interest = answers[1];
+      
+      if (interest === 0) {
+        diagnosis = "PATH: AI & AUTOMATION";
+        action = "Recommended Kit: AI Starter Workflow + 10 Prompts Guide";
+      } else if (interest === 1) {
+        diagnosis = "PATH: MEDIA PRODUCTION";
+        action = "Recommended Kit: Phone Video Checklist + Camera Buying Guide";
+      } else if (interest === 2) {
+        diagnosis = "PATH: SONIC ARTS";
+        action = "Recommended Kit: Music Basics + Chord Progressions";
+      } else {
+        diagnosis = "PATH: ENTREPRENEURSHIP";
+        action = "Recommended Kit: Offer Builder Template + Side Hustle Sheet";
+      }
+    } else if (theme === 'tech') {
         if (percentage > 70) diagnosis = "SYSTEMS HEALTHY. OPTIMIZATION POSSIBLE.";
         else if (percentage > 40) diagnosis = "EFFICIENCY LEAK DETECTED.";
         else diagnosis = "CRITICAL: MANUAL OVERLOAD.";
@@ -233,22 +265,19 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
                         SCAN COMPLETE
                     </div>
                     
-                    <h2 className={`text-3xl md:text-4xl font-black italic uppercase ${config.text}`}>
+                    <h2 className={`text-2xl md:text-3xl font-black italic uppercase ${config.text}`}>
                         {result.diagnosis}
                     </h2>
 
                     <div className="py-6 border-y border-white/5 my-4">
-                        <p className="text-zinc-300 text-lg max-w-sm mx-auto">
+                        <p className="text-white font-bold text-lg max-w-sm mx-auto">
                             {result.action}
                         </p>
                     </div>
 
                     <div className="flex flex-col gap-3">
-                         <button className={`${config.button} px-8 py-4 rounded-lg tracking-widest font-bold uppercase text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg`}>
-                            BOOK A CONSULTATION
-                         </button>
-                         <button onClick={onClose} className="text-xs text-zinc-500 hover:text-white underline">
-                            Close Analysis
+                         <button onClick={onClose} className={`${config.button} px-8 py-4 rounded-lg tracking-widest font-bold uppercase text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg`}>
+                            GO TO KIT
                          </button>
                     </div>
                 </div>
@@ -260,7 +289,7 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         <div 
             className="absolute inset-0 pointer-events-none opacity-10" 
             style={{
-                backgroundImage: `linear-gradient(${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : '#10b981'} 1px, transparent 1px), linear-gradient(90deg, ${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : '#10b981'} 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : config.color === 'amber' ? '#f59e0b' : '#10b981'} 1px, transparent 1px), linear-gradient(90deg, ${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : config.color === 'amber' ? '#f59e0b' : '#10b981'} 1px, transparent 1px)`,
                 backgroundSize: '20px 20px',
             }}
         />

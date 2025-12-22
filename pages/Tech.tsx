@@ -26,22 +26,22 @@ const Tech: React.FC = () => {
       {/* Hero */}
       <div className="relative pt-32 pb-16 container mx-auto px-6 max-w-6xl">
         <div className="flex flex-col items-start border-l-2 border-cyan-500/30 pl-8 ml-4 md:ml-0">
-          <h4 className="text-cyan-600 mb-2 uppercase tracking-widest text-sm flex items-center gap-2">
+          <h4 className="text-cyan-600 mb-4 uppercase tracking-widest text-sm font-bold flex items-center gap-2">
             <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full"></span>
             SYSTEM ONLINE — YOUR OPERATIONS, SIMPLIFIED
           </h4>
-          <h1 className="text-4xl md:text-7xl font-bold mb-6 text-white leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white leading-tight tracking-tight">
             Stop Doing Busywork. <br />
             {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
             <span className="text-cyan-400 animate-pulse md:animate-none">Run Your Business on Smart Systems.</span>
           </h1>
-          <p className="text-slate-400 max-w-2xl text-lg mb-4 leading-relaxed">
+          <p className="text-slate-300 max-w-3xl text-xl md:text-2xl mb-8 leading-relaxed font-light">
             You’re building something real — but your time is getting eaten by admin, follow-ups, and duct-taped tools.
             PureCreativity Tech designs simple automations and lightweight web apps that remove friction, protect your data, and give you hours back every week.
           </p>
           
           {/* Alignment Line */}
-          <p className="text-cyan-200/80 font-mono text-sm mb-8">
+          <p className="text-cyan-200/80 font-mono text-sm mb-10">
              &gt; Already have an offer? We’ll build the system that runs it.
           </p>
 

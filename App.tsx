@@ -7,6 +7,7 @@ const Tech = React.lazy(() => import('./pages/Tech'));
 const Music = React.lazy(() => import('./pages/Music'));
 const Media = React.lazy(() => import('./pages/Media'));
 const Business = React.lazy(() => import('./pages/Business'));
+const Learn = React.lazy(() => import('./pages/Learn'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ const App: React.FC = () => {
           <Route path="/music" element={<Music />} />
           <Route path="/media" element={<Media />} />
           <Route path="/business" element={<Business />} />
+          <Route path="/learn" element={<Learn />} />
         </Routes>
       </Suspense>
     </HashRouter>

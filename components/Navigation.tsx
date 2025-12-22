@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 interface NavigationProps {
-  theme: 'tech' | 'music' | 'media' | 'business';
+  theme: 'tech' | 'music' | 'media' | 'business' | 'learn';
 }
 
 const Navigation: React.FC<NavigationProps> = ({ theme }) => {
@@ -47,6 +47,15 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       container: "gap-4 md:gap-8",
       icon: "text-emerald-500",
       mobileMenu: "bg-zinc-950 text-white font-sans"
+    },
+    learn: {
+      background: "bg-neutral-950/90 border-b border-amber-500/20 backdrop-blur-md",
+      logo: "text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-amber-400 bg-[length:200%_auto] animate-shine font-display font-bold tracking-tight text-xl md:text-2xl",
+      link: "font-display text-xs font-bold tracking-widest uppercase text-neutral-500 hover:text-amber-400",
+      active: "text-amber-400 border-b border-amber-500 pb-1",
+      container: "gap-4 md:gap-8",
+      icon: "text-amber-400",
+      mobileMenu: "bg-neutral-950 text-amber-100 font-display"
     }
   };
 
@@ -57,6 +66,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
     { label: 'Music', path: '/music' },
     { label: 'Media', path: '/media' },
     { label: 'Business', path: '/business' },
+    { label: 'Learn', path: '/learn' },
   ];
 
   return (
