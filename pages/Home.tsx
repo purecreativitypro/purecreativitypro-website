@@ -294,7 +294,7 @@ const Home: React.FC = () => {
         >
           {hoveredSection === 'tech' && <ElectricBorder colorClass="via-cyan-400" glowClass="shadow-[0_0_20px_#22d3ee] drop-shadow-[0_0_10px_#22d3ee]" />}
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
           <div className={`absolute inset-0 bg-gradient-to-t from-cyan-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
           
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -324,7 +324,7 @@ const Home: React.FC = () => {
         >
           {hoveredSection === 'music' && <ElectricBorder colorClass="via-fuchsia-400" glowClass="shadow-[0_0_20px_#e879f9] drop-shadow-[0_0_10px_#e879f9]" />}
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
           <div className={`absolute inset-0 bg-gradient-to-t from-fuchsia-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -354,7 +354,7 @@ const Home: React.FC = () => {
         >
           {hoveredSection === 'media' && <ElectricBorder colorClass="via-orange-400" glowClass="shadow-[0_0_20px_#fb923c] drop-shadow-[0_0_10px_#fb923c]" />}
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2025&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
           <div className={`absolute inset-0 bg-gradient-to-t from-orange-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'media' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -384,7 +384,7 @@ const Home: React.FC = () => {
         >
           {hoveredSection === 'business' && <ElectricBorder colorClass="via-emerald-400" glowClass="shadow-[0_0_20px_#34d399] drop-shadow-[0_0_10px_#34d399]" />}
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
           <div className={`absolute inset-0 bg-gradient-to-t from-emerald-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">

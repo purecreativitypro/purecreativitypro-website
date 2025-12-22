@@ -88,7 +88,7 @@ const Media: React.FC = () => {
               style={{ transform: `translateY(calc((var(--scroll-y) - 600) * -0.1))` }}
             >
                 <img 
-                    src="https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=80&w=2070&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=75&w=1200&auto=format&fit=crop" 
                     alt="Editorial" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
@@ -106,7 +106,7 @@ const Media: React.FC = () => {
               style={{ transform: `translateY(calc((var(--scroll-y) - 800) * 0.05))` }}
             >
                 <img 
-                    src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2070&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=75&w=1200&auto=format&fit=crop" 
                     alt="Landscape" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
@@ -124,7 +124,7 @@ const Media: React.FC = () => {
               style={{ transform: `translateY(calc((var(--scroll-y) - 900) * -0.05))` }}
             >
                  <img 
-                    src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2000&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=75&w=1200&auto=format&fit=crop" 
                     alt="Abstract" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
@@ -138,7 +138,7 @@ const Media: React.FC = () => {
              {/* Item 4 - Wide (Static Base) */}
              <div className="group relative cursor-pointer md:col-span-2 h-[450px] overflow-hidden rounded-sm shadow-2xl mt-12 border-4 border-transparent hover:border-orange-500/30 transition-all duration-700 hover:shadow-[0_0_40px_rgba(249,115,22,0.2)]">
                  <img 
-                    src="https://images.unsplash.com/photo-1559075480-8025251664d4?q=80&w=2070&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1559075480-8025251664d4?q=75&w=1200&auto=format&fit=crop" 
                     alt="Strategy" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
                 />
