@@ -174,7 +174,7 @@ const Home: React.FC = () => {
     <div className="min-h-screen w-full bg-[#050505] text-white font-sans selection:bg-white selection:text-black overflow-x-hidden">
       
       {/* 1. HERO SECTION: "THE CONVERGENCE HUB" */}
-      <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 perspective-1000">
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 perspective-1000 py-28 md:py-0">
         
         {/* TOP NAVIGATION */}
         <nav className="absolute top-0 left-0 w-full z-[100] pointer-events-auto">
@@ -226,7 +226,7 @@ const Home: React.FC = () => {
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay - PERFORMANCE FIX: Removed backdrop-blur-xl */}
+            {/* Mobile Menu Overlay */}
             <div className={`fixed inset-0 z-40 bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                <div className="flex flex-col gap-10 text-center">
                   {navLinks.map((dept) => (
@@ -269,31 +269,51 @@ const Home: React.FC = () => {
         {/* --- HERO FOREGROUND CONTENT --- */}
         <div className={`relative z-20 w-full h-full flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           
-          <div className="relative text-center w-full px-2">
-             {/* Main Title - Updated to Afropunk Style (Syne Font) - RESPONSIVE TUNING */}
-             <h1 className="flex flex-col items-center justify-center font-afro leading-[0.85] md:leading-[0.8] select-none relative w-full max-w-full">
+          <div className="relative text-center w-full px-2 md:px-0">
+             {/* Main Title - Updated to Afropunk Style (Syne Font) - RESPONSIVE TUNING using VW units to fit all screens */}
+             <h1 className="flex flex-col items-center justify-center font-afro leading-none select-none relative w-full">
                 
-                {/* PURE: Solid, Massive, White */}
-                {/* Mobile: Reduced to 15vw (was 18vw) to ensure better fit. Desktop: 13rem. */}
-                <span className="text-[15vw] md:text-[13rem] font-extrabold text-white tracking-tighter relative z-10 mix-blend-screen">
+                {/* PURE: Scaled relative to viewport width */}
+                {/* 
+                   UPDATED SIZES:
+                   Mobile Portrait: 17vw (was 19vw)
+                   Landscape Mobile (sm): 15vw (was 18vw)
+                   Portrait Tablet (md): 16vw (was 20vw)
+                   Desktop (lg/xl): 13vw / 11vw
+                */}
+                <span className="text-[17vw] sm:text-[15vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] font-extrabold text-white tracking-tighter relative z-10 mix-blend-screen leading-none">
                     PURE
                 </span>
 
-                {/* CREATIVITY: Outlined, overlapping, offset glitch effect */}
-                <div className="relative mt-[-2vw] md:mt-[-2rem]">
-                   {/* Background layer for glitch/shadow effect */}
-                   <span className="absolute top-1 left-1 md:top-2 md:left-2 text-[8.5vw] md:text-[11rem] font-extrabold text-transparent text-outline-thick opacity-30 blur-sm select-none">
+                {/* CREATIVITY: Scaled relative to viewport width to prevent overflow */}
+                {/* 
+                   UPDATED SIZES:
+                   Mobile Portrait: 9vw (was 10.5vw)
+                   Landscape Mobile (sm): 8.5vw (was 10.5vw)
+                   Portrait Tablet (md): 8.5vw (was 10vw)
+                   Desktop (lg/xl): 7vw / 6vw
+                */}
+                <div className="relative mt-[-2vw] sm:mt-[-1.5vw] md:mt-[-1.5vw] lg:mt-[-1vw] xl:mt-[-0.5vw] w-full text-center">
+                   
+                   {/* Background layer for glitch/shadow effect 
+                       FIXED: Changed positioning from `left-[0.4vw]` to `absolute w-full left-0 top-0 text-center` + translate. 
+                       This ensures it centers correctly on desktop instead of sticking to the left edge.
+                   */}
+                   <span className="absolute top-0 left-0 w-full text-center font-extrabold text-transparent text-outline-thick opacity-30 blur-sm select-none leading-none translate-x-[0.3vw] translate-y-[0.3vw]
+                      text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
                    </span>
-                   {/* Main Outline Text - Mobile: Reduced to 8.5vw (was 10vw) to fit width. */}
-                   <span className="relative z-20 text-[8.5vw] md:text-[11rem] font-extrabold text-transparent text-outline-thick tracking-tight hover:text-white/10 transition-colors duration-500">
+                   
+                   {/* Main Outline Text */}
+                   <span className="relative z-20 font-extrabold text-transparent text-outline-thick tracking-tight hover:text-white/10 transition-colors duration-500 leading-none
+                      text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
                    </span>
                 </div>
              </h1>
           </div>
 
-          <div className="mt-12 md:mt-24 flex flex-col items-center text-center max-w-2xl px-6 relative z-30">
+          <div className="mt-12 md:mt-16 flex flex-col items-center text-center max-w-2xl px-6 relative z-30">
              
              {/* Glue Statement */}
              <p className="text-white/80 text-xs md:text-sm font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
@@ -342,15 +362,6 @@ const Home: React.FC = () => {
                    >
                        Business
                    </button>
-                   <span className="text-white/20 text-[8px]">•</span>
-                   <button 
-                       onClick={scrollToDepartments} 
-                       onMouseEnter={() => setHoveredSection('learn')}
-                       onMouseLeave={() => setHoveredSection(null)}
-                       className="uppercase text-amber-300 font-bold drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] hover:scale-110 transition-transform cursor-pointer"
-                   >
-                       Learn
-                   </button>
                 </div>
              </div>
 
@@ -375,7 +386,7 @@ const Home: React.FC = () => {
       {/* 2. INTERACTIVE DEPARTMENTS HUB (100vh) */}
       <section 
         ref={departmentRef}
-        className="relative h-[100dvh] md:h-screen w-full flex flex-col md:flex-row border-t border-white/10 bg-[#050505]"
+        className="relative min-h-[700px] md:min-h-0 h-[100dvh] md:h-screen w-full flex flex-col md:flex-row border-t border-white/10 bg-[#050505]"
       >
         {/* Dynamic Background Aura for Departments */}
         <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none z-0 ${hoveredSection ? 'opacity-40' : 'opacity-0'}`}>
@@ -402,7 +413,7 @@ const Home: React.FC = () => {
           to="/tech"
           onMouseEnter={() => setHoveredSection('tech')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'tech' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'tech' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -437,7 +448,7 @@ const Home: React.FC = () => {
           to="/music"
           onMouseEnter={() => setHoveredSection('music')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'music' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'music' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -472,7 +483,7 @@ const Home: React.FC = () => {
           to="/media"
           onMouseEnter={() => setHoveredSection('media')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'media' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'media' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -507,7 +518,7 @@ const Home: React.FC = () => {
           to="/business"
           onMouseEnter={() => setHoveredSection('business')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
+          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
             ${hoveredSection === 'business' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'business' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
@@ -542,7 +553,7 @@ const Home: React.FC = () => {
           to="/learn"
           onMouseEnter={() => setHoveredSection('learn')}
           onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-[20%] md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden bg-black
+          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden bg-black
             ${hoveredSection === 'learn' ? 'md:flex-[2.5]' : 'md:flex-1'}
             ${hoveredSection && hoveredSection !== 'learn' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}

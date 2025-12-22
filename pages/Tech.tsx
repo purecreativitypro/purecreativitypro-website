@@ -30,12 +30,12 @@ const Tech: React.FC = () => {
             <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full"></span>
             SYSTEM ONLINE — YOUR OPERATIONS, SIMPLIFIED
           </h4>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-white leading-tight tracking-tight break-words">
             Stop Doing Busywork. <br />
             {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
             <span className="text-cyan-400 animate-pulse md:animate-none">Run Your Business on Smart Systems.</span>
           </h1>
-          <p className="text-slate-300 max-w-3xl text-xl md:text-2xl mb-8 leading-relaxed font-light">
+          <p className="text-slate-300 max-w-3xl text-lg md:text-2xl mb-8 leading-relaxed font-light">
             You’re building something real — but your time is getting eaten by admin, follow-ups, and duct-taped tools.
             PureCreativity Tech designs simple automations and lightweight web apps that remove friction, protect your data, and give you hours back every week.
           </p>
@@ -122,7 +122,7 @@ const Tech: React.FC = () => {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                <div className="space-y-2 font-mono text-sm">
+                <div className="space-y-2 font-mono text-sm overflow-x-auto">
                   <div className="flex">
                     <span className="text-slate-500 mr-4">01</span>
                     <span className="text-purple-400">const</span> <span className="text-blue-400">businessGrowth</span> = <span className="text-yellow-300">async</span> () ={'>'} {'{'}

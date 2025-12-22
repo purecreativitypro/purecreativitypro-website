@@ -110,11 +110,12 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay - PERFORMANCE FIX: Removed backdrop-blur-xl */}
+      {/* Mobile Menu Overlay */}
+      {/* Updated to support scrolling on landscape/small screens */}
       <div 
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 transition-opacity duration-300 ease-in-out ${currentTheme.mobileMenu} ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-start pt-28 pb-10 gap-10 overflow-y-auto transition-opacity duration-300 ease-in-out ${currentTheme.mobileMenu} ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-8 min-h-0 shrink-0">
             {links.map((link, idx) => {
               const isActive = location.pathname === link.path;
               return (
@@ -132,7 +133,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
         </div>
         
         {/* Mobile Menu Footer Branding */}
-        <div className="absolute bottom-12 text-xs opacity-40 tracking-[0.3em] uppercase">
+        <div className="mt-auto pt-8 text-xs opacity-40 tracking-[0.3em] uppercase shrink-0">
           PureCreativity / {theme}
         </div>
       </div>

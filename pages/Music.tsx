@@ -29,12 +29,12 @@ const Music: React.FC = () => {
         </h4>
 
         {/* Headline */}
-        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-pink-400 to-purple-500 drop-shadow-lg leading-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-pink-400 to-purple-500 drop-shadow-lg leading-tight break-words">
           Music that makes your<br />project feel expensive.
         </h1>
         
         {/* Subhead */}
-        <p className="text-xl md:text-2xl text-indigo-200 max-w-3xl font-light mb-6 leading-relaxed">
+        <p className="text-lg md:text-2xl text-indigo-200 max-w-3xl font-light mb-6 leading-relaxed">
           For artists, creators, and brands who need music that actually fits. We produce instrumentals, compose original themes, and score visuals — so your audience feels what you’re trying to say.
         </p>
         

@@ -25,12 +25,12 @@ const Media: React.FC = () => {
                         <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
                         PureCreativity Media — AI-Powered Content Studio
                     </h4>
-                    <h1 className="text-6xl md:text-8xl font-serif font-medium leading-[0.9] mb-8 tracking-tighter">
+                    <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-medium leading-[0.9] mb-8 tracking-tighter break-words">
                         CREATE.<br />
                         <span className="italic text-zinc-400">ENHANCE.</span><br />
                         CONVERT.
                     </h1>
-                    <p className="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-4 border-l-2 border-orange-500 pl-6">
+                    <p className="text-lg md:text-2xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-4 border-l-2 border-orange-500 pl-6">
                         We turn ideas and raw assets into scroll-stopping content using AI + design tools — from ebooks and ads to reels and brand visuals — so your business looks premium and performs.
                     </p>
                     
@@ -70,7 +70,7 @@ const Media: React.FC = () => {
       <div className="py-24 px-6 container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-2 gap-16 items-center">
               <div>
-                  <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">Your brand is better than your content looks.</h2>
+                  <h2 className="text-3xl md:text-5xl font-serif mb-8 leading-tight">Your brand is better than your content looks.</h2>
                   <p className="text-zinc-500 text-lg italic border-l-4 border-zinc-200 pl-4">
                       "If you’ve been trying to make your content match your vision, you’re not alone."
                   </p>
@@ -268,7 +268,7 @@ const Media: React.FC = () => {
       {/* FINAL CTA */}
       <div className="bg-black text-white py-32 px-6 text-center">
           <div className="container mx-auto max-w-4xl">
-              <h2 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
+              <h2 className="text-3xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
               <button 
                 onClick={() => setIsScannerOpen(true)}
                 className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95"

@@ -19,11 +19,11 @@ const Business: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   PURECREATIVITY BUSINESS — THE ENTREPRENEURSHIP STUDIO
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-tight break-words">
                 Turn your talent into income — <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-600">with a plan you can actually follow.</span>
               </h1>
-              <p className="text-zinc-300 text-xl md:text-2xl leading-relaxed mb-10 border-l-2 border-emerald-500/20 pl-6 font-light">
+              <p className="text-zinc-300 text-lg md:text-2xl leading-relaxed mb-10 border-l-2 border-emerald-500/20 pl-6 font-light">
                 Whether you’re still choosing your side hustle or you’re ready to level up, we help you find the right direction, build an offer that fits you, and assemble the systems + content to grow it predictably.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -110,124 +110,82 @@ const Business: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                   {[
-                      { icon: <Search />, step: "01", title: "Discover", desc: "pick the right business path" },
-                      { icon: <PenTool />, step: "02", title: "Design", desc: "build your offer + message" },
-                      { icon: <Target />, step: "03", title: "Deploy", desc: "create assets + systems" },
-                      { icon: <TrendingUp />, step: "04", title: "Scale", desc: "refine what works and grow predictably" }
+                      { icon: <Search size={24} />, step: "01", title: "Discover", desc: "pick the right business path" },
+                      { icon: <PenTool size={24} />, step: "02", title: "Design", desc: "build your offer + message" },
+                      { icon: <Target size={24} />, step: "03", title: "Deploy", desc: "create assets + systems" },
+                      { icon: <TrendingUp size={24} />, step: "04", title: "Scale", desc: "refine what works and grow predictably" }
                   ].map((item, i) => (
-                      <div key={i} className="group p-6 hover:bg-zinc-800/50 rounded-lg transition-colors border border-transparent hover:border-zinc-700/50">
-                          <div className="flex justify-between items-start mb-6">
-                              <div className="text-emerald-500 p-3 bg-emerald-950/30 rounded-lg">{item.icon}</div>
-                              <span className="text-zinc-700 font-mono text-xl font-bold group-hover:text-emerald-500/50 transition-colors">{item.step}</span>
+                      <div key={i} className="flex flex-col items-center text-center group">
+                          <div className="w-16 h-16 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-emerald-500 mb-6 group-hover:border-emerald-500/50 group-hover:bg-emerald-950/20 transition-all">
+                              {item.icon}
                           </div>
-                          <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                          <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
+                          <div className="text-emerald-600 font-mono text-xs font-bold mb-2">STEP {item.step}</div>
+                          <h3 className="text-xl font-bold text-zinc-100 mb-2">{item.title}</h3>
+                          <p className="text-zinc-500 text-sm">{item.desc}</p>
                       </div>
                   ))}
               </div>
           </div>
       </div>
 
-      {/* ONE STUDIO / FOUR WEAPONS */}
-      <div className="py-24 container mx-auto px-6 max-w-5xl">
-         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12">
-             <div className="md:flex gap-12 items-center">
-                 <div className="md:w-1/2 mb-8 md:mb-0">
-                     <h2 className="text-3xl font-bold mb-4">One studio. Four weapons.</h2>
-                     <p className="text-zinc-400">When it’s time to execute, we pull the right tools for the job:</p>
-                 </div>
-                 <div className="md:w-1/2 grid grid-cols-1 gap-4">
-                     {[
-                         { label: "Business", desc: "clarity, niche, offer design, pricing, plan", color: "text-emerald-400" },
-                         { label: "Tech", desc: "smart systems, automations, web apps, client portals", color: "text-cyan-400" },
-                         { label: "Media", desc: "content creation + AI enhancement + repurposing", color: "text-orange-400" },
-                         { label: "Music", desc: "sonic identity, scoring, sound assets when needed", color: "text-fuchsia-400" }
-                     ].map((item, i) => (
-                         <div key={i} className="flex items-start gap-3 text-sm">
-                             <span className={`font-bold uppercase tracking-wider ${item.color} w-20 shrink-0`}>{item.label}</span>
-                             <span className="text-zinc-300">{item.desc}</span>
-                         </div>
-                     ))}
-                 </div>
-             </div>
+      {/* Offerings / Services */}
+      <div className="py-24 container mx-auto px-6 max-w-6xl">
+         <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">How we build it</h2>
+            <p className="text-zinc-400">Everything you need to go from idea to income.</p>
+         </div>
+         
+         <div className="grid md:grid-cols-3 gap-8">
+            <ServiceCard 
+               icon={<Lightbulb size={24}/>}
+               title="Offer Design"
+               desc="We help you package your skills into a high-value offer that people actually want to buy."
+            />
+            <ServiceCard 
+               icon={<Layers size={24}/>}
+               title="Funnel & Tech"
+               desc="We build the landing pages, automations, and payment systems so you can sleep while you sell."
+            />
+            <ServiceCard 
+               icon={<Users size={24}/>}
+               title="Audience Growth"
+               desc="Strategies to attract the right people without dancing on TikTok (unless you want to)."
+            />
          </div>
       </div>
 
-      {/* SERVICE CARDS (Replaces Deep Dive) */}
-      <div className="container mx-auto px-6 max-w-6xl py-12">
-          <div className="grid md:grid-cols-3 gap-8">
-              {[
-                  { title: "Find Your Business Path", desc: "If you don’t know what to build, we’ll help you pick a direction that fits you skills, lifestyle, and market demand.", icon: <Search /> },
-                  { title: "Build an Offer That Sells", desc: "We shape your product/service into something clear, valuable, and easy to say yes to — with a simple delivery plan.", icon: <Target /> },
-                  { title: "Build the Engine", desc: "We assemble the assets and systems that create predictable growth: content, follow-up, automation, and simple metrics.", icon: <Rocket /> }
-              ].map((item, i) => (
-                  <div key={i} className="bg-gradient-to-br from-zinc-900 to-black p-8 rounded-2xl border border-zinc-800 hover:border-emerald-500/30 transition-colors group">
-                      <div className="text-emerald-500 mb-6 p-3 bg-emerald-950/20 inline-block rounded-lg group-hover:scale-110 transition-transform">{item.icon}</div>
-                      <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
-                      <p className="text-zinc-400 leading-relaxed text-sm">{item.desc}</p>
-                  </div>
-              ))}
-          </div>
-      </div>
-
-      {/* SUCCESS PICTURE */}
-      <div className="py-24 bg-zinc-900/20">
+      {/* FAQ */}
+      <div className="bg-zinc-900/30 border-y border-zinc-800/50 py-24">
           <div className="container mx-auto px-6 max-w-4xl">
-              <h2 className="text-3xl font-bold mb-10 text-center">What changes when you have a blueprint</h2>
-              <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
-                  {[
-                      "You stop second-guessing and start executing",
-                      "You know what to sell and who it’s for",
-                      "Your content and systems work together",
-                      "Growth becomes predictable instead of random"
-                  ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                          <CheckCircle2 className="text-emerald-500" size={20} />
-                          <span className="text-zinc-300 text-lg">{item}</span>
-                      </div>
-                  ))}
+              <h2 className="text-3xl font-bold mb-12 text-center">FAQ</h2>
+              <div className="space-y-6">
+                 {[
+                    { q: "I have no idea what business to start.", a: "That's exactly why we start with the 'Discover' phase. We analyze your skills and market demand to find your best path." },
+                    { q: "Is this for beginners?", a: "Yes. Whether you're at zero or $5k/mo, the principles of offer, system, and traffic remain the same." },
+                    { q: "Do you build the tech for me?", a: "We have 'Done For You' tech options, or we can guide you through simple setups." }
+                 ].map((faq, i) => (
+                    <div key={i} className="bg-zinc-950 border border-zinc-800 p-6 rounded-lg">
+                       <h4 className="font-bold text-zinc-200 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-emerald-500"/> {faq.q}</h4>
+                       <p className="text-zinc-500 text-sm pl-6">{faq.a}</p>
+                    </div>
+                 ))}
               </div>
-          </div>
-      </div>
-
-      {/* FAQ SECTION */}
-      <div className="py-24 container mx-auto px-6 max-w-3xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">FAQ</h2>
-          <div className="space-y-6">
-              {[
-                  { q: "What if I don’t know what business to start?", a: "Perfect — that’s what the first step is for. We help you choose a path that fits you and the market." },
-                  { q: "What if I already have an idea?", a: "Great — we’ll validate it, sharpen the offer, and build the execution plan." },
-                  { q: "Do you just give advice, or do you build?", a: "Both. We can deliver the blueprint, and we can also build the assets and systems across Tech/Media/Music as needed." },
-                  { q: "Is this only for full-time entrepreneurs?", a: "No. It’s designed for side hustlers and small teams who need clarity and momentum." }
-              ].map((item, i) => (
-                  <div key={i} className="border-b border-zinc-800 pb-6">
-                      <h4 className="font-bold text-lg mb-2 text-zinc-200 flex items-start gap-3">
-                        <HelpCircle size={18} className="text-emerald-500 mt-1 shrink-0" />
-                        {item.q}
-                      </h4>
-                      <p className="text-zinc-500 pl-8 text-sm leading-relaxed">{item.a}</p>
-                  </div>
-              ))}
-          </div>
-      </div>
-
-      {/* CTA BAND */}
-      <div className="bg-emerald-900/20 py-24 border-t border-emerald-900/50">
-          <div className="container mx-auto px-6 text-center">
-              <h2 className="text-4xl font-bold mb-4">Stop guessing. Start building.</h2>
-              <p className="text-emerald-200/60 mb-8 max-w-2xl mx-auto">If you’ve got talent and a desire to build, you’re in the right place. Let’s turn it into something real.</p>
-              <button className="px-10 py-5 bg-white text-emerald-900 font-bold rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                  START YOUR BLUEPRINT
-              </button>
           </div>
       </div>
 
       <footer className="bg-zinc-950 py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-emerald-900/10 uppercase">
-        PureCreativity.Business // The Blueprint
+        PureCreativity.Business // Build The Future
       </footer>
-
     </div>
   );
 };
+
+const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; desc: string }> = ({ icon, title, desc }) => (
+   <div className="p-8 border border-zinc-800 bg-zinc-900/20 hover:bg-zinc-900/50 transition-colors rounded-xl group">
+      <div className="text-emerald-500 mb-4 group-hover:scale-110 transition-transform origin-left">{icon}</div>
+      <h3 className="text-xl font-bold text-zinc-100 mb-3">{title}</h3>
+      <p className="text-zinc-400 leading-relaxed text-sm">{desc}</p>
+   </div>
+);
 
 export default Business;
