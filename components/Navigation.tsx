@@ -67,9 +67,11 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
       <div className="flex justify-between items-center w-full relative z-50">
         <Link to="/" className={`transition-transform hover:scale-105 ${currentTheme.logo}`}>
           PureCreativity
-          <span className={`hidden md:inline-block ml-2 text-sm font-light opacity-60 ${theme === 'music' ? 'text-white' : 'text-current'}`}>
-             / {theme.charAt(0).toUpperCase() + theme.slice(1)}
-          </span>
+          {theme !== 'music' && (
+            <span className="hidden md:inline-block ml-2 text-sm font-light opacity-60 text-current">
+               / {theme.charAt(0).toUpperCase() + theme.slice(1)}
+            </span>
+          )}
         </Link>
 
         {/* Desktop Links */}
