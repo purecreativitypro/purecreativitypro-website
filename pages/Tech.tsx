@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Terminal, Bot, Code2, Smartphone, Zap, Database } from 'lucide-react';
+import { Terminal, Bot, Code2, Smartphone, Zap, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Tech: React.FC = () => {
   return (
@@ -23,23 +23,30 @@ const Tech: React.FC = () => {
         <div className="flex flex-col items-start border-l-2 border-cyan-500/30 pl-8 ml-4 md:ml-0">
           <h4 className="text-cyan-600 mb-2 uppercase tracking-widest text-sm flex items-center gap-2">
             <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full"></span>
-            System Online
+            SYSTEM ONLINE — YOUR OPERATIONS, SIMPLIFIED
           </h4>
           <h1 className="text-4xl md:text-7xl font-bold mb-6 text-white leading-tight">
-            Efficient Systems for <br />
+            Stop Doing Busywork. <br />
             {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
-            <span className="text-cyan-400 animate-pulse md:animate-none">The Modern Entrepreneur</span>
+            <span className="text-cyan-400 animate-pulse md:animate-none">Run Your Business on Smart Systems.</span>
           </h1>
           <p className="text-slate-400 max-w-2xl text-lg mb-8 leading-relaxed">
-            PureCreativity Tech specializes in bridging the gap between ambition and execution. 
-            We build intelligent web applications, automate workflows, and consult on AI integration 
-            to reclaim your time.
+            You’re building something real — but your time is getting eaten by admin, follow-ups, and duct-taped tools.
+            PureCreativity Tech designs simple automations and lightweight web apps that remove friction, protect your data, and give you hours back every week.
           </p>
-          <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95">
-            <Terminal size={18} />
-            <span>INITIALIZE_PROJECT</span>
-            <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
-          </button>
+          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+            <div className="flex flex-col">
+                <button className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95">
+                    <Terminal size={18} />
+                    <span>&gt; START A PROJECT</span>
+                    <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
+                </button>
+                <span className="text-xs text-slate-500 mt-2 font-mono ml-1">Free 10-minute systems scan</span>
+            </div>
+            <a href="#" className="text-cyan-300 hover:text-white transition-colors flex items-center gap-2 text-sm border-b border-transparent hover:border-cyan-300 pb-0.5">
+                See what we build <ArrowRight size={14} />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -50,16 +57,16 @@ const Tech: React.FC = () => {
           <ServiceCard 
             icon={<Bot className="text-cyan-300" size={32} />}
             title="AI & Automation"
-            code="consulting.init()"
-            description="We analyze your business bottlenecks and implement custom AI agents and automation scripts to handle repetitive tasks."
+            code="workflow.optimize()"
+            description="Stop repeating yourself. We automate the tasks that steal your focus — messages, data entry, follow-ups, file handling, and internal workflows — so your business runs even when you’re offline."
             delay={0}
           />
           
           <ServiceCard 
             icon={<Smartphone className="text-cyan-300" size={32} />}
             title="PWA Development"
-            code="app.build({ mobile: true })"
-            description="Next-gen Progressive Web Apps that work offline, load instantly, and provide a native experience without the app store hassle."
+            code="app.deploy({ mobile: true })"
+            description="Want an “app” without app-store headaches? We build fast, installable Progressive Web Apps that feel native, load instantly, and keep your team moving from any device."
             delay={1}
           />
 
@@ -67,14 +74,14 @@ const Tech: React.FC = () => {
             icon={<Code2 className="text-cyan-300" size={32} />}
             title="SaaS Solutions"
             code="scale.up()"
-            description="Robust, scalable Software as a Service platforms built on modern React architectures tailored for side-hustlers."
+            description="Turn your process into a product. We build secure, scalable web platforms — from client portals to multi-tenant SaaS — designed to grow without complexity."
             delay={2}
           />
 
         </div>
       </div>
 
-      {/* Feature Section */}
+      {/* Feature Section: Code is Leverage */}
       <div className="border-t border-cyan-900/30 bg-slate-900/50 py-20 relative">
         <div className="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/2">
@@ -122,24 +129,76 @@ const Tech: React.FC = () => {
           <div className="w-full md:w-1/2">
             <h3 className="text-2xl font-bold text-white mb-4">Code is Leverage.</h3>
             <p className="text-slate-400 mb-6">
-              You don't need to be a developer to wield the power of code. We translate your business logic into digital systems that work while you sleep.
+              You don't need to be a developer to benefit from software.
+              We translate what you do manually into clean, reliable systems — so your business is easier to run, easier to scale, and harder to break.
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-8">
               {[
-                "Custom Dashboard Creation",
-                "API Integration & Development",
-                "Database Architecture",
-                "Performance Optimization"
+                "Client Portals & Admin Dashboards",
+                "Payments, Scheduling & Tool Integrations",
+                "Databases, Reporting & Clean Data Flow",
+                "Performance, Security & Long-Term Maintainability"
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-2 text-cyan-200">
                   <Zap size={16} /> {item}
                 </li>
               ))}
             </ul>
+            <button className="text-cyan-400 font-bold hover:text-white transition-colors flex items-center gap-2">
+                &gt; REQUEST A BUILD QUOTE
+            </button>
           </div>
         </div>
       </div>
       
+      {/* The Plan Section */}
+      <div className="container mx-auto px-6 max-w-6xl py-20 border-t border-cyan-900/30">
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">The Plan</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+              {[
+                  { step: "01", title: "Describe the bottleneck", desc: "what’s slowing you down" },
+                  { step: "02", title: "We build the system", desc: "automation or app — simple + secure" },
+                  { step: "03", title: "You run lighter", desc: "launch + handoff + support" }
+              ].map((item, i) => (
+                  <div key={i} className="relative bg-slate-900/50 border border-slate-800 p-8 hover:bg-slate-900 transition-colors group">
+                      <div className="text-4xl font-bold text-slate-800 absolute top-4 right-4 font-mono group-hover:text-cyan-900/50 transition-colors">{item.step}</div>
+                      <div className="w-10 h-10 border border-cyan-500/50 flex items-center justify-center text-cyan-400 mb-6 rounded-full bg-cyan-950/30">
+                          {i === 0 && <Database size={18} />}
+                          {i === 1 && <Code2 size={18} />}
+                          {i === 2 && <Zap size={18} />}
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                      <p className="text-slate-400 text-sm">({item.desc})</p>
+                  </div>
+              ))}
+          </div>
+          <div className="mt-12 text-center">
+              <button className="group bg-cyan-600 text-white px-8 py-3 font-bold hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 inline-flex items-center gap-2">
+                  &gt; BOOK A SYSTEMS CALL
+              </button>
+          </div>
+      </div>
+
+      {/* What This Unlocks Section */}
+      <div className="bg-slate-900/30 border-t border-cyan-900/30 py-20">
+          <div className="container mx-auto px-6 max-w-4xl text-center">
+              <h2 className="text-3xl font-bold text-white mb-10">What This Unlocks</h2>
+              <div className="grid md:grid-cols-2 gap-x-12 gap-y-6 text-left">
+                  {[
+                      "Your operations stop living in your head",
+                      "Leads and customers get faster responses",
+                      "You spend more time selling, serving, and creating",
+                      "Your tools finally work together"
+                  ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                          <CheckCircle2 className="text-cyan-500 mt-1 shrink-0" size={20} />
+                          <span className="text-slate-300 text-lg">{item}</span>
+                      </div>
+                  ))}
+              </div>
+          </div>
+      </div>
+
       <footer className="py-8 text-center text-slate-600 text-xs font-mono border-t border-slate-900">
         PureCreativity.Tech // SYSTEM.END
       </footer>

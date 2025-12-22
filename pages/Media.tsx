@@ -1,184 +1,268 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import Navigation from '../components/Navigation';
-import { Camera, Video, PenTool, Layout, ArrowUpRight } from 'lucide-react';
+import { Wand2, Layers, Repeat, Megaphone, Palette, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Media: React.FC = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div 
-      ref={containerRef}
-      className="min-h-screen bg-zinc-50 text-black font-serif relative overflow-x-hidden"
-      style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
-    >
+    <div className="min-h-screen bg-zinc-50 text-black font-sans selection:bg-orange-500/30 selection:text-orange-900 relative overflow-x-hidden">
       <Navigation theme="media" />
-      
-      {/* Parallax Background Text */}
-      <div 
-        className="fixed top-1/4 -right-20 text-[20vw] font-bold text-zinc-200/40 select-none pointer-events-none z-0 whitespace-nowrap"
-        style={{ transform: `translateX(calc(var(--scroll-y) * -0.2))` }}
-      >
-        PURE MEDIA
-      </div>
 
-      <div 
-        className="fixed top-2/3 -left-10 text-[15vw] font-bold text-zinc-200/30 select-none pointer-events-none z-0 whitespace-nowrap italic"
-        style={{ transform: `translateX(calc(var(--scroll-y) * 0.1))` }}
-      >
-        AESTHETIC
-      </div>
-
-      {/* Heavy Header */}
-      <div className="relative z-10 bg-zinc-900 text-white pt-48 pb-32 px-6 rounded-b-[4rem] shadow-2xl overflow-hidden">
-        {/* Header Parallax Element */}
-        <div 
-          className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
-          style={{ transform: `translateY(calc(var(--scroll-y) * 0.4))` }}
-        >
-          <div className="absolute top-20 left-10 w-64 h-64 border border-white/20 rounded-full"></div>
-          <div className="absolute top-40 right-20 w-96 h-96 border border-white/10 rounded-full"></div>
-        </div>
+      {/* HERO SECTION */}
+      <div className="relative bg-zinc-900 text-white pt-32 pb-24 px-6 rounded-b-[3rem] shadow-2xl overflow-hidden">
+        {/* Abstract shapes for vibe */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-3xl pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-end gap-12">
-                <div style={{ transform: `translateY(calc(var(--scroll-y) * -0.05))` }}>
-                    <h1 className="text-7xl md:text-9xl font-serif font-medium leading-[0.9] mb-6 tracking-tighter">
-                        Capture.<br />
-                        <span className="italic text-zinc-400">Create.</span><br />
-                        Convert.
+                <div className="max-w-3xl">
+                    <h4 className="text-orange-500 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-6 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                        PureCreativity Media — AI-Powered Content Studio
+                    </h4>
+                    <h1 className="text-6xl md:text-8xl font-serif font-medium leading-[0.9] mb-8 tracking-tighter">
+                        CREATE.<br />
+                        <span className="italic text-zinc-400">ENHANCE.</span><br />
+                        CONVERT.
                     </h1>
-                    <div className="w-32 h-1 bg-orange-500"></div>
-                </div>
-                <div className="max-w-md pb-4" style={{ transform: `translateY(calc(var(--scroll-y) * 0.05))` }}>
-                    <p className="text-xl text-zinc-300 font-sans font-light leading-relaxed">
-                        PureCreativity Media is a full-service agency for visual storytelling. 
-                        We combine high-end photography, cinematic video, and data-driven content strategy.
+                    <p className="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-10 border-l-2 border-orange-500 pl-6">
+                        We turn ideas and raw assets into scroll-stopping content using AI + design tools — from ebooks and ads to reels and brand visuals — so your business looks premium and performs.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start">
+                        <button className="bg-white text-black px-8 py-4 rounded-full font-bold tracking-wide hover:bg-orange-500 hover:text-white transition-all flex items-center gap-2 group active:scale-95">
+                            START A PROJECT
+                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        </button>
+                        <button className="px-8 py-4 rounded-full border border-zinc-700 text-white font-bold tracking-wide hover:border-orange-500 hover:text-orange-500 transition-all active:scale-95">
+                            GET A FREE CONTENT SCAN
+                        </button>
+                    </div>
+                    <p className="text-zinc-500 text-xs mt-6 tracking-wide font-mono uppercase">
+                        Bring an idea or bring footage. We’ll handle the creative.
                     </p>
                 </div>
             </div>
         </div>
       </div>
 
-      {/* Services Strip */}
-      <div className="relative z-20 bg-orange-500 text-black py-6 overflow-hidden font-sans font-bold text-sm tracking-widest uppercase shadow-lg">
-        <div className="container mx-auto flex justify-between px-6">
-            <span className="flex items-center gap-3"><Camera size={18}/> Photography</span>
-            <span className="flex items-center gap-3"><Video size={18}/> Videography</span>
-            <span className="flex items-center gap-3"><PenTool size={18}/> Editing</span>
-            <span className="flex items-center gap-3"><Layout size={18}/> Strategy</span>
-        </div>
+      {/* PROBLEM SECTION */}
+      <div className="py-24 px-6 container mx-auto max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+              <div>
+                  <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">Your brand is better than your content looks.</h2>
+                  <p className="text-zinc-500 text-lg italic border-l-4 border-zinc-200 pl-4">
+                      "If you’ve been trying to make your content match your vision, you’re not alone."
+                  </p>
+              </div>
+              <div className="space-y-6">
+                  {[
+                      "You need consistent content, but creating it takes too long.",
+                      "Templates feel generic, and outsourcing feels expensive or unclear.",
+                      "You have ideas — you just need them brought to life fast and on-brand."
+                  ].map((item, i) => (
+                      <div key={i} className="flex gap-4 items-start">
+                          <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center shrink-0 mt-1">
+                              <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                          </div>
+                          <p className="text-lg text-zinc-800 font-medium">{item}</p>
+                      </div>
+                  ))}
+              </div>
+          </div>
       </div>
 
-      {/* Gallery / Work */}
-      <div className="container mx-auto px-6 py-32 max-w-7xl relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-start">
-            
-            {/* Item 1 - Tall (Moves slower - Deep Parallax) */}
-            <div 
-              className="group relative cursor-pointer md:row-span-2 h-[700px] overflow-hidden rounded-sm shadow-xl border-4 border-transparent hover:border-orange-500/30 transition-all duration-700 hover:shadow-[0_0_40px_rgba(249,115,22,0.2)]"
-              style={{ transform: `translateY(calc((var(--scroll-y) - 600) * -0.1))` }}
-            >
-                <img 
-                    src="https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=75&w=1200&auto=format&fit=crop" 
-                    alt="Editorial" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
-                />
-                {/* On Mobile: Always visible gradient and text. On Desktop: Hover only. */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-black/30 md:group-hover:bg-transparent transition-colors duration-500"></div>
-                <div className="absolute bottom-0 left-0 p-10 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-8 md:group-hover:translate-y-0">
-                    <h3 className="text-4xl font-serif italic mb-2">Editorial</h3>
-                    <p className="font-sans text-xs tracking-widest uppercase opacity-80">Brand Campaign / New York</p>
-                </div>
-            </div>
+      {/* VILLAIN / GUIDE SECTION */}
+      <div className="bg-zinc-100 py-24 px-6">
+          <div className="container mx-auto max-w-4xl text-center">
+              <div className="mb-16">
+                  <h3 className="text-orange-600 font-bold tracking-widest uppercase text-sm mb-4">The Real Enemy</h3>
+                  <h2 className="text-3xl md:text-4xl font-serif mb-6">Inconsistency.</h2>
+                  <p className="text-zinc-600 max-w-2xl mx-auto text-lg leading-relaxed">
+                      Inconsistent visuals and scattered messaging make great businesses look smaller than they are. We fix that by building content systems you can actually keep up with.
+                  </p>
+              </div>
+              
+              <div className="w-full h-px bg-zinc-200 my-12"></div>
 
-            {/* Item 2 - Square (Moves faster - Fore Parallax) */}
-            <div 
-              className="group relative cursor-pointer h-[400px] overflow-hidden rounded-sm shadow-lg border-4 border-transparent hover:border-orange-500/30 transition-all duration-700 hover:shadow-[0_0_40px_rgba(249,115,22,0.2)]"
-              style={{ transform: `translateY(calc((var(--scroll-y) - 800) * 0.05))` }}
-            >
-                <img 
-                    src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=75&w=1200&auto=format&fit=crop" 
-                    alt="Landscape" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
-                />
-                 {/* On Mobile: Always visible gradient and text. On Desktop: Hover only. */}
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-transparent transition-colors duration-500"></div>
-                 <div className="absolute bottom-0 left-0 p-8 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
-                    <h3 className="text-3xl font-serif italic">Adventure</h3>
-                    <p className="font-sans text-xs tracking-widest uppercase opacity-80">Social Content / Iceland</p>
-                </div>
-            </div>
-
-            {/* Item 3 - Square (Moves mid) */}
-            <div 
-              className="group relative cursor-pointer h-[400px] overflow-hidden rounded-sm shadow-lg lg:mt-24 border-4 border-transparent hover:border-orange-500/30 transition-all duration-700 hover:shadow-[0_0_40px_rgba(249,115,22,0.2)]"
-              style={{ transform: `translateY(calc((var(--scroll-y) - 900) * -0.05))` }}
-            >
-                 <img 
-                    src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=75&w=1200&auto=format&fit=crop" 
-                    alt="Abstract" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-transparent transition-colors duration-500"></div>
-                <div className="absolute bottom-0 left-0 p-8 text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
-                    <h3 className="text-3xl font-serif italic">Vision</h3>
-                    <p className="font-sans text-xs tracking-widest uppercase opacity-80">Product Photography / Studio</p>
-                </div>
-            </div>
-
-             {/* Item 4 - Wide (Static Base) */}
-             <div className="group relative cursor-pointer md:col-span-2 h-[450px] overflow-hidden rounded-sm shadow-2xl mt-12 border-4 border-transparent hover:border-orange-500/30 transition-all duration-700 hover:shadow-[0_0_40px_rgba(249,115,22,0.2)]">
-                 <img 
-                    src="https://images.unsplash.com/photo-1559075480-8025251664d4?q=75&w=1200&auto=format&fit=crop" 
-                    alt="Strategy" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-orange-500/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="text-center text-black px-12">
-                         <h3 className="text-5xl font-serif mb-4 italic">Strategy</h3>
-                         <p className="font-sans font-bold uppercase tracking-[0.2em] text-sm">View Comprehensive Case Study <ArrowUpRight className="inline-block ml-1" /></p>
-                    </div>
-                </div>
-                {/* On mobile, standard strategy text is hidden, show a simplified tag */}
-                <div className="absolute bottom-6 left-6 md:top-6 md:right-6 md:left-auto md:bottom-auto text-white md:text-white/50 font-sans text-lg md:text-[10px] tracking-[0.2em] md:tracking-[0.5em] uppercase font-bold md:font-normal bg-black/50 md:bg-transparent p-2 md:p-0">Featured Project 2025</div>
-            </div>
-
-        </div>
+              <div>
+                  <h3 className="text-orange-600 font-bold tracking-widest uppercase text-sm mb-4">The Guide</h3>
+                  <h2 className="text-3xl md:text-4xl font-serif mb-6">You bring the vision. We bring the execution.</h2>
+                  <p className="text-zinc-600 max-w-2xl mx-auto text-lg leading-relaxed">
+                      PureCreativity Media blends AI speed with human taste, strategy, and brand consistency — so your content doesn’t just look good… it supports your offer.
+                  </p>
+              </div>
+          </div>
       </div>
 
-      {/* CTA Section with Scroll Entrance */}
-      <div className="relative z-30 bg-black text-white py-32 px-6 text-center font-sans overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{ transform: `translateY(calc((var(--scroll-y) - 2000) * 0.1))` }}
-        >
-          <div className="text-[30vw] font-bold text-white/10 select-none">NEXT</div>
-        </div>
-        
-        <div className="relative z-10 max-w-3xl mx-auto" style={{ transform: `translateY(calc((var(--scroll-y) - 2200) * -0.02))` }}>
-          <h2 className="text-5xl md:text-7xl font-bold mb-10 tracking-tight leading-none">Ready to define your image?</h2>
-          <button className="group relative bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)]">
-              <span>START A PROJECT</span>
-              <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </button>
-        </div>
+      {/* SERVICES SECTION */}
+      <div className="py-24 px-6 container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <ServiceCard 
+                  icon={<Wand2 size={24} />} 
+                  title="AI Content Creation" 
+                  subtitle="(From Scratch)"
+                  desc="From a blank page to finished assets. We create ebooks, carousels, ad creatives, thumbnails, reels concepts, and social posts built around your message."
+              />
+              <ServiceCard 
+                  icon={<Megaphone size={24} />} 
+                  title="AI Editing + Enhancement" 
+                  subtitle=""
+                  desc="Make what you have look premium. Cleanup, upscale, color polish, lighting fixes, background removal, audio cleanup, captions, and pro formatting."
+              />
+              <ServiceCard 
+                  icon={<Layers size={24} />} 
+                  title="Repurposing Packs" 
+                  subtitle=""
+                  desc="One idea becomes a week of content. We turn long-form into short clips, hooks, captions, cover images, and platform-ready variations."
+              />
+              <ServiceCard 
+                  icon={<Repeat size={24} />} 
+                  title="Campaign Creative" 
+                  subtitle="+ Messaging"
+                  desc="Launch-ready creative that stays consistent. Ads, landing visuals, offer graphics, and content that supports the sale."
+              />
+              <ServiceCard 
+                  icon={<Palette size={24} />} 
+                  title="Creative Direction" 
+                  subtitle=""
+                  desc="If you’re not sure what to make, we define the style, structure, and content angle — so everything looks and feels aligned."
+              />
+              
+              {/* FROM SCRATCH EMPHASIS BOX */}
+              <div className="bg-zinc-900 text-white p-8 rounded-xl flex flex-col justify-center shadow-xl">
+                  <h3 className="text-xl font-bold mb-4 font-serif italic text-orange-500">No footage? No problem.</h3>
+                  <p className="text-zinc-400 text-sm mb-4">No idea? We can build it.</p>
+                  <ul className="space-y-3">
+                      {[
+                          "Turn rough concepts into finished visuals",
+                          "Generate on-brand designs",
+                          "Deliver platform-ready formats"
+                      ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-3 text-sm text-zinc-300">
+                              <CheckCircle2 size={16} className="text-orange-500 shrink-0"/> {item}
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          </div>
       </div>
 
-      <footer className="relative z-10 bg-zinc-900 py-12 text-center text-zinc-500 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
+      {/* THE PLAN */}
+      <div className="bg-orange-500 text-black py-24 px-6">
+          <div className="container mx-auto max-w-6xl">
+              <h2 className="text-4xl md:text-5xl font-serif mb-16 text-center text-white drop-shadow-md">The Plan</h2>
+              <div className="grid md:grid-cols-3 gap-8 mb-12">
+                  {[
+                      { step: "01", title: "Share your offer + vibe", desc: "(or send what you have)" },
+                      { step: "02", title: "We create + enhance", desc: "(draft → polish → variations)" },
+                      { step: "03", title: "You post consistently", desc: "and convert more" }
+                  ].map((item, i) => (
+                      <div key={i} className="bg-white p-8 rounded-lg shadow-xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+                          <div className="absolute -right-4 -top-4 text-9xl font-serif text-zinc-100 group-hover:text-orange-50 transition-colors pointer-events-none select-none">
+                              {item.step}
+                          </div>
+                          <div className="relative z-10">
+                              <div className="text-xs font-bold tracking-widest uppercase mb-2 text-orange-600">Step {item.step}</div>
+                              <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
+                              <p className="text-zinc-600">{item.desc}</p>
+                          </div>
+                      </div>
+                  ))}
+              </div>
+              <div className="text-center">
+                  <button className="bg-black text-white px-10 py-4 rounded-full font-bold tracking-wide hover:bg-white hover:text-black transition-all shadow-xl active:scale-95">
+                      GET A FREE CONTENT SCAN
+                  </button>
+              </div>
+          </div>
+      </div>
+
+      {/* PROOF SECTION */}
+      <div className="py-24 px-6 container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-serif mb-12 text-center">Proof it works</h2>
+          <div className="grid md:grid-cols-2 gap-12">
+              <div className="space-y-4">
+                  <div className="bg-zinc-200 h-64 rounded-lg flex items-center justify-center relative overflow-hidden group border border-zinc-300">
+                      <img src="https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-50" alt="Raw" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                        <span className="bg-black text-white px-4 py-2 text-xs uppercase tracking-widest font-bold">Before: Raw Asset</span>
+                      </div>
+                  </div>
+                  <div className="bg-zinc-900 h-80 rounded-lg flex items-center justify-center relative overflow-hidden shadow-2xl group border border-zinc-800">
+                      <img src="https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Enhanced" />
+                      <div className="absolute bottom-6 left-6">
+                        <span className="bg-orange-500 text-black px-4 py-2 text-xs uppercase tracking-widest font-bold shadow-lg">After: Enhanced + On-Brand</span>
+                      </div>
+                  </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold mb-6">Deliverables that convert</h3>
+                  <p className="text-zinc-600 mb-8 leading-relaxed">
+                     We don't just "edit." We package content for maximum engagement.
+                     Every asset is delivered in the correct ratio, format, and style for your target platform.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                      {["Carousel Packs", "Reel Covers", "Ad Set Creatives", "Lead Magnets (PDF)", "Story Graphics", "YouTube Thumbnails"].map((item, i) => (
+                          <div key={i} className="border border-zinc-200 p-4 rounded bg-white flex items-center gap-2 text-sm text-zinc-700 shadow-sm">
+                              <CheckCircle2 size={16} className="text-orange-500 shrink-0"/> {item}
+                          </div>
+                      ))}
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {/* FAQ SECTION */}
+      <div className="bg-zinc-100 py-24 px-6">
+          <div className="container mx-auto max-w-3xl">
+              <h2 className="text-3xl font-serif mb-12 text-center">FAQ</h2>
+              <div className="space-y-4">
+                  {[
+                      { q: "Do I need professional footage or photos?", a: "No. Bring what you have — even phone footage — and we’ll enhance it. If you need capture later, we can guide the shot list and direction." },
+                      { q: "Is this AI-only?", a: "AI-assisted, human-finished. We use AI for speed and options, then apply taste, strategy, and consistency." },
+                      { q: "What do you need from me?", a: "Your offer, your goal, and any brand links or assets. If you have nothing, we can start from a simple description." },
+                      { q: "What’s the turnaround time?", a: "Depends on scope, but most requests start with a first draft within a few days." },
+                      { q: "What will I receive?", a: "Ready-to-post files formatted for your platforms (and source files when needed)." }
+                  ].map((item, i) => (
+                      <div key={i} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                          <h4 className="font-bold text-lg mb-2 flex items-start gap-3 text-zinc-900">
+                              <span className="text-orange-500 font-serif italic">Q.</span> {item.q}
+                          </h4>
+                          <p className="text-zinc-600 pl-7 text-sm leading-relaxed">{item.a}</p>
+                      </div>
+                  ))}
+              </div>
+          </div>
+      </div>
+
+      {/* FINAL CTA */}
+      <div className="bg-black text-white py-32 px-6 text-center">
+          <div className="container mx-auto max-w-4xl">
+              <h2 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
+              <button className="bg-white text-black px-12 py-5 text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 inline-flex items-center gap-3 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-95">
+                  START A PROJECT
+              </button>
+              <p className="mt-6 text-zinc-500 text-xs tracking-widest uppercase">Tell us what you’re launching — we’ll build the content.</p>
+          </div>
+      </div>
+
+      <footer className="bg-zinc-900 py-12 text-center text-zinc-500 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
         PureCreativity.Media // Perspective is Everything
       </footer>
 
     </div>
   );
 };
+
+const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; subtitle: string; desc: string }> = ({ icon, title, subtitle, desc }) => (
+    <div className="bg-white p-8 rounded-xl shadow-lg border border-zinc-100 hover:shadow-2xl hover:border-orange-200 transition-all duration-300 group">
+        <div className="w-12 h-12 bg-zinc-100 rounded-lg flex items-center justify-center text-zinc-900 mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+            {icon}
+        </div>
+        <h3 className="text-xl font-bold mb-1">{title}</h3>
+        <p className="text-sm text-orange-500 font-bold mb-4 uppercase tracking-wider">{subtitle}</p>
+        <p className="text-zinc-600 leading-relaxed text-sm">{desc}</p>
+    </div>
+);
 
 export default Media;

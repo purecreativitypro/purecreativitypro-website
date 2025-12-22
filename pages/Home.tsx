@@ -224,8 +224,8 @@ const Home: React.FC = () => {
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay - Outside mix-blend container to prevent transparency clash */}
-            <div className={`fixed inset-0 z-40 bg-[#050505]/95 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            {/* Mobile Menu Overlay - PERFORMANCE FIX: Removed backdrop-blur-xl */}
+            <div className={`fixed inset-0 z-40 bg-[#050505]/98 flex flex-col items-center justify-center transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                <div className="flex flex-col gap-10 text-center">
                   {navLinks.map((dept) => (
                     <Link 
