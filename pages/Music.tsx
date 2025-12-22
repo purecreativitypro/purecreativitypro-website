@@ -7,9 +7,17 @@ const Music: React.FC = () => {
     <div className="min-h-screen bg-indigo-950 text-white font-display relative overflow-hidden">
       <Navigation theme="music" />
 
-      {/* Ambient Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-fuchsia-600 rounded-full blur-[128px] opacity-20 animate-pulse-slow"></div>
-      <div className="absolute bottom-[0%] right-[-10%] w-[600px] h-[600px] bg-purple-600 rounded-full blur-[128px] opacity-30 animate-float"></div>
+      {/* PERFORMANCE OPTIMIZATION: Replaced animated DOM blobs with static CSS radial gradients. 
+          Large animated blurs cause massive frame drops on mobile. */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none" 
+        style={{
+          background: `
+            radial-gradient(circle at 10% 10%, rgba(192, 38, 211, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 90% 90%, rgba(147, 51, 234, 0.15) 0%, transparent 40%)
+          `
+        }}
+      />
 
       {/* Hero Section */}
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20 flex flex-col items-center text-center">
@@ -20,7 +28,7 @@ const Music: React.FC = () => {
           We craft soundscapes that move audiences. From chart-topping instrumentals to immersive movie scoring.
         </p>
         
-        <button className="relative px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold tracking-widest hover:bg-fuchsia-500 transition-all shadow-[0_0_30px_rgba(192,38,211,0.5)] hover:shadow-[0_0_50px_rgba(192,38,211,0.7)] group overflow-hidden">
+        <button className="relative px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold tracking-widest hover:bg-fuchsia-500 transition-all shadow-[0_0_30px_rgba(192,38,211,0.5)] hover:shadow-[0_0_50px_rgba(192,38,211,0.7)] group overflow-hidden active:scale-95">
           <span className="relative z-10 flex items-center gap-2">
             LISTEN TO REEL <Headphones size={20} className="animate-bounce md:animate-none" />
           </span>
@@ -28,9 +36,9 @@ const Music: React.FC = () => {
         </button>
       </div>
 
-      {/* Marquee / Infinite Scroll */}
+      {/* Marquee / Infinite Scroll - Added will-change-transform for performance */}
       <div className="w-full bg-indigo-900/30 border-y border-white/5 py-6 overflow-hidden mb-20 backdrop-blur-sm flex items-center">
-        <div className="flex whitespace-nowrap gap-16 animate-marquee w-max items-center opacity-50 text-sm tracking-[0.2em] font-bold text-fuchsia-200/50">
+        <div className="flex whitespace-nowrap gap-16 animate-marquee w-max items-center opacity-50 text-sm tracking-[0.2em] font-bold text-fuchsia-200/50 will-change-transform">
           {/* Loop 1 */}
           <span>COMPOSITION</span>
           <span>•</span>
@@ -64,17 +72,6 @@ const Music: React.FC = () => {
           <span>•</span>
           <span>MASTERING</span>
           <span>•</span>
-          {/* Loop 4 */}
-          <span>COMPOSITION</span>
-          <span>•</span>
-          <span>FILM SCORING</span>
-          <span>•</span>
-          <span>SOUND DESIGN</span>
-          <span>•</span>
-          <span>MIXING</span>
-          <span>•</span>
-          <span>MASTERING</span>
-          <span>•</span>
         </div>
       </div>
 
@@ -90,12 +87,13 @@ const Music: React.FC = () => {
             <p className="text-indigo-200 leading-relaxed mb-6">
               Tailor-made instrumentals for artists looking for their signature sound. We blend genre-bending rhythms with emotional melodies.
             </p>
+            {/* Visualizer - Optimized: reduced count, simple transform */}
             <div className="h-16 flex items-end gap-1">
               {[...Array(12)].map((_, i) => (
                 <div 
                   key={i} 
                   className="w-full bg-fuchsia-500/50 rounded-t-sm animate-pulse"
-                  style={{ height: `${Math.random() * 100}%`, animationDelay: `${i * 0.1}s` }}
+                  style={{ height: '100%', transform: `scaleY(${Math.random()})`, transformOrigin: 'bottom', animationDelay: `${i * 0.1}s` }}
                 ></div>
               ))}
             </div>

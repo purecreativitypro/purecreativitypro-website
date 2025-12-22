@@ -31,14 +31,17 @@ const Business: React.FC = () => {
            
            {/* Abstract Chart Visual */}
            <div className="w-full md:w-1/2 relative">
-              <div className="absolute inset-0 bg-emerald-500/20 blur-[100px] rounded-full"></div>
+              {/* Optimized Glow: Reduced opacity and complexity */}
+              <div className="absolute inset-0 bg-emerald-500/10 blur-[60px] rounded-full pointer-events-none"></div>
+              
               <div className="relative bg-zinc-900 border border-zinc-800 p-8 rounded-xl shadow-2xl">
                   <div className="flex justify-between items-end h-64 gap-4">
-                      {[30, 45, 35, 60, 50, 75, 65, 90].map((h, i) => (
-                          <div key={i} className="w-full bg-zinc-800 rounded-t-sm relative group overflow-hidden">
+                      {/* Optimized Bars: Using scaleY instead of height to animate without layout shifts */}
+                      {[0.3, 0.45, 0.35, 0.6, 0.5, 0.75, 0.65, 0.9].map((h, i) => (
+                          <div key={i} className="w-full bg-zinc-800 rounded-t-sm relative group overflow-hidden h-full flex items-end">
                               <div 
-                                style={{ height: `${h}%` }} 
-                                className="absolute bottom-0 w-full bg-gradient-to-t from-emerald-900 to-emerald-500 transition-all duration-1000 group-hover:to-emerald-300"
+                                style={{ transform: `scaleY(${h})` }} 
+                                className="w-full h-full origin-bottom bg-gradient-to-t from-emerald-900 to-emerald-500 transition-transform duration-1000 ease-out group-hover:to-emerald-300"
                               ></div>
                           </div>
                       ))}

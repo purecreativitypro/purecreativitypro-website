@@ -61,22 +61,114 @@ const Home: React.FC = () => {
   const tiltX = (mousePos.y / window.innerHeight - 0.5) * 10;
   const tiltY = (mousePos.x / window.innerWidth - 0.5) * -10;
 
-  // Enhanced Electric Border with Bolder Glow and Thickness
-  const ElectricBorder = ({ colorClass, glowClass }: { colorClass: string, glowClass: string }) => (
-    <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden rounded-sm">
-      {/* Blurred Glow Layer for Electric Haze */}
-      <div className={`absolute top-0 left-0 w-full h-[8px] bg-gradient-to-r from-transparent ${colorClass} to-transparent animate-[beam-right_1.5s_linear_infinite] blur-[4px] opacity-60`} />
-      <div className={`absolute top-0 right-0 w-[8px] h-full bg-gradient-to-b from-transparent ${colorClass} to-transparent animate-[beam-down_1.5s_linear_infinite] delay-[375ms] blur-[4px] opacity-60`} />
-      <div className={`absolute bottom-0 right-0 w-full h-[8px] bg-gradient-to-r from-transparent ${colorClass} to-transparent animate-[beam-left_1.5s_linear_infinite] delay-[750ms] blur-[4px] opacity-60`} />
-      <div className={`absolute top-0 left-0 w-[8px] h-full bg-gradient-to-b from-transparent ${colorClass} to-transparent animate-[beam-up_1.5s_linear_infinite] delay-[1125ms] blur-[4px] opacity-60`} />
+  // --- AMAZING ELECTRIC BORDER V3 (Single Light Loop) ---
+  const ElectricBorder = ({ hex, isActive }: { hex: string, isActive: boolean }) => {
+    return (
+      <div className={`absolute inset-0 pointer-events-none z-30 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+        <style>{`
+            @keyframes border-top-flow {
+                0% { transform: translateX(-100%); opacity: 0; }
+                1% { opacity: 1; }
+                25% { transform: translateX(100%); opacity: 1; }
+                26% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes border-right-flow {
+                0% { transform: translateY(-100%); opacity: 0; }
+                1% { opacity: 1; }
+                25% { transform: translateY(100%); opacity: 1; }
+                26% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes border-bottom-flow {
+                0% { transform: translateX(100%); opacity: 0; }
+                1% { opacity: 1; }
+                25% { transform: translateX(-100%); opacity: 1; }
+                26% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+            @keyframes border-left-flow {
+                0% { transform: translateY(100%); opacity: 0; }
+                1% { opacity: 1; }
+                25% { transform: translateY(-100%); opacity: 1; }
+                26% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+        `}</style>
+        
+        {/* ANIMATED CORNER BRACKETS - Slide in from offset */}
+        <div 
+            className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+            style={{ borderColor: hex, transform: isActive ? 'translate(0, 0)' : 'translate(10px, 10px)' }}
+        />
+        <div 
+            className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+            style={{ borderColor: hex, transform: isActive ? 'translate(0, 0)' : 'translate(-10px, 10px)' }}
+        />
+        <div 
+            className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+            style={{ borderColor: hex, transform: isActive ? 'translate(0, 0)' : 'translate(-10px, -10px)' }}
+        />
+        <div 
+            className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+            style={{ borderColor: hex, transform: isActive ? 'translate(0, 0)' : 'translate(10px, -10px)' }}
+        />
 
-      {/* Sharp Core Beam - Thicker and Brighter */}
-      <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent ${colorClass} to-transparent animate-[beam-right_1.5s_linear_infinite] ${glowClass}`} />
-      <div className={`absolute top-0 right-0 w-[3px] h-full bg-gradient-to-b from-transparent ${colorClass} to-transparent animate-[beam-down_1.5s_linear_infinite] delay-[375ms] ${glowClass}`} />
-      <div className={`absolute bottom-0 right-0 w-full h-[3px] bg-gradient-to-r from-transparent ${colorClass} to-transparent animate-[beam-left_1.5s_linear_infinite] delay-[750ms] ${glowClass}`} />
-      <div className={`absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-transparent ${colorClass} to-transparent animate-[beam-up_1.5s_linear_infinite] delay-[1125ms] ${glowClass}`} />
-    </div>
-  );
+        {/* SINGLE LIGHT LOOP - 2s Cycle */}
+        {/* Top */}
+        <div className="absolute top-0 left-0 w-full h-[2px]">
+             <div 
+                className="w-full h-full"
+                style={{ 
+                    background: `linear-gradient(90deg, transparent 0%, ${hex} 50%, #ffffff 100%)`,
+                    boxShadow: `0 0 15px ${hex}, 0 0 30px ${hex}`,
+                    animation: 'border-top-flow 2s linear infinite'
+                }} 
+             />
+        </div>
+
+        {/* Right */}
+        <div className="absolute top-0 right-0 w-[2px] h-full">
+             <div 
+                className="w-full h-full"
+                style={{ 
+                    background: `linear-gradient(180deg, transparent 0%, ${hex} 50%, #ffffff 100%)`,
+                    boxShadow: `0 0 15px ${hex}, 0 0 30px ${hex}`,
+                    animation: 'border-right-flow 2s linear infinite',
+                    animationDelay: '0.5s'
+                }} 
+             />
+        </div>
+
+        {/* Bottom */}
+        <div className="absolute bottom-0 right-0 w-full h-[2px]">
+             <div 
+                className="w-full h-full"
+                style={{ 
+                    background: `linear-gradient(270deg, transparent 0%, ${hex} 50%, #ffffff 100%)`,
+                    boxShadow: `0 0 15px ${hex}, 0 0 30px ${hex}`,
+                    animation: 'border-bottom-flow 2s linear infinite',
+                    animationDelay: '1s'
+                }} 
+             />
+        </div>
+
+        {/* Left */}
+        <div className="absolute top-0 left-0 w-[2px] h-full">
+             <div 
+                className="w-full h-full"
+                style={{ 
+                    background: `linear-gradient(0deg, transparent 0%, ${hex} 50%, #ffffff 100%)`,
+                    boxShadow: `0 0 15px ${hex}, 0 0 30px ${hex}`,
+                    animation: 'border-left-flow 2s linear infinite',
+                    animationDelay: '1.5s'
+                }} 
+             />
+        </div>
+
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen w-full bg-[#050505] text-white font-sans selection:bg-white selection:text-black overflow-x-hidden">
@@ -292,9 +384,14 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'tech' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          {hoveredSection === 'tech' && <ElectricBorder colorClass="via-cyan-400" glowClass="shadow-[0_0_20px_#22d3ee] drop-shadow-[0_0_10px_#22d3ee]" />}
+          <ElectricBorder hex="#22d3ee" isActive={hoveredSection === 'tech'} />
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <img 
+            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=70&w=800&auto=format&fit=crop" 
+            alt="Tech Background"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          />
           <div className={`absolute inset-0 bg-gradient-to-t from-cyan-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
           
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -322,9 +419,14 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'music' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          {hoveredSection === 'music' && <ElectricBorder colorClass="via-fuchsia-400" glowClass="shadow-[0_0_20px_#e879f9] drop-shadow-[0_0_10px_#e879f9]" />}
+          <ElectricBorder hex="#e879f9" isActive={hoveredSection === 'music'} />
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <img 
+            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=800&auto=format&fit=crop" 
+            alt="Music Background"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          />
           <div className={`absolute inset-0 bg-gradient-to-t from-fuchsia-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -352,9 +454,14 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'media' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          {hoveredSection === 'media' && <ElectricBorder colorClass="via-orange-400" glowClass="shadow-[0_0_20px_#fb923c] drop-shadow-[0_0_10px_#fb923c]" />}
+          <ElectricBorder hex="#fb923c" isActive={hoveredSection === 'media'} />
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <img 
+            src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=70&w=800&auto=format&fit=crop" 
+            alt="Media Background"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          />
           <div className={`absolute inset-0 bg-gradient-to-t from-orange-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'media' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
@@ -382,9 +489,14 @@ const Home: React.FC = () => {
             ${hoveredSection && hoveredSection !== 'business' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
           `}
         >
-          {hoveredSection === 'business' && <ElectricBorder colorClass="via-emerald-400" glowClass="shadow-[0_0_20px_#34d399] drop-shadow-[0_0_10px_#34d399]" />}
+          <ElectricBorder hex="#34d399" isActive={hoveredSection === 'business'} />
           
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=70&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+          <img 
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=70&w=800&auto=format&fit=crop" 
+            alt="Business Background"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+          />
           <div className={`absolute inset-0 bg-gradient-to-t from-emerald-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
