@@ -217,14 +217,27 @@ const Media: React.FC = () => {
           <h2 className="text-3xl font-serif mb-12 text-center">Proof it works</h2>
           <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-4">
+                  {/* Before Image: User provided Google Drive Link (Using thumbnail hack for reliability) */}
                   <div className="bg-zinc-200 h-64 rounded-lg flex items-center justify-center relative overflow-hidden group border border-zinc-300">
-                      <img src="https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-50" alt="Raw" />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                      <img 
+                        src="https://drive.google.com/thumbnail?id=1-XunDGqd-41b5c6jzy_mlvfU0EHIXm04&sz=w1200" 
+                        className="w-full h-full object-cover" 
+                        alt="Raw Asset - Before" 
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/10">
                         <span className="bg-black text-white px-4 py-2 text-xs uppercase tracking-widest font-bold">Before: Raw Asset</span>
                       </div>
                   </div>
+                  
+                  {/* After Image: User provided Google Drive Link (Using thumbnail hack for reliability) */}
                   <div className="bg-zinc-900 h-80 rounded-lg flex items-center justify-center relative overflow-hidden shadow-2xl group border border-zinc-800">
-                      <img src="https://images.unsplash.com/photo-1542038784456-1ea0e93ca64b?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Enhanced" />
+                      <img 
+                        src="https://drive.google.com/thumbnail?id=1RljZH5e-hp1kdvPYJJ_T4PZy2VrLqf7v&sz=w1200" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                        alt="Enhanced Asset - After" 
+                      />
+                      {/* Glow/Diffusion Overlay */}
+                      <div className="absolute inset-0 bg-orange-500/10 mix-blend-overlay pointer-events-none"></div>
                       <div className="absolute bottom-6 left-6">
                         <span className="bg-orange-500 text-black px-4 py-2 text-xs uppercase tracking-widest font-bold shadow-lg">After: Enhanced + On-Brand</span>
                       </div>
