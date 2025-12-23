@@ -287,7 +287,10 @@ const Media: React.FC = () => {
       </div>
 
       <footer className="bg-zinc-900 py-12 text-center text-zinc-500 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
-        PureCreativity.Media // Perspective is Everything
+        <div className="mb-4">PureCreativity.Media // Perspective is Everything</div>
+        <div className="text-[9px] opacity-50 font-light">
+           &copy; PureCreativity 2024
+        </div>
       </footer>
 
     </div>

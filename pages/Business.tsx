@@ -179,7 +179,10 @@ const Business: React.FC = () => {
       </div>
 
       <footer className="bg-zinc-950 py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-emerald-900/10 uppercase">
-        PureCreativity.Business // Build The Future
+        <div className="mb-4">PureCreativity.Business // Build The Future</div>
+        <div className="text-[9px] opacity-50 font-light">
+           &copy; PureCreativity 2024
+        </div>
       </footer>
     </div>
   );

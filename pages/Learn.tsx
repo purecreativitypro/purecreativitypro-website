@@ -262,7 +262,10 @@ const Learn: React.FC = () => {
       </div>
 
       <footer className="bg-neutral-950 py-12 text-center text-neutral-600 text-xs tracking-[0.3em] font-sans border-t border-neutral-900 uppercase">
-        PureCreativity.Learn // Knowledge is Power
+        <div className="mb-4">PureCreativity.Learn // Knowledge is Power</div>
+        <div className="text-[9px] opacity-50 font-light">
+           &copy; PureCreativity 2024
+        </div>
       </footer>
     </div>
   );

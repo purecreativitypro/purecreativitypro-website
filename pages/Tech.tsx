@@ -272,7 +272,10 @@ const Tech: React.FC = () => {
       </div>
 
       <footer className="bg-slate-950 py-12 text-center text-slate-600 text-xs tracking-[0.3em] font-mono border-t border-cyan-900/10 uppercase">
-        PureCreativity.Tech // Code is Leverage
+        <div className="mb-4">PureCreativity.Tech // Code is Leverage</div>
+        <div className="text-[9px] opacity-50 font-light">
+          &copy; PureCreativity 2024
+        </div>
       </footer>
     </div>
   );

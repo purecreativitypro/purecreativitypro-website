@@ -252,7 +252,10 @@ const Music: React.FC = () => {
        </div>
 
        <footer className="bg-indigo-950 py-12 text-center text-indigo-400 text-xs tracking-[0.3em] font-display border-t border-fuchsia-500/10 uppercase">
-         PureCreativity.Music // Sonic Identity
+         <div className="mb-4">PureCreativity.Music // Sonic Identity</div>
+         <div className="text-[9px] opacity-50 font-light">
+           &copy; PureCreativity 2024
+         </div>
        </footer>
 
     </div>
