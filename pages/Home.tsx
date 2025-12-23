@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen } from 'lucide-react';
+import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen, Check, Star, Compass, Briefcase } from 'lucide-react';
+
+// Centralized booking URL for easy updates
+const BOOKING_URL = "https://tidycal.com/purecreativitypro/purecreativity-blueprint-session";
 
 const Home: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
@@ -270,41 +273,16 @@ const Home: React.FC = () => {
         <div className={`relative z-20 w-full h-full flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           
           <div className="relative text-center w-full px-2 md:px-0">
-             {/* Main Title - Updated to Afropunk Style (Syne Font) - RESPONSIVE TUNING using VW units to fit all screens */}
+             {/* Main Title */}
              <h1 className="flex flex-col items-center justify-center font-afro leading-none select-none relative w-full">
-                
-                {/* PURE: Scaled relative to viewport width */}
-                {/* 
-                   UPDATED SIZES:
-                   Mobile Portrait: 17vw (was 19vw)
-                   Landscape Mobile (sm): 15vw (was 18vw)
-                   Portrait Tablet (md): 16vw (was 20vw)
-                   Desktop (lg/xl): 13vw / 11vw
-                */}
                 <span className="text-[17vw] sm:text-[15vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] font-extrabold text-white tracking-tighter relative z-10 mix-blend-screen leading-none">
                     PURE
                 </span>
-
-                {/* CREATIVITY: Scaled relative to viewport width to prevent overflow */}
-                {/* 
-                   UPDATED SIZES:
-                   Mobile Portrait: 9vw (was 10.5vw)
-                   Landscape Mobile (sm): 8.5vw (was 10.5vw)
-                   Portrait Tablet (md): 8.5vw (was 10vw)
-                   Desktop (lg/xl): 7vw / 6vw
-                */}
                 <div className="relative mt-[-2vw] sm:mt-[-1.5vw] md:mt-[-1.5vw] lg:mt-[-1vw] xl:mt-[-0.5vw] w-full text-center">
-                   
-                   {/* Background layer for glitch/shadow effect 
-                       FIXED: Changed positioning from `left-[0.4vw]` to `absolute w-full left-0 top-0 text-center` + translate. 
-                       This ensures it centers correctly on desktop instead of sticking to the left edge.
-                   */}
                    <span className="absolute top-0 left-0 w-full text-center font-extrabold text-transparent text-outline-thick opacity-30 blur-sm select-none leading-none translate-x-[0.3vw] translate-y-[0.3vw]
                       text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
                    </span>
-                   
-                   {/* Main Outline Text */}
                    <span className="relative z-20 font-extrabold text-transparent text-outline-thick tracking-tight hover:text-white/10 transition-colors duration-500 leading-none
                       text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
@@ -313,10 +291,17 @@ const Home: React.FC = () => {
              </h1>
           </div>
 
-          <div className="mt-12 md:mt-16 flex flex-col items-center text-center max-w-2xl px-6 relative z-30">
+          <div className="mt-8 md:mt-12 flex flex-col items-center text-center max-w-2xl px-6 relative z-30">
              
+             {/* NEW: Who It's For */}
+             <div className="mb-8 border border-white/10 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm">
+                 <p className="text-white font-bold tracking-widest text-[9px] md:text-xs uppercase text-center">
+                     For side hustlers and entrepreneurs — whether you’re just starting or already making sales — who want to stop guessing, get clear on the next step, and build momentum.
+                 </p>
+             </div>
+
              {/* Glue Statement */}
-             <p className="text-white/80 text-xs md:text-sm font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
+             <p className="text-white/60 text-xs md:text-sm font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
                 Business defines the plan. Tech builds the system. Media ships the content. Music sets the tone.
              </p>
 
@@ -376,14 +361,117 @@ const Home: React.FC = () => {
              </button>
 
              {/* Start Here Option */}
-             <Link to="/business" className="mt-6 text-[10px] md:text-xs text-zinc-500 hover:text-white transition-colors tracking-widest uppercase border-b border-transparent hover:border-white pb-1 group flex items-center gap-1">
-                Not sure which studio you need? Start with the Blueprint <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform"/>
-             </Link>
+             <div className="mt-8 flex flex-col items-center gap-3 animate-fade-in-up">
+                 <p className="text-zinc-500 text-[10px] uppercase tracking-widest font-bold">
+                    Not sure which studio you need? Book a Clarity Call and we’ll point you to the right next step →
+                 </p>
+                 <a 
+                    href={BOOKING_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-white text-black px-6 py-2 rounded-full font-bold text-xs tracking-widest hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 cursor-pointer"
+                 >
+                    BOOK A CLARITY CALL
+                 </a>
+             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. INTERACTIVE DEPARTMENTS HUB (100vh) */}
+      {/* 2. PROBLEM SECTION */}
+      <section className="py-24 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
+          <div className="container mx-auto max-w-4xl text-center">
+             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">You don’t need more ideas.<br/> You need a system.</h2>
+             <p className="text-zinc-400 text-lg leading-relaxed mb-12 max-w-2xl mx-auto font-light">
+                Most side hustlers and entrepreneurs don’t quit because they aren’t capable — they quit because they’re doing it alone.
+                Confusion and tool overload steal momentum. PureCreativity is your guide to choose the next right step, build something people will pay for, and set up simple systems so growth becomes repeatable.
+             </p>
+             <div className="grid md:grid-cols-3 gap-4 text-left max-w-4xl mx-auto">
+                {[
+                    { title: "Get clear", sub: "Choose the right direction.", icon: Compass },
+                    { title: "Build what sells", sub: "Turn your skill into a simple offer.", icon: Briefcase },
+                    { title: "Make it repeatable", sub: "Set up systems that drive predictable growth.", icon: Cpu }
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col gap-2 text-zinc-300 border border-white/10 p-5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-colors group">
+                        <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0 border border-red-500/30 group-hover:border-red-500/60 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.15)] mb-2">
+                            <item.icon size={24} className="text-red-500" />
+                        </div>
+                        <div>
+                            <span className="block text-sm font-bold tracking-wide text-white">{item.title}</span>
+                            <span className="block text-xs text-zinc-500">{item.sub}</span>
+                        </div>
+                    </div>
+                ))}
+             </div>
+          </div>
+      </section>
+
+      {/* 3. PLAN SECTION */}
+      <section className="py-24 bg-black border-t border-white/5 px-6 relative z-30">
+          <div className="container mx-auto max-w-5xl text-center">
+             <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-500">
+                 The Plan
+             </div>
+             
+             <h3 className="text-xl md:text-2xl text-white font-display font-medium mb-12 mt-4 max-w-2xl mx-auto">
+                 You don’t have to build alone — here’s the path.
+             </h3>
+
+             <div className="grid md:grid-cols-3 gap-12 mb-16 relative">
+                {/* Connecting Line (Desktop) */}
+                <div className="hidden md:block absolute top-6 left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-transparent via-zinc-800 to-transparent"></div>
+                
+                {[
+                    { step: "01", text: "Get the Blueprint" },
+                    { step: "02", text: "Build the Engine" },
+                    { step: "03", text: "Ship the Work" }
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center relative z-10">
+                        <div className="w-12 h-12 bg-black border border-white/20 rounded-full flex items-center justify-center text-lg font-bold text-white mb-6 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                           {i + 1}
+                        </div>
+                        <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{item.text}</h3>
+                    </div>
+                ))}
+             </div>
+             
+             <div className="flex flex-col items-center gap-4">
+                 <a 
+                    href={BOOKING_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-white text-black px-12 py-5 rounded-full font-bold text-sm tracking-[0.15em] hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.15)] cursor-pointer"
+                 >
+                    BOOK A CLARITY CALL
+                 </a>
+                 <p className="text-zinc-500 text-xs tracking-wide">
+                     One paid call to get clear, choose the next step, and stop doing it alone.
+                 </p>
+             </div>
+          </div>
+      </section>
+
+      {/* 4. WHAT WE DO SECTION */}
+      <section className="py-24 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
+           <div className="container mx-auto max-w-6xl">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-16 text-center">What we build inside PureCreativity</h2>
+              <div className="grid md:grid-cols-4 gap-6">
+                  {[
+                    { title: "Business", desc: "Clarity, niche, offers, predictable growth.", color: "text-emerald-400", border: "hover:border-emerald-500/50" },
+                    { title: "Tech", desc: "Smart systems, automations, apps.", color: "text-cyan-400", border: "hover:border-cyan-500/50" },
+                    { title: "Media", desc: "AI-powered content creation + enhancement.", color: "text-orange-400", border: "hover:border-orange-500/50" },
+                    { title: "Music", desc: "Production, scoring, sound identity.", color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" }
+                  ].map((item, i) => (
+                      <div key={i} className={`p-8 border border-white/5 rounded-xl bg-black/40 ${item.border} transition-colors group cursor-default`}>
+                          <h3 className={`font-bold text-xl mb-3 ${item.color} tracking-tight`}>{item.title}</h3>
+                          <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                  ))}
+              </div>
+           </div>
+      </section>
+
+      {/* 5. INTERACTIVE DEPARTMENTS HUB (100vh) */}
       <section 
         ref={departmentRef}
         className="relative min-h-[700px] md:min-h-0 h-[100dvh] md:h-screen w-full flex flex-col md:flex-row border-t border-white/10 bg-[#050505]"
@@ -421,23 +509,23 @@ const Home: React.FC = () => {
           <ElectricBorder hex="#22d3ee" isActive={hoveredSection === 'tech'} />
           
           <img 
-            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=70&w=800&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=70&w=800&auto=format&fit=crop" 
             alt="Tech Background"
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-cyan-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
           
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
             <Cpu className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'tech' ? 'text-cyan-400 scale-110 md:scale-125 rotate-90' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-4xl font-mono font-bold tracking-tighter mb-1 md:mb-2 text-white">TECH</h2>
+            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">TECH</h2>
             
             <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'tech' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
                 <p className="text-cyan-200 font-mono text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Systems • AI • Code
+                  Automate & Conquer
                 </p>
                 <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-cyan-400 border border-cyan-500/30 px-2 md:px-3 py-1 rounded bg-cyan-950/30">
-                   <span>INIT_SYSTEM</span> <ArrowRight size={10} />
+                   <span>INIT_SYSTEMS</span> <ArrowRight size={10} />
                 </div>
             </div>
           </div>
@@ -456,23 +544,23 @@ const Home: React.FC = () => {
           <ElectricBorder hex="#e879f9" isActive={hoveredSection === 'music'} />
           
           <img 
-            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=800&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?q=70&w=800&auto=format&fit=crop" 
             alt="Music Background"
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-fuchsia-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
             <Music className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'music' ? 'text-fuchsia-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-4xl font-display font-black tracking-tighter mb-1 md:mb-2 text-white">MUSIC</h2>
+            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">MUSIC</h2>
             
             <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'music' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
                 <p className="text-fuchsia-200 font-display text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Audio • Score • Mix
+                  Sonic Identity
                 </p>
                 <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-fuchsia-400 border border-fuchsia-500/30 px-2 md:px-3 py-1 rounded-full bg-fuchsia-950/30">
-                   <span>PLAY REEL</span> <Zap size={10} fill="currentColor" />
+                   <span>HEAR_THE_DIFFERENCE</span> <Zap size={10} fill="currentColor" />
                 </div>
             </div>
           </div>
@@ -491,23 +579,23 @@ const Home: React.FC = () => {
           <ElectricBorder hex="#fb923c" isActive={hoveredSection === 'media'} />
           
           <img 
-            src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=70&w=800&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop" 
             alt="Media Background"
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-orange-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'media' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
             <Aperture className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'media' ? 'text-white scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-4xl font-serif font-bold tracking-tight mb-1 md:mb-2 text-white">MEDIA</h2>
+            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">MEDIA</h2>
             
              <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'media' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
                 <p className="text-orange-200 font-serif text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Photo • Video • Brand
+                  Visual Engineering
                 </p>
                 <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-white border border-white/30 px-2 md:px-3 py-1 rounded-sm bg-white/10">
-                   <span>VIEW PORTFOLIO</span>
+                   <span>DEPLOY_CONTENT</span>
                 </div>
             </div>
           </div>
@@ -529,20 +617,20 @@ const Home: React.FC = () => {
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=70&w=800&auto=format&fit=crop" 
             alt="Business Background"
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-emerald-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
             <TrendingUp className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'business' ? 'text-emerald-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-4xl font-sans font-black tracking-tight mb-1 md:mb-2 text-white">BUSINESS</h2>
+            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">BUSINESS</h2>
             
             <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'business' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
                 <p className="text-emerald-200 font-sans text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Growth • Scale • Niche
+                  Structure & Scale
                 </p>
                 <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-emerald-400 border border-emerald-500/30 px-2 md:px-3 py-1 rounded bg-emerald-950/30">
-                   <span>GET BLUEPRINT</span> <TrendingUp size={10} />
+                   <span>BUILD_THE_OFFER</span> <TrendingUp size={10} />
                 </div>
             </div>
           </div>
@@ -561,23 +649,23 @@ const Home: React.FC = () => {
           <ElectricBorder hex="#fbbf24" isActive={hoveredSection === 'learn'} />
           
           <img 
-            src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=70&w=800&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=70&w=800&auto=format&fit=crop" 
             alt="Learn Background"
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-amber-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'learn' ? 'opacity-100' : 'opacity-0'}`} />
 
           <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
             <BookOpen className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'learn' ? 'text-amber-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-4xl font-display font-bold tracking-tight mb-1 md:mb-2 text-white">LEARN</h2>
+            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">LEARN</h2>
             
             <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'learn' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
                 <p className="text-amber-200 font-sans text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Guides • Kits • Start
+                  Download Skills
                 </p>
                 <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-amber-400 border border-amber-500/30 px-2 md:px-3 py-1 rounded bg-amber-950/30">
-                   <span>BROWSE KITS</span> <ArrowRight size={10} />
+                   <span>ACCESS_DATABASE</span> <ArrowRight size={10} />
                 </div>
             </div>
           </div>
@@ -588,8 +676,8 @@ const Home: React.FC = () => {
       {/* 3. REFINED FOOTER */}
       <footer className="bg-[#050505] py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
         <div className="mb-4">PureCreativity // The Convergence Hub</div>
-        <div className="text-[9px] opacity-50 flex justify-center gap-6 font-light">
-          <span>NY</span><span>LDN</span><span>TKY</span><span>ZRH</span>
+        <div className="text-[9px] opacity-50 font-light">
+          &copy; PureCreativity 2024
         </div>
       </footer>
 
