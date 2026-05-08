@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Wand2, Layers, Repeat, Megaphone, Palette, ArrowRight, CheckCircle2 } from 'lucide-react';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Media: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -75,7 +78,9 @@ const Media: React.FC = () => {
       <div className="py-24 px-6 container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-2 gap-16 items-center">
               <div>
+                  <ScrollReveal direction="up" distance={25} blur={3}>
                   <h2 className="text-3xl md:text-5xl font-serif mb-8 leading-tight">Your brand is better than your content looks.</h2>
+                  </ScrollReveal>
                   <p className="text-zinc-500 text-lg italic border-l-4 border-zinc-200 pl-4">
                       "If you’ve been trying to make your content match your vision, you’re not alone."
                   </p>
@@ -101,8 +106,12 @@ const Media: React.FC = () => {
       <div className="bg-zinc-100 py-24 px-6">
           <div className="container mx-auto max-w-4xl text-center">
               <div className="mb-16">
+                  <ScrollReveal direction="up" distance={20}>
                   <h3 className="text-orange-600 font-bold tracking-widest uppercase text-sm mb-4">The Real Enemy</h3>
+                  </ScrollReveal>
+                  <ScrollReveal direction="up" distance={25} blur={3}>
                   <h2 className="text-3xl md:text-4xl font-serif mb-6">Inconsistency.</h2>
+                  </ScrollReveal>
                   <p className="text-zinc-600 max-w-2xl mx-auto text-lg leading-relaxed">
                       Inconsistent visuals and scattered messaging make great businesses look smaller than they are. We fix that by building content systems you can actually keep up with.
                   </p>
@@ -111,8 +120,12 @@ const Media: React.FC = () => {
               <div className="w-full h-px bg-zinc-200 my-12"></div>
 
               <div>
+                  <ScrollReveal direction="up" distance={20}>
                   <h3 className="text-orange-600 font-bold tracking-widest uppercase text-sm mb-4">The Guide</h3>
+                  </ScrollReveal>
+                  <ScrollReveal direction="up" distance={25} blur={3}>
                   <h2 className="text-3xl md:text-4xl font-serif mb-6">You bring the vision. We bring the execution.</h2>
+                  </ScrollReveal>
                   <p className="text-zinc-600 max-w-2xl mx-auto text-lg leading-relaxed">
                       PureCreativity Media blends AI speed with human taste, strategy, and brand consistency — so your content doesn’t just look good… it supports your offer.
                   </p>
@@ -162,7 +175,9 @@ const Media: React.FC = () => {
               
               {/* FROM SCRATCH EMPHASIS BOX */}
               <div className="bg-zinc-900 text-white p-8 rounded-xl flex flex-col justify-center shadow-xl">
+                  <ScrollReveal direction="up" distance={20}>
                   <h3 className="text-xl font-bold mb-4 font-serif italic text-orange-500">No footage? No problem.</h3>
+                  </ScrollReveal>
                   <p className="text-zinc-400 text-sm mb-4">No idea? We can build it.</p>
                   <ul className="space-y-3">
                       {[
@@ -182,7 +197,9 @@ const Media: React.FC = () => {
       {/* THE PLAN */}
       <div className="bg-orange-500 text-black py-24 px-6">
           <div className="container mx-auto max-w-6xl">
+              <ScrollReveal direction="up" distance={25} blur={3}>
               <h2 className="text-4xl md:text-5xl font-serif mb-16 text-center text-white drop-shadow-md">The Plan</h2>
+              </ScrollReveal>
               <div className="grid md:grid-cols-3 gap-8 mb-12">
                   {[
                       { step: "01", title: "Share your offer + vibe", desc: "(or send what you have)" },
@@ -195,7 +212,9 @@ const Media: React.FC = () => {
                           </div>
                           <div className="relative z-10">
                               <div className="text-xs font-bold tracking-widest uppercase mb-2 text-orange-600">Step {item.step}</div>
+                              <ScrollReveal direction="up" distance={20}>
                               <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
+                              </ScrollReveal>
                               <p className="text-zinc-600">{item.desc}</p>
                           </div>
                       </div>
@@ -214,7 +233,9 @@ const Media: React.FC = () => {
 
       {/* PROOF SECTION */}
       <div className="py-24 px-6 container mx-auto max-w-6xl">
+          <ScrollReveal direction="up" distance={25} blur={3}>
           <h2 className="text-3xl font-serif mb-12 text-center">Proof it works</h2>
+          </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-4">
                   {/* Before Image: User provided Google Drive Link (Using thumbnail hack for reliability) */}
@@ -244,7 +265,9 @@ const Media: React.FC = () => {
                   </div>
               </div>
               <div className="flex flex-col justify-center">
+                  <ScrollReveal direction="up" distance={20}>
                   <h3 className="text-2xl font-bold mb-6">Deliverables that convert</h3>
+                  </ScrollReveal>
                   <p className="text-zinc-600 mb-8 leading-relaxed">
                      We don't just "edit." We package content for maximum engagement.
                      Every asset is delivered in the correct ratio, format, and style for your target platform.
@@ -263,7 +286,9 @@ const Media: React.FC = () => {
       {/* FAQ SECTION */}
       <div className="bg-zinc-100 py-24 px-6">
           <div className="container mx-auto max-w-3xl">
+              <ScrollReveal direction="up" distance={25} blur={3}>
               <h2 className="text-3xl font-serif mb-12 text-center">FAQ</h2>
+              </ScrollReveal>
               <div className="space-y-4">
                   {[
                       { q: "Do I need professional footage or photos?", a: "No. Bring what you have — even phone footage — and we’ll enhance it. If you need capture later, we can guide the shot list and direction." },
@@ -286,7 +311,9 @@ const Media: React.FC = () => {
       {/* FINAL CTA */}
       <div className="bg-black text-white py-32 px-6 text-center">
           <div className="container mx-auto max-w-4xl">
+              <ScrollReveal direction="left" distance={25} blur={3}>
               <h2 className="text-3xl md:text-6xl font-serif font-bold mb-10 leading-tight">Ready to make your content look as good as your business?</h2>
+              </ScrollReveal>
               <a 
                 href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
                 target="_blank"
@@ -315,7 +342,9 @@ const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; subtitle: st
         <div className="w-12 h-12 bg-zinc-100 rounded-lg flex items-center justify-center text-zinc-900 mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors">
             {icon}
         </div>
+        <ScrollReveal direction="up" distance={20}>
         <h3 className="text-xl font-bold mb-1">{title}</h3>
+        </ScrollReveal>
         <p className="text-sm text-orange-500 font-bold mb-4 uppercase tracking-wider">{subtitle}</p>
         <p className="text-zinc-600 leading-relaxed text-sm">{desc}</p>
     </div>

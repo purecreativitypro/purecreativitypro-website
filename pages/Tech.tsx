@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Terminal, Bot, Code2, Smartphone, Zap, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
+import SEOHead, { createServiceSchema } from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
+import CaseStudyCard from '../components/CaseStudyCard';
 
 const Tech: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -44,6 +48,12 @@ const Tech: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-cyan-400 font-mono selection:bg-cyan-900 selection:text-white relative overflow-x-hidden">
+      <SEOHead
+        title="Tech — AI, Automation & Web Apps"
+        description="Stop doing busywork. PureCreativity Tech designs simple automations, lightweight web apps, and AI-powered systems that remove friction and give you hours back every week."
+        path="/tech"
+        jsonLd={createServiceSchema('PureCreativity Tech', 'AI automation, PWA development, and SaaS solutions for entrepreneurs and small businesses.', '/tech')}
+      />
       <Navigation theme="tech" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="tech" />
       
@@ -122,22 +132,27 @@ const Tech: React.FC = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
+          <ScrollReveal key={0} direction="up" delay={0} blur={4} distance={25}>
           <ServiceCard 
             icon={<Bot className="text-cyan-300" size={32} />}
             title="AI & Automation"
             code="workflow.optimize()"
-            description="Stop repeating yourself. We automate the tasks that steal your focus — messages, data entry, follow-ups, file handling, and internal workflows — so your business runs even when you’re offline."
+            description="Stop repeating yourself. We automate the tasks that steal your focus — messages, data entry, follow-ups, file handling, and internal workflows — so your business runs even when you're offline."
             delay={0}
           />
+          </ScrollReveal>
           
+          <ScrollReveal key={1} direction="up" delay={0.12} blur={4} distance={25}>
           <ServiceCard 
             icon={<Smartphone className="text-cyan-300" size={32} />}
             title="PWA Development"
             code="app.deploy({ mobile: true })"
-            description="Want an “app” without app-store headaches? We build fast, installable Progressive Web Apps that feel native, load instantly, and keep your team moving from any device."
+            description='Want an "app" without app-store headaches? We build fast, installable Progressive Web Apps that feel native, load instantly, and keep your team moving from any device.'
             delay={1}
           />
+          </ScrollReveal>
 
+          <ScrollReveal key={2} direction="up" delay={0.24} blur={4} distance={25}>
           <ServiceCard 
             icon={<Code2 className="text-cyan-300" size={32} />}
             title="SaaS Solutions"
@@ -145,6 +160,7 @@ const Tech: React.FC = () => {
             description="Turn your process into a product. We build secure, scalable web platforms — from client portals to multi-tenant SaaS — designed to grow without complexity."
             delay={2}
           />
+          </ScrollReveal>
 
         </div>
       </div>
@@ -262,21 +278,49 @@ const Tech: React.FC = () => {
                       "You spend more time selling, serving, and creating",
                       "Your tools finally work together"
                   ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                          <CheckCircle2 className="text-cyan-500 mt-1 shrink-0" size={20} />
-                          <span className="text-slate-300 text-lg">{item}</span>
-                      </div>
+                      <ScrollReveal key={i} direction="left" delay={i * 0.1} distance={20}>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="text-cyan-500 mt-1 shrink-0" size={20} />
+                            <span className="text-slate-300 text-lg">{item}</span>
+                        </div>
+                      </ScrollReveal>
                   ))}
               </div>
           </div>
       </div>
 
-      <footer className="bg-slate-950 py-12 text-center text-slate-600 text-xs tracking-[0.3em] font-mono border-t border-cyan-900/10 uppercase">
-        <div className="mb-4">PureCreativity.Tech // Code is Leverage</div>
-        <div className="text-[9px] opacity-50 font-light">
-          &copy; PureCreativity 2024
+      {/* RECENT WORK */}
+      <div className="py-24 px-6 bg-slate-950">
+        <div className="container mx-auto max-w-5xl">
+          <ScrollReveal direction="up" distance={20}>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-12 text-center">Recent Work</h2>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-6">
+            <ScrollReveal direction="left" delay={0} distance={20}>
+              <CaseStudyCard
+                title="Automated Client Onboarding System"
+                client="Creative Agency"
+                description="Built an end-to-end automation that handles intake, scheduling, and CRM updates — saving 15 hours per week."
+                result="15hrs/week saved"
+                imageUrl="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=70&w=600&auto=format&fit=crop"
+                accent="text-cyan-400"
+              />
+            </ScrollReveal>
+            <ScrollReveal direction="right" delay={0.1} distance={20}>
+              <CaseStudyCard
+                title="AI-Powered Content Pipeline"
+                client="E-Commerce Brand"
+                description="Designed an AI workflow that generates product descriptions, social posts, and email copy from a single brief."
+                result="3x output speed"
+                imageUrl="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=70&w=600&auto=format&fit=crop"
+                accent="text-cyan-400"
+              />
+            </ScrollReveal>
+          </div>
         </div>
-      </footer>
+      </div>
+
+      <Footer theme="tech" />
     </div>
   );
 };

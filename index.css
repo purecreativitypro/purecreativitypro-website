@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   Theme System — CSS Custom Properties
+   ================================================================ */
+:root,
+[data-theme="dark"] {
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.05);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --card-hover: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.15);
+  --accent-glow: rgba(255, 255, 255, 0.15);
+  --selection-bg: #ffffff;
+  --selection-text: #000000;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #eeeeee;
+  --bg-surface: #ffffff;
+  --bg-elevated: #fafafa;
+  --text-primary: #111111;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --border-primary: rgba(0, 0, 0, 0.1);
+  --border-secondary: rgba(0, 0, 0, 0.05);
+  --overlay: rgba(255, 255, 255, 0.6);
+  --card-bg: rgba(0, 0, 0, 0.02);
+  --card-hover: rgba(0, 0, 0, 0.05);
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-border: rgba(0, 0, 0, 0.15);
+  --accent-glow: rgba(0, 0, 0, 0.08);
+  --selection-bg: #111111;
+  --selection-text: #ffffff;
+}
+
+/* ================================================================
+   Selection Color
+   ================================================================ */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* ================================================================
+   Custom Scrollbar
+   ================================================================ */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ================================================================
+   Afropunk Text Utilities
+   ================================================================ */
+.text-outline {
+  -webkit-text-stroke: 2px white;
+  color: transparent;
+}
+.text-outline-thick {
+  -webkit-text-stroke: 3px white;
+  color: transparent;
+}
+
+[data-theme="light"] .text-outline {
+  -webkit-text-stroke: 2px #111111;
+}
+[data-theme="light"] .text-outline-thick {
+  -webkit-text-stroke: 3px #111111;
+}
+
+@media (max-width: 768px) {
+  .text-outline {
+    -webkit-text-stroke: 1px white;
+  }
+  .text-outline-thick {
+    -webkit-text-stroke: 1.5px white;
+  }
+  [data-theme="light"] .text-outline {
+    -webkit-text-stroke: 1px #111111;
+  }
+  [data-theme="light"] .text-outline-thick {
+    -webkit-text-stroke: 1.5px #111111;
+  }
+}
+
+/* ================================================================
+   Smooth Scroll
+   ================================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ================================================================
+   Custom Cursor (desktop only, hide default when custom is active)
+   ================================================================ */
+.cursor-custom {
+  cursor: none;
+}
+.cursor-custom a,
+.cursor-custom button,
+.cursor-custom [role="button"] {
+  cursor: none;
+}

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { ArrowRight, Download, BookOpen, Star, Zap, MonitorPlay, Music, Cpu, BarChart3, Aperture, Check } from 'lucide-react';
+import SEOHead from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Learn: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -69,7 +72,9 @@ const Learn: React.FC = () => {
                 className={`p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800 transition-all duration-300 group ${item.border} ${item.bg}`}
             >
                 <div className={`${item.color} mb-3 group-hover:scale-110 transition-transform`}>{item.icon}</div>
+                <ScrollReveal direction="up" distance={20}>
                 <h3 className="font-bold text-lg text-white text-left">{item.label}</h3>
+                </ScrollReveal>
             </button>
           ))}
         </div>
@@ -82,7 +87,9 @@ const Learn: React.FC = () => {
       <div id="starter-kits" className="bg-neutral-900 border-y border-neutral-800 py-24">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
+            <ScrollReveal direction="left" distance={25} blur={3}>
             <h2 className="text-3xl font-bold text-white mb-2">Free First Steps</h2>
+            </ScrollReveal>
             <p className="text-amber-400 font-medium">Quick wins you can finish today.</p>
           </div>
 
@@ -155,7 +162,9 @@ const Learn: React.FC = () => {
       {/* 4) PAID SECTION */}
       <div className="py-24 container mx-auto px-6 max-w-5xl">
          <div className="text-center mb-16">
+            <ScrollReveal direction="up" distance={25} blur={3}>
             <h2 className="text-3xl font-bold text-white mb-2">Tiny Training Packs</h2>
+            </ScrollReveal>
             <p className="text-neutral-400">Small products. Big momentum.</p>
          </div>
 
@@ -208,7 +217,9 @@ const Learn: React.FC = () => {
       {/* 5) THE PATH */}
       <div className="bg-neutral-900 border-t border-neutral-800 py-24">
          <div className="container mx-auto px-6 max-w-4xl text-center">
+             <ScrollReveal direction="left" distance={25} blur={3}>
              <h2 className="text-3xl font-bold text-white mb-12">The Path</h2>
+             </ScrollReveal>
              
              <div className="grid md:grid-cols-3 gap-8 relative">
                 {/* Connector Line (Desktop) */}
@@ -224,7 +235,9 @@ const Learn: React.FC = () => {
                          <span className="text-xs text-neutral-500 font-bold uppercase tracking-wider">Step</span>
                          <span className="text-2xl font-bold text-white">{item.step}</span>
                       </div>
+                      <ScrollReveal direction="up" distance={20}>
                       <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
+                      </ScrollReveal>
                       <p className="text-neutral-500 text-sm">{item.sub}</p>
                    </div>
                 ))}
@@ -246,7 +259,9 @@ const Learn: React.FC = () => {
       {/* 6) FINAL CTA BAND */}
       <div className="py-24 px-6 text-center bg-gradient-to-b from-neutral-950 to-amber-950/20">
          <div className="container mx-auto max-w-2xl">
+            <ScrollReveal direction="left" distance={25} blur={3}>
             <h2 className="text-4xl font-display font-bold text-white mb-6">Not sure what to learn first?</h2>
+            </ScrollReveal>
             <p className="text-neutral-400 text-lg mb-8">
                Start with the Blueprint and we’ll point you to the right path.
             </p>

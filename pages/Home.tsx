@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen, Check, Star, Compass, Briefcase } from 'lucide-react';
+import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen, Check, Star, Compass, Briefcase, Sun, Moon } from 'lucide-react';
+import { useScroll, useTransform, motion } from 'framer-motion';
+import SEOHead, { organizationSchema, websiteSchema } from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal, { StaggerContainer } from '../components/ScrollReveal';
+import AnimatedCounter from '../components/AnimatedCounter';
+import TestimonialCarousel from '../components/TestimonialCarousel';
+import { useTheme } from '../components/ThemeContext';
+import ContactForm from '../components/ContactForm';
+import EmailCapture from '../components/EmailCapture';
 
 // Centralized booking URL for easy updates
 const BOOKING_URL = "https://tidycal.com/purecreativitypro/purecreativity-blueprint-session";
@@ -11,6 +20,17 @@ const Home: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const departmentRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const { toggleTheme, isDark } = useTheme();
+
+  // Parallax: scroll-linked transforms for hero
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroTextY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const auraY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -175,9 +195,15 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#050505] text-white font-sans selection:bg-white selection:text-black overflow-x-hidden">
+      <SEOHead
+        title="PureCreativity"
+        description="The Convergence Hub — Tech, Music, Media, and Business solutions for entrepreneurs and side hustlers. Stop guessing, get clear, and build momentum."
+        path="/"
+        jsonLd={[organizationSchema, websiteSchema]}
+      />
       
       {/* 1. HERO SECTION: "THE CONVERGENCE HUB" */}
-      <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 perspective-1000 py-28 md:py-0">
+      <section ref={heroRef} className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020202] px-4 perspective-1000 py-28 md:py-0">
         
         {/* TOP NAVIGATION */}
         <nav className="absolute top-0 left-0 w-full z-[100] pointer-events-auto">
@@ -222,8 +248,9 @@ const Home: React.FC = () => {
 
                 {/* Mobile Hamburger */}
                 <button 
-                  className="md:hidden text-white p-2 focus:outline-none z-50 relative"
+                  className="md:hidden text-white p-2.5 -mr-2 focus:outline-none z-50 relative"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  aria-label="Toggle navigation menu"
                 >
                    {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
@@ -237,7 +264,7 @@ const Home: React.FC = () => {
                       key={dept}
                       to={`/${dept}`}
                       onClick={() => setIsMenuOpen(false)}
-                      className="text-4xl font-afro font-bold uppercase tracking-tight text-zinc-500 hover:text-white transition-all duration-500 hover:scale-110"
+                      className="text-4xl font-afro font-bold uppercase tracking-tight text-zinc-400 hover:text-white transition-all duration-500 hover:scale-110"
                     >
                       {dept}
                     </Link>
@@ -246,14 +273,28 @@ const Home: React.FC = () => {
             </div>
         </nav>
 
-        {/* --- VIBRANT BACKGROUND CORE --- */}
+        {/* --- VIBRANT BACKGROUND CORE (with parallax) --- */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+             {/* 0. Video Background — subtle, dark, looping */}
+             <video
+               autoPlay
+               muted
+               loop
+               playsInline
+               className="absolute inset-0 w-full h-full object-cover opacity-15"
+               poster=""
+             >
+               <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+             </video>
+             <div className="absolute inset-0 bg-black/70 z-[1]" />
+
              {/* 1. Grain Overlay for Authenticity/Texture */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_pattern_with_intensity_0.4.png')] z-10 mix-blend-overlay"></div>
 
-             {/* 2. The Pillars Converging (Auras) */}
-             <div className="absolute inset-0 flex items-center justify-center" 
-                  style={{ transform: `translate(${tiltY * 2}px, ${tiltX * 2}px)` }}>
+             {/* 2. The Pillars Converging (Auras) — parallax on scroll */}
+             <motion.div
+                  className="absolute inset-0 flex items-center justify-center" 
+                  style={{ y: auraY, transform: `translate(${tiltY * 2}px, 0px)` }}>
                  
                  {/* Tech (Cyan) - Top Left */}
                  <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-cyan-600/30 rounded-full blur-[100px] animate-pulse-slow mix-blend-screen"></div>
@@ -266,11 +307,14 @@ const Home: React.FC = () => {
                  
                  {/* Business (Emerald) - Bottom Right */}
                  <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-emerald-600/30 rounded-full blur-[100px] animate-pulse-slow delay-3000 mix-blend-screen"></div>
-             </div>
+             </motion.div>
         </div>
 
         {/* --- HERO FOREGROUND CONTENT --- */}
-        <div className={`relative z-20 w-full h-full flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        <motion.div
+          className={`relative z-20 w-full h-full flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+          style={{ y: heroTextY, opacity: heroOpacity }}
+        >
           
           <div className="relative text-center w-full px-2 md:px-0">
              {/* Main Title */}
@@ -279,11 +323,11 @@ const Home: React.FC = () => {
                     PURE
                 </span>
                 <div className="relative mt-[-2vw] sm:mt-[-1.5vw] md:mt-[-1.5vw] lg:mt-[-1vw] xl:mt-[-0.5vw] w-full text-center">
-                   <span className="absolute top-0 left-0 w-full text-center font-extrabold text-transparent text-outline-thick opacity-30 blur-sm select-none leading-none translate-x-[0.3vw] translate-y-[0.3vw]
+                   <span className="absolute top-0 left-0 w-full text-center font-extrabold text-white/10 blur-sm select-none leading-none translate-x-[0.3vw] translate-y-[0.3vw]
                       text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
                    </span>
-                   <span className="relative z-20 font-extrabold text-transparent text-outline-thick tracking-tight hover:text-white/10 transition-colors duration-500 leading-none
+                   <span className="relative z-20 font-extrabold text-white tracking-tight leading-none
                       text-[9vw] sm:text-[8.5vw] md:text-[8.5vw] lg:text-[7vw] xl:text-[6vw]">
                       CREATIVITY
                    </span>
@@ -295,23 +339,23 @@ const Home: React.FC = () => {
              
              {/* NEW: Who It's For */}
              <div className="mb-8 border border-white/10 bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm">
-                 <p className="text-white font-bold tracking-widest text-[9px] md:text-xs uppercase text-center">
-                     For side hustlers and entrepreneurs — whether you’re just starting or already making sales — who want to stop guessing, get clear on the next step, and build momentum.
-                 </p>
+                 <p className="text-white font-bold tracking-widest text-[11px] md:text-xs uppercase text-center">
+                      For side hustlers and entrepreneurs — whether you're just starting or already making sales — who want to stop guessing, get clear on the next step, and build momentum.
+                  </p>
              </div>
 
-             {/* Glue Statement */}
-             <p className="text-white/60 text-xs md:text-sm font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
+             {/* Glue Statement — improved readability */}
+             <p className="text-zinc-200 text-sm md:text-base font-mono mb-8 md:mb-10 max-w-lg leading-relaxed border-b border-white/10 pb-4 md:pb-6">
                 Business defines the plan. Tech builds the system. Media ships the content. Music sets the tone.
              </p>
 
              {/* Refined Mobile Subheading */}
              <div className="flex flex-col items-center mb-8 md:mb-10 font-mono uppercase">
-                <span className="text-white/60 text-[9px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6">
+                <span className="text-zinc-400 text-[11px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6">
                     The Convergence of
                 </span>
                 
-                <div className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4 gap-y-3 text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.3em]">
+                <div className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4 gap-y-3 text-[11px] md:text-xs tracking-[0.15em] md:tracking-[0.3em]">
                    <button 
                        onClick={scrollToDepartments} 
                        onMouseEnter={() => setHoveredSection('tech')}
@@ -320,7 +364,7 @@ const Home: React.FC = () => {
                    >
                        Tech
                    </button>
-                   <span className="text-white/20 text-[8px]">•</span>
+                   <span className="text-zinc-600 text-[11px]">•</span>
                    <button 
                        onClick={scrollToDepartments} 
                        onMouseEnter={() => setHoveredSection('music')}
@@ -329,7 +373,7 @@ const Home: React.FC = () => {
                    >
                        Music
                    </button>
-                   <span className="text-white/20 text-[8px]">•</span>
+                   <span className="text-zinc-600 text-[11px]">•</span>
                    <button 
                        onClick={scrollToDepartments} 
                        onMouseEnter={() => setHoveredSection('media')}
@@ -338,7 +382,7 @@ const Home: React.FC = () => {
                    >
                        Media
                    </button>
-                   <span className="text-white/20 text-[8px]">•</span>
+                   <span className="text-zinc-600 text-[11px]">•</span>
                    <button 
                        onClick={scrollToDepartments} 
                        onMouseEnter={() => setHoveredSection('business')}
@@ -355,52 +399,58 @@ const Home: React.FC = () => {
                 className="group relative px-6 md:px-8 py-3 md:py-4 bg-white/5 border border-white/20 backdrop-blur-md rounded-full overflow-hidden hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95"
              >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:animate-[beam-right_0.5s_linear]"></div>
-                <span className="relative flex items-center gap-3 text-[10px] md:text-xs font-bold tracking-[0.2em] text-white">
+                <span className="relative flex items-center gap-3 text-[11px] md:text-xs font-bold tracking-[0.2em] text-white">
                    EXPLORE THE HUB <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </span>
              </button>
 
              {/* Start Here Option */}
              <div className="mt-8 flex flex-col items-center gap-3 animate-fade-in-up">
-                 <p className="text-zinc-500 text-[10px] uppercase tracking-widest font-bold">
-                    Not sure which studio you need? Book a Clarity Call and we’ll point you to the right next step →
+                 <p className="text-zinc-400 text-[11px] uppercase tracking-widest font-bold">
+                    Not sure which studio you need? Book a Clarity Call and we'll point you to the right next step →
                  </p>
                  <a 
                     href={BOOKING_URL} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="bg-white text-black px-6 py-2 rounded-full font-bold text-xs tracking-widest hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 cursor-pointer"
+                    className="group/cta bg-white text-black px-6 py-2 rounded-full font-bold text-xs tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 cursor-pointer inline-flex items-center gap-2"
                  >
-                    BOOK A CLARITY CALL
+                    BOOK A CLARITY CALL <ArrowRight size={12} className="group-hover/cta:translate-x-1 transition-transform" />
                  </a>
              </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. PROBLEM SECTION */}
       <section className="py-24 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
           <div className="container mx-auto max-w-4xl text-center">
+             <ScrollReveal direction="up" distance={30}>
              <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">You don’t need more ideas.<br/> You need a system.</h2>
-             <p className="text-zinc-400 text-lg leading-relaxed mb-12 max-w-2xl mx-auto font-light">
-                Most side hustlers and entrepreneurs don’t quit because they aren’t capable — they quit because they’re doing it alone.
+             </ScrollReveal>
+             <ScrollReveal direction="up" delay={0.15} distance={20}>
+             <p className="text-zinc-400 text-lg leading-relaxed mb-12 max-w-3xl mx-auto font-light">
+                Most side hustlers and entrepreneurs don't quit because they aren't capable — they quit because they're doing it alone.
                 Confusion and tool overload steal momentum. PureCreativity is your guide to choose the next right step, build something people will pay for, and set up simple systems so growth becomes repeatable.
              </p>
+             </ScrollReveal>
              <div className="grid md:grid-cols-3 gap-4 text-left max-w-4xl mx-auto">
                 {[
                     { title: "Get clear", sub: "Choose the right direction.", icon: Compass },
                     { title: "Build what sells", sub: "Turn your skill into a simple offer.", icon: Briefcase },
                     { title: "Make it repeatable", sub: "Set up systems that drive predictable growth.", icon: Cpu }
                 ].map((item, i) => (
-                    <div key={i} className="flex flex-col gap-2 text-zinc-300 border border-white/10 p-5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-colors group">
-                        <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0 border border-red-500/30 group-hover:border-red-500/60 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.15)] mb-2">
-                            <item.icon size={24} className="text-red-500" />
-                        </div>
-                        <div>
-                            <span className="block text-sm font-bold tracking-wide text-white">{item.title}</span>
-                            <span className="block text-xs text-zinc-500">{item.sub}</span>
-                        </div>
-                    </div>
+                    <ScrollReveal key={i} direction="left" delay={i * 0.12} blur={4} distance={30}>
+                      <div className="flex flex-col gap-2 text-zinc-300 border border-white/10 p-5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-colors group h-full">
+                          <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0 border border-red-500/30 group-hover:border-red-500/60 transition-colors shadow-[0_0_15px_rgba(239,68,68,0.15)] mb-2">
+                              <item.icon size={24} className="text-red-500" />
+                          </div>
+                          <div>
+                              <span className="block text-sm font-bold tracking-wide text-white">{item.title}</span>
+                              <span className="block text-xs text-zinc-400">{item.sub}</span>
+                          </div>
+                      </div>
+                    </ScrollReveal>
                 ))}
              </div>
           </div>
@@ -409,13 +459,15 @@ const Home: React.FC = () => {
       {/* 3. PLAN SECTION */}
       <section className="py-24 bg-black border-t border-white/5 px-6 relative z-30">
           <div className="container mx-auto max-w-5xl text-center">
-             <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-500">
+             <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase text-zinc-400">
                  The Plan
              </div>
              
+             <ScrollReveal direction="up" blur={6}>
              <h3 className="text-xl md:text-2xl text-white font-display font-medium mb-12 mt-4 max-w-2xl mx-auto">
                  You don’t have to build alone — here’s the path.
              </h3>
+             </ScrollReveal>
 
              <div className="grid md:grid-cols-3 gap-12 mb-16 relative">
                 {/* Connecting Line (Desktop) */}
@@ -426,12 +478,14 @@ const Home: React.FC = () => {
                     { step: "02", text: "Build the Engine" },
                     { step: "03", text: "Ship the Work" }
                 ].map((item, i) => (
-                    <div key={i} className="flex flex-col items-center relative z-10">
-                        <div className="w-12 h-12 bg-black border border-white/20 rounded-full flex items-center justify-center text-lg font-bold text-white mb-6 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-                           {i + 1}
-                        </div>
-                        <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{item.text}</h3>
-                    </div>
+                    <ScrollReveal key={i} direction="up" delay={i * 0.15} blur={6} distance={25}>
+                      <div className="flex flex-col items-center relative z-10">
+                          <div className="w-12 h-12 bg-black border border-white/20 rounded-full flex items-center justify-center text-lg font-bold text-white mb-6 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                             {i + 1}
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{item.text}</h3>
+                      </div>
+                    </ScrollReveal>
                 ))}
              </div>
              
@@ -444,17 +498,26 @@ const Home: React.FC = () => {
                  >
                     BOOK A CLARITY CALL
                  </a>
-                 <p className="text-zinc-500 text-xs tracking-wide">
+                 <p className="text-zinc-400 text-xs tracking-wide">
                      One paid call to get clear, choose the next step, and stop doing it alone.
                  </p>
              </div>
           </div>
       </section>
 
+      {/* 3B. EMAIL CAPTURE */}
+      <section className="py-16 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
+          <ScrollReveal direction="up" distance={20}>
+            <EmailCapture />
+          </ScrollReveal>
+      </section>
+
       {/* 4. WHAT WE DO SECTION */}
       <section className="py-24 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
            <div className="container mx-auto max-w-6xl">
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-16 text-center">What we build inside PureCreativity</h2>
+              <ScrollReveal direction="up" distance={25}>
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-16 text-center">What we build inside PureCreativity</h2>
+              </ScrollReveal>
               <div className="grid md:grid-cols-4 gap-6">
                   {[
                     { title: "Business", desc: "Clarity, niche, offers, predictable growth.", color: "text-emerald-400", border: "hover:border-emerald-500/50" },
@@ -462,224 +525,168 @@ const Home: React.FC = () => {
                     { title: "Media", desc: "AI-powered content creation + enhancement.", color: "text-orange-400", border: "hover:border-orange-500/50" },
                     { title: "Music", desc: "Production, scoring, sound identity.", color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" }
                   ].map((item, i) => (
-                      <div key={i} className={`p-8 border border-white/5 rounded-xl bg-black/40 ${item.border} transition-colors group cursor-default`}>
-                          <h3 className={`font-bold text-xl mb-3 ${item.color} tracking-tight`}>{item.title}</h3>
-                          <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
-                      </div>
+                      <ScrollReveal key={i} direction="right" delay={i * 0.1} blur={4} distance={30}>
+                        <div className={`p-8 border border-white/5 rounded-xl bg-black/40 ${item.border} transition-all duration-300 group cursor-default h-full hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg hover:bg-white/[0.04]`}>
+                            <h3 className={`font-bold text-xl mb-3 ${item.color} tracking-tight group-hover:drop-shadow-[0_0_6px_currentColor] transition-all`}>{item.title}</h3>
+                            <p className="text-zinc-400 text-sm leading-relaxed group-hover:text-zinc-300 transition-colors">{item.desc}</p>
+                        </div>
+                      </ScrollReveal>
                   ))}
               </div>
            </div>
       </section>
 
-      {/* 5. INTERACTIVE DEPARTMENTS HUB (100vh) */}
-      <section 
-        ref={departmentRef}
-        className="relative min-h-[700px] md:min-h-0 h-[100dvh] md:h-screen w-full flex flex-col md:flex-row border-t border-white/10 bg-[#050505]"
-      >
-        {/* Dynamic Background Aura for Departments */}
-        <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none z-0 ${hoveredSection ? 'opacity-40' : 'opacity-0'}`}>
-           <div className={`absolute inset-0 bg-gradient-to-br transition-all duration-1000
-            ${hoveredSection === 'tech' ? 'from-cyan-900/40 via-black to-black' : ''}
-            ${hoveredSection === 'music' ? 'from-fuchsia-900/40 via-black to-black' : ''}
-            ${hoveredSection === 'media' ? 'from-orange-900/40 via-black to-black' : ''}
-            ${hoveredSection === 'business' ? 'from-emerald-900/40 via-black to-black' : ''}
-            ${hoveredSection === 'learn' ? 'from-amber-900/40 via-black to-black' : ''}
-          `} />
+       {/* 4B. ANIMATED STATS BAR */}
+       <section className="py-16 bg-black border-t border-white/5 px-6 relative z-30">
+           <div className="container mx-auto max-w-4xl">
+              <ScrollReveal direction="up" distance={20}>
+                <div className="grid grid-cols-3 gap-8 md:gap-16">
+                  <AnimatedCounter target={50} suffix="+" label="Projects Delivered" />
+                  <AnimatedCounter target={4} label="Creative Studios" />
+                  <AnimatedCounter target={98} suffix="%" label="Client Satisfaction" />
+                </div>
+              </ScrollReveal>
+           </div>
+       </section>
+
+       {/* 4C. TESTIMONIALS */}
+       <section className="py-24 bg-zinc-950 border-t border-white/5 px-6 relative z-30">
+           <div className="container mx-auto max-w-5xl">
+              <ScrollReveal direction="up" distance={20}>
+                <div className="text-center mb-12">
+                  <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase text-zinc-400 mb-4">
+                    Testimonials
+                  </div>
+                  <h3 className="text-xl md:text-2xl text-white font-display font-medium max-w-2xl mx-auto">
+                    What our clients say
+                  </h3>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.15} distance={15}>
+                <TestimonialCarousel />
+              </ScrollReveal>
+           </div>
+       </section>
+
+      {/* 4D. CONTACT FORM */}
+      <section className="py-24 bg-black border-t border-white/5 px-6 relative z-30">
+          <div className="container mx-auto max-w-5xl">
+            <ScrollReveal direction="up" distance={20}>
+              <div className="text-center mb-12">
+                <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase text-zinc-400 mb-4">
+                  Get In Touch
+                </div>
+                <h3 className="text-xl md:text-2xl text-white font-display font-medium max-w-2xl mx-auto">
+                  Ready to build something?
+                </h3>
+                <p className="text-zinc-400 text-sm mt-2">Tell us about your project and we'll point you in the right direction.</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal direction="up" delay={0.15} distance={15}>
+              <ContactForm />
+            </ScrollReveal>
+          </div>
+      </section>
+
+      {/* 5. ECOSYSTEM — BENTO GRID */}
+      <section ref={departmentRef} className="relative py-20 md:py-28 px-6 bg-[#050505] border-t border-white/10">
+        <div className="container mx-auto max-w-6xl">
+          <ScrollReveal direction="up" distance={20}>
+            <div className="text-center mb-14">
+              <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase text-zinc-400 mb-4">The Ecosystem</div>
+              <h2 className="text-3xl md:text-5xl font-afro font-bold text-white">Five Studios. One Vision.</h2>
+            </div>
+          </ScrollReveal>
+
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[220px] md:auto-rows-[260px]">
+
+            {/* TECH — spans 3 cols, 2 rows */}
+            <Link to="/tech" onMouseEnter={() => setHoveredSection('tech')} onMouseLeave={() => setHoveredSection(null)}
+              className="group relative md:col-span-3 md:row-span-2 rounded-2xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-all duration-500">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=70&w=900&auto=format&fit=crop" alt="Code on a dark screen" loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <Cpu className="w-8 h-8 text-cyan-400 mb-3 group-hover:rotate-90 transition-transform duration-500" />
+                <h3 className="text-3xl md:text-4xl font-afro font-bold text-white mb-1">TECH</h3>
+                <p className="text-cyan-300/80 text-sm mb-3">AI, Automation & Web Applications</p>
+                <div className="flex items-center gap-2 text-xs text-cyan-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="font-mono tracking-wider">EXPLORE</span><ArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+
+            {/* MUSIC — spans 3 cols */}
+            <Link to="/music" onMouseEnter={() => setHoveredSection('music')} onMouseLeave={() => setHoveredSection(null)}
+              className="group relative md:col-span-3 rounded-2xl overflow-hidden border border-white/10 hover:border-fuchsia-500/40 transition-all duration-500">
+              <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=900&auto=format&fit=crop" alt="Music studio with neon lighting" loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <Music className="w-8 h-8 text-fuchsia-400 mb-3" />
+                <h3 className="text-3xl md:text-4xl font-afro font-bold text-white mb-1">MUSIC</h3>
+                <p className="text-fuchsia-300/80 text-sm mb-3">Production & Sonic Branding</p>
+                <div className="flex items-center gap-2 text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="font-mono tracking-wider">EXPLORE</span><ArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+
+            {/* MEDIA — spans 3 cols */}
+            <Link to="/media" onMouseEnter={() => setHoveredSection('media')} onMouseLeave={() => setHoveredSection(null)}
+              className="group relative md:col-span-3 rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/40 transition-all duration-500">
+              <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=70&w=900&auto=format&fit=crop" alt="Camera lens close-up with bokeh" loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <Aperture className="w-8 h-8 text-orange-400 mb-3 group-hover:rotate-180 transition-transform duration-700" />
+                <h3 className="text-3xl md:text-4xl font-afro font-bold text-white mb-1">MEDIA</h3>
+                <p className="text-orange-300/80 text-sm mb-3">Film, Content & Visual Storytelling</p>
+                <div className="flex items-center gap-2 text-xs text-orange-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="font-mono tracking-wider">EXPLORE</span><ArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+
+            {/* BUSINESS — spans 4 cols */}
+            <Link to="/business" onMouseEnter={() => setHoveredSection('business')} onMouseLeave={() => setHoveredSection(null)}
+              className="group relative md:col-span-4 rounded-2xl overflow-hidden border border-white/10 hover:border-emerald-500/40 transition-all duration-500">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=70&w=900&auto=format&fit=crop" alt="Business analytics dashboard on screen" loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <TrendingUp className="w-8 h-8 text-emerald-400 mb-3" />
+                <h3 className="text-3xl md:text-4xl font-afro font-bold text-white mb-1">BUSINESS</h3>
+                <p className="text-emerald-300/80 text-sm mb-3">Strategy, Branding & Consulting</p>
+                <div className="flex items-center gap-2 text-xs text-emerald-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="font-mono tracking-wider">EXPLORE</span><ArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+
+            {/* LEARN — spans 2 cols */}
+            <Link to="/learn" onMouseEnter={() => setHoveredSection('learn')} onMouseLeave={() => setHoveredSection(null)}
+              className="group relative md:col-span-2 rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/40 transition-all duration-500">
+              <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=70&w=900&auto=format&fit=crop" alt="Open book with warm lighting" loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <BookOpen className="w-8 h-8 text-amber-400 mb-3" />
+                <h3 className="text-3xl md:text-4xl font-afro font-bold text-white mb-1">LEARN</h3>
+                <p className="text-amber-300/80 text-sm mb-3">Academy & Mentorship</p>
+                <div className="flex items-center gap-2 text-xs text-amber-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="font-mono tracking-wider">EXPLORE</span><ArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+
+          </div>
         </div>
-
-        {/* Section Heading Overlay */}
-        <div className={`absolute top-4 md:top-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-500 ${hoveredSection ? 'opacity-0 -translate-y-4' : 'opacity-100'}`}>
-          <div className="flex items-center gap-4">
-             <div className="h-[1px] w-4 md:w-8 bg-zinc-700"></div>
-             <span className="text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.5em] uppercase font-bold text-zinc-500 whitespace-nowrap">The Ecosystem</span>
-             <div className="h-[1px] w-4 md:w-8 bg-zinc-700"></div>
-          </div>
-        </div>
-
-        {/* TECH Section */}
-        <Link
-          to="/tech"
-          onMouseEnter={() => setHoveredSection('tech')}
-          onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
-            ${hoveredSection === 'tech' ? 'md:flex-[2.5]' : 'md:flex-1'}
-            ${hoveredSection && hoveredSection !== 'tech' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
-          `}
-        >
-          <ElectricBorder hex="#22d3ee" isActive={hoveredSection === 'tech'} />
-          
-          <img 
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=70&w=800&auto=format&fit=crop" 
-            alt="Tech Background"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-cyan-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'tech' ? 'opacity-100' : 'opacity-0'}`} />
-          
-          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
-            <Cpu className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'tech' ? 'text-cyan-400 scale-110 md:scale-125 rotate-90' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">TECH</h2>
-            
-            <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'tech' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
-                <p className="text-cyan-200 font-mono text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Automate & Conquer
-                </p>
-                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-cyan-400 border border-cyan-500/30 px-2 md:px-3 py-1 rounded bg-cyan-950/30">
-                   <span>INIT_SYSTEMS</span> <ArrowRight size={10} />
-                </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* MUSIC Section */}
-        <Link
-          to="/music"
-          onMouseEnter={() => setHoveredSection('music')}
-          onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
-            ${hoveredSection === 'music' ? 'md:flex-[2.5]' : 'md:flex-1'}
-            ${hoveredSection && hoveredSection !== 'music' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
-          `}
-        >
-          <ElectricBorder hex="#e879f9" isActive={hoveredSection === 'music'} />
-          
-          <img 
-            src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?q=70&w=800&auto=format&fit=crop" 
-            alt="Music Background"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-fuchsia-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'music' ? 'opacity-100' : 'opacity-0'}`} />
-
-          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
-            <Music className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'music' ? 'text-fuchsia-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">MUSIC</h2>
-            
-            <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'music' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
-                <p className="text-fuchsia-200 font-display text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Sonic Identity
-                </p>
-                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-fuchsia-400 border border-fuchsia-500/30 px-2 md:px-3 py-1 rounded-full bg-fuchsia-950/30">
-                   <span>HEAR_THE_DIFFERENCE</span> <Zap size={10} fill="currentColor" />
-                </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* MEDIA Section */}
-        <Link
-          to="/media"
-          onMouseEnter={() => setHoveredSection('media')}
-          onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
-            ${hoveredSection === 'media' ? 'md:flex-[2.5]' : 'md:flex-1'}
-            ${hoveredSection && hoveredSection !== 'media' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
-          `}
-        >
-          <ElectricBorder hex="#fb923c" isActive={hoveredSection === 'media'} />
-          
-          <img 
-            src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop" 
-            alt="Media Background"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-orange-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'media' ? 'opacity-100' : 'opacity-0'}`} />
-
-          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
-            <Aperture className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'media' ? 'text-white scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">MEDIA</h2>
-            
-             <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'media' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
-                <p className="text-orange-200 font-serif text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Visual Engineering
-                </p>
-                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-white border border-white/30 px-2 md:px-3 py-1 rounded-sm bg-white/10">
-                   <span>DEPLOY_CONTENT</span>
-                </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* BUSINESS Section */}
-        <Link
-          to="/business"
-          onMouseEnter={() => setHoveredSection('business')}
-          onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-black
-            ${hoveredSection === 'business' ? 'md:flex-[2.5]' : 'md:flex-1'}
-            ${hoveredSection && hoveredSection !== 'business' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
-          `}
-        >
-          <ElectricBorder hex="#34d399" isActive={hoveredSection === 'business'} />
-          
-          <img 
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=70&w=800&auto=format&fit=crop" 
-            alt="Business Background"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-emerald-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'business' ? 'opacity-100' : 'opacity-0'}`} />
-
-          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
-            <TrendingUp className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'business' ? 'text-emerald-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">BUSINESS</h2>
-            
-            <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'business' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
-                <p className="text-emerald-200 font-sans text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Structure & Scale
-                </p>
-                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-emerald-400 border border-emerald-500/30 px-2 md:px-3 py-1 rounded bg-emerald-950/30">
-                   <span>BUILD_THE_OFFER</span> <TrendingUp size={10} />
-                </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* LEARN Section */}
-        <Link
-          to="/learn"
-          onMouseEnter={() => setHoveredSection('learn')}
-          onMouseLeave={() => setHoveredSection(null)}
-          className={`group relative flex-1 h-auto md:h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center overflow-hidden bg-black
-            ${hoveredSection === 'learn' ? 'md:flex-[2.5]' : 'md:flex-1'}
-            ${hoveredSection && hoveredSection !== 'learn' ? 'md:flex-[0.5] grayscale opacity-30' : ''}
-          `}
-        >
-          <ElectricBorder hex="#fbbf24" isActive={hoveredSection === 'learn'} />
-          
-          <img 
-            src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=70&w=800&auto=format&fit=crop" 
-            alt="Learn Background"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-amber-950/90 to-transparent transition-opacity duration-500 ${hoveredSection === 'learn' ? 'opacity-100' : 'opacity-0'}`} />
-
-          <div className="relative z-10 flex flex-col items-center p-2 md:p-6 text-center">
-            <BookOpen className={`w-6 h-6 md:w-12 md:h-12 mb-2 md:mb-4 transition-all duration-500 ${hoveredSection === 'learn' ? 'text-amber-400 scale-110 md:scale-125' : 'text-zinc-600'}`} />
-            <h2 className="text-xl md:text-5xl font-afro font-bold tracking-tight mb-1 md:mb-2 text-white">LEARN</h2>
-            
-            <div className={`overflow-hidden transition-all duration-500 ease-out ${hoveredSection === 'learn' ? 'max-h-24 opacity-100 mt-1 md:mt-2' : 'max-h-0 opacity-0'}`}>
-                <p className="text-amber-200 font-sans text-[8px] md:text-xs tracking-widest uppercase mb-2 md:mb-4">
-                  Download Skills
-                </p>
-                <div className="flex items-center justify-center gap-2 text-[8px] md:text-[9px] text-amber-400 border border-amber-500/30 px-2 md:px-3 py-1 rounded bg-amber-950/30">
-                   <span>ACCESS_DATABASE</span> <ArrowRight size={10} />
-                </div>
-            </div>
-          </div>
-        </Link>
-
       </section>
 
       {/* 3. REFINED FOOTER */}
-      <footer className="bg-[#050505] py-12 text-center text-zinc-600 text-xs tracking-[0.3em] font-sans border-t border-white/5 uppercase">
-        <div className="mb-4">PureCreativity // The Convergence Hub</div>
-        <div className="text-[9px] opacity-50 font-light">
-          &copy; PureCreativity 2024
-        </div>
-      </footer>
+      <Footer theme="home" />
 
     </div>
   );

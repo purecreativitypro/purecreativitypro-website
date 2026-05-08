@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Target, TrendingUp, Users, Lightbulb, BarChart3, ArrowRight, CheckCircle2, Search, PenTool, Rocket, HelpCircle, Layers } from 'lucide-react';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Business: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -78,7 +81,9 @@ const Business: React.FC = () => {
           <div className="container mx-auto px-6 max-w-5xl">
              <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
+                   <ScrollReveal direction="up" distance={25} blur={3}>
                    <h2 className="text-3xl md:text-4xl font-bold mb-6">You’re not lazy. You’re unstructured.</h2>
+                   </ScrollReveal>
                    <p className="text-zinc-400 text-lg leading-relaxed">
                       Most people don’t fail because they lack talent — they fail because they never turn talent into a clear offer, a simple system, and consistent execution.
                    </p>
@@ -101,7 +106,9 @@ const Business: React.FC = () => {
 
       {/* GUIDE SECTION */}
       <div className="py-24 container mx-auto px-6 max-w-4xl text-center">
+         <ScrollReveal direction="left" distance={25} blur={3}>
          <h2 className="text-3xl font-bold mb-6">You don’t need a million tools. You need a blueprint.</h2>
+         </ScrollReveal>
          <p className="text-zinc-400 text-xl leading-relaxed max-w-2xl mx-auto">
             PureCreativity exists for builders: side hustlers, creatives, and entrepreneurs who want a clear path and real execution. We help you simplify decisions, make progress fast, and turn your vision into something real.
          </p>
@@ -111,7 +118,9 @@ const Business: React.FC = () => {
       <div className="bg-zinc-900 border-y border-zinc-800 py-20">
           <div className="container mx-auto px-6 max-w-6xl">
               <div className="text-center mb-12">
+                  <ScrollReveal direction="up" distance={25} blur={3}>
                   <h2 className="text-3xl font-bold">The Plan</h2>
+                  </ScrollReveal>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                   {[
@@ -125,7 +134,9 @@ const Business: React.FC = () => {
                               {item.icon}
                           </div>
                           <div className="text-emerald-600 font-mono text-xs font-bold mb-2">STEP {item.step}</div>
+                          <ScrollReveal direction="up" distance={20}>
                           <h3 className="text-xl font-bold text-zinc-100 mb-2">{item.title}</h3>
+                          </ScrollReveal>
                           <p className="text-zinc-500 text-sm">{item.desc}</p>
                       </div>
                   ))}
@@ -136,7 +147,9 @@ const Business: React.FC = () => {
       {/* Offerings / Services */}
       <div className="py-24 container mx-auto px-6 max-w-6xl">
          <div className="text-center mb-16">
+            <ScrollReveal direction="up" distance={25} blur={3}>
             <h2 className="text-3xl font-bold mb-4">How we build it</h2>
+            </ScrollReveal>
             <p className="text-zinc-400">Everything you need to go from idea to income.</p>
          </div>
          
@@ -162,7 +175,9 @@ const Business: React.FC = () => {
       {/* FAQ */}
       <div className="bg-zinc-900/30 border-y border-zinc-800/50 py-24">
           <div className="container mx-auto px-6 max-w-4xl">
+              <ScrollReveal direction="left" distance={25} blur={3}>
               <h2 className="text-3xl font-bold mb-12 text-center">FAQ</h2>
+              </ScrollReveal>
               <div className="space-y-6">
                  {[
                     { q: "I have no idea what business to start.", a: "That's exactly why we start with the 'Discover' phase. We analyze your skills and market demand to find your best path." },
@@ -191,7 +206,9 @@ const Business: React.FC = () => {
 const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; desc: string }> = ({ icon, title, desc }) => (
    <div className="p-8 border border-zinc-800 bg-zinc-900/20 hover:bg-zinc-900/50 transition-colors rounded-xl group">
       <div className="text-emerald-500 mb-4 group-hover:scale-110 transition-transform origin-left">{icon}</div>
+      <ScrollReveal direction="up" distance={20}>
       <h3 className="text-xl font-bold text-zinc-100 mb-3">{title}</h3>
+      </ScrollReveal>
       <p className="text-zinc-400 leading-relaxed text-sm">{desc}</p>
    </div>
 );

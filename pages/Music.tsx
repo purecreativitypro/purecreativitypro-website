@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { Mic2, Music as MusicIcon, Radio, Disc, Sliders, Headphones, ArrowRight, X, Play, HelpCircle, Check } from 'lucide-react';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
+import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
+import AudioPlayer from '../components/AudioPlayer';
+import CaseStudyCard from '../components/CaseStudyCard';
 
 const Music: React.FC = () => {
   return (
@@ -72,7 +77,9 @@ const Music: React.FC = () => {
       {/* PROBLEM SECTION */}
       <div className="bg-indigo-900/30 border-y border-white/5 py-20 backdrop-blur-sm relative z-10">
          <div className="container mx-auto px-6 max-w-5xl">
+            <ScrollReveal direction="up" distance={25} blur={3}>
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">When the sound is wrong, everything feels off.</h2>
+            </ScrollReveal>
             <div className="grid md:grid-cols-3 gap-8 mb-10">
                 {[
                     "Your content looks good, but it doesn’t hit emotionally.",
@@ -112,7 +119,9 @@ const Music: React.FC = () => {
               <Disc className="text-white" size={24} />
             </div>
             <div className="mb-2 text-fuchsia-400 text-xs font-bold tracking-widest uppercase">For artists & creators</div>
+            <ScrollReveal direction="up" distance={20}>
             <h3 className="text-3xl font-bold mb-4">Production</h3>
+            </ScrollReveal>
             <p className="text-indigo-200 leading-relaxed mb-6">
               Custom instrumentals and production that fits your voice — not a template. We shape the drums, melody, and texture so your track feels like you.
             </p>
@@ -141,7 +150,9 @@ const Music: React.FC = () => {
               <Radio className="text-white" size={24} />
             </div>
             <div className="mb-2 text-indigo-400 text-xs font-bold tracking-widest uppercase">For film, ads, and content</div>
+            <ScrollReveal direction="up" distance={20}>
             <h3 className="text-3xl font-bold mb-4">Scoring & Media</h3>
+            </ScrollReveal>
             <p className="text-indigo-200 leading-relaxed mb-6">
               Emotion-first scoring and sound beds that make visuals land. We build tension, release, energy, and atmosphere — so your story comes through without extra words.
             </p>
@@ -167,7 +178,9 @@ const Music: React.FC = () => {
 
       {/* THE PLAN SECTION */}
       <div className="container mx-auto px-6 pb-24 max-w-6xl">
+         <ScrollReveal direction="left" distance={25} blur={3}>
          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">The Plan</h2>
+         </ScrollReveal>
          <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
                 { step: "01", title: "Share the vibe", desc: "reference links, mood, purpose" },
@@ -180,7 +193,9 @@ const Music: React.FC = () => {
                         <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-fuchsia-400 font-bold mb-4 border border-fuchsia-500/30">
                             {i+1}
                         </div>
+                        <ScrollReveal direction="up" distance={20}>
                         <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                        </ScrollReveal>
                         <p className="text-indigo-300 text-sm">{item.desc}</p>
                     </div>
                 </div>
@@ -201,7 +216,9 @@ const Music: React.FC = () => {
        {/* Featured Tracks List */}
        <div className="container mx-auto px-6 pb-24 max-w-4xl">
          <div className="mb-10 border-l-4 border-fuchsia-500 pl-6">
+             <ScrollReveal direction="up" distance={20}>
              <h3 className="text-fuchsia-400 font-bold mb-2 uppercase tracking-widest text-sm">Recent Works</h3>
+             </ScrollReveal>
              <p className="text-indigo-200">A few quick examples across instrumentals, brand beds, and cinematic cues.</p>
          </div>
          <div className="space-y-4">
@@ -231,7 +248,9 @@ const Music: React.FC = () => {
        {/* FAQ Section */}
        <div className="bg-indigo-950 border-t border-white/5 py-24">
            <div className="container mx-auto px-6 max-w-4xl">
+               <ScrollReveal direction="up" distance={25} blur={3}>
                <h2 className="text-3xl font-bold mb-12 text-center">FAQ</h2>
+               </ScrollReveal>
                <div className="grid md:grid-cols-2 gap-10">
                   {[
                       { q: "How fast can I get a first draft?", a: "Turnaround depends on scope, but most projects start with a first draft within a few days." },
@@ -249,6 +268,58 @@ const Music: React.FC = () => {
                   ))}
                </div>
            </div>
+       </div>
+
+       {/* LISTEN TO OUR WORK */}
+       <div className="py-24 px-6 bg-indigo-950/60">
+         <div className="container mx-auto max-w-3xl">
+           <ScrollReveal direction="up" distance={20}>
+             <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 text-center">Listen to Our Work</h2>
+             <p className="text-indigo-300 text-sm text-center mb-10">Sample tracks from our production catalog. Full library available on request.</p>
+           </ScrollReveal>
+           <div className="space-y-4">
+             <ScrollReveal direction="left" delay={0} distance={20}>
+               <AudioPlayer title="Brand Sonic Logo — Elevate Studios" subtitle="3-second audio signature" accent="bg-fuchsia-500" />
+             </ScrollReveal>
+             <ScrollReveal direction="left" delay={0.1} distance={20}>
+               <AudioPlayer title="Podcast Intro — The Growth Lab" subtitle="30-second podcast opener" accent="bg-purple-500" />
+             </ScrollReveal>
+             <ScrollReveal direction="left" delay={0.2} distance={20}>
+               <AudioPlayer title="Product Launch Score — Bloom & Co" subtitle="Background score for launch video" accent="bg-fuchsia-600" />
+             </ScrollReveal>
+           </div>
+         </div>
+       </div>
+
+       {/* RECENT PROJECTS */}
+       <div className="py-24 px-6 bg-indigo-950/40">
+         <div className="container mx-auto max-w-5xl">
+           <ScrollReveal direction="up" distance={20}>
+             <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-12 text-center">Recent Projects</h2>
+           </ScrollReveal>
+           <div className="grid md:grid-cols-2 gap-6">
+             <ScrollReveal direction="left" delay={0} distance={20}>
+               <CaseStudyCard
+                 title="Full Sonic Branding Package"
+                 client="Bloom & Co"
+                 description="Created a complete audio identity including sonic logo, hold music, podcast intro, and event soundscapes."
+                 result="Brand recognition +40%"
+                 imageUrl="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?q=70&w=600&auto=format&fit=crop"
+                 accent="text-fuchsia-400"
+               />
+             </ScrollReveal>
+             <ScrollReveal direction="right" delay={0.1} distance={20}>
+               <CaseStudyCard
+                 title="Album Production & Mixing"
+                 client="Independent Artist"
+                 description="Produced, mixed, and mastered a 10-track debut album. Delivered radio-ready masters with full stem packages."
+                 result="50K+ streams month 1"
+                 imageUrl="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=70&w=600&auto=format&fit=crop"
+                 accent="text-fuchsia-400"
+               />
+             </ScrollReveal>
+           </div>
+         </div>
        </div>
 
        <footer className="bg-indigo-950 py-12 text-center text-indigo-400 text-xs tracking-[0.3em] font-display border-t border-fuchsia-500/10 uppercase">
