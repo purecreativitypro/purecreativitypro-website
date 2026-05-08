@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://www.purecreativitypro.com';
 const SITE_NAME = 'PureCreativity';
-const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=70&w=1200&auto=format&fit=crop';
+const DEFAULT_IMAGE = 'https://www.purecreativitypro.com/og-image.png';
 
 interface SEOHeadProps {
   title: string;

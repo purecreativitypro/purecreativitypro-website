@@ -69,11 +69,34 @@ const FloatingScrollToTop = () => {
 };
 
 // Simple loading indicator
+const SkeletonPulse = ({ className = '' }: { className?: string }) => (
+  <div className={`bg-white/[0.04] rounded-lg animate-pulse ${className}`} />
+);
+
 const PageLoader = () => (
-  <div className="min-h-screen w-full bg-[var(--bg-primary)] flex items-center justify-center">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-      <span className="text-[10px] text-zinc-600 tracking-[0.3em] uppercase font-mono">Loading</span>
+  <div className="min-h-screen w-full bg-[var(--bg-primary)] px-6">
+    {/* Fake nav */}
+    <div className="container mx-auto max-w-6xl pt-6 flex items-center justify-between">
+      <SkeletonPulse className="w-32 h-5" />
+      <div className="flex gap-4">
+        <SkeletonPulse className="w-12 h-4 hidden md:block" />
+        <SkeletonPulse className="w-12 h-4 hidden md:block" />
+        <SkeletonPulse className="w-12 h-4 hidden md:block" />
+      </div>
+    </div>
+    {/* Fake hero */}
+    <div className="container mx-auto max-w-4xl pt-32 flex flex-col items-center gap-6">
+      <SkeletonPulse className="w-24 h-5 rounded-full" />
+      <SkeletonPulse className="w-3/4 h-12 md:h-16" />
+      <SkeletonPulse className="w-2/3 h-6" />
+      <SkeletonPulse className="w-40 h-12 rounded-full mt-4" />
+    </div>
+    {/* Fake content blocks */}
+    <div className="container mx-auto max-w-5xl pt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <SkeletonPulse className="h-48 md:col-span-2" />
+      <SkeletonPulse className="h-48" />
+      <SkeletonPulse className="h-48" />
+      <SkeletonPulse className="h-48 md:col-span-2" />
     </div>
   </div>
 );

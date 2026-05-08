@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Terminal, Bot, Code2, Smartphone, Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
-import SEOHead, { createServiceSchema } from '../components/SEOHead';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import CaseStudyCard from '../components/CaseStudyCard';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import TestimonialQuote from '../components/TestimonialQuote';
 
 const Tech: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -56,7 +57,7 @@ const Tech: React.FC = () => {
         title="Tech — AI, Automation & Web Apps"
         description="Stop doing busywork. PureCreativity Tech designs simple automations, lightweight web apps, and AI-powered systems that remove friction and give you hours back every week."
         path="/tech"
-        jsonLd={createServiceSchema('PureCreativity Tech', 'AI automation, PWA development, and SaaS solutions for entrepreneurs and small businesses.', '/tech')}
+        jsonLd={[createServiceSchema('PureCreativity Tech', 'AI automation, PWA development, and SaaS solutions for entrepreneurs and small businesses.', '/tech'), createFAQSchema(faqItems.map(f => ({ question: f.q, answer: f.a })))]}
       />
       <Navigation theme="tech" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="tech" />
@@ -107,13 +108,13 @@ const Tech: React.FC = () => {
               </a>
               <button
                 onClick={() => setIsScannerOpen(true)}
-                className="text-xs text-slate-500 mt-2 sm:mt-3 font-mono hover:text-cyan-400 transition-colors"
+                className="text-xs text-slate-500 mt-2 sm:mt-3 font-mono hover:text-cyan-400 transition-colors py-3"
               >
                 &gt; Initialize systems scan
               </button>
             </div>
 
-            <Link to="/business" className="mt-6 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+            <Link to="/business" className="mt-6 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2 group py-3">
               Not sure where to start? Start with the Blueprint <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -344,6 +345,14 @@ const Tech: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Testimonial */}
+      <TestimonialQuote
+        quote="They automated our entire client onboarding flow in under a week. What used to take us 3 hours per client now takes 10 minutes."
+        author="D. Martinez"
+        role="Freelance Consultant"
+        accentColor="cyan"
+      />
 
       {/* FAQ — Accordion */}
       <div className="py-24 px-6 border-t border-cyan-900/30">

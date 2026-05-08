@@ -9,6 +9,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import TestimonialQuote from '../components/TestimonialQuote';
 
 const Media: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -27,7 +28,7 @@ const Media: React.FC = () => {
         title="Media — AI-Powered Content Studio"
         description="Turn ideas and raw assets into scroll-stopping content using AI + design tools. From ebooks and ads to reels and brand visuals."
         path="/media"
-        jsonLd={createServiceSchema('PureCreativity Media', 'AI-powered content creation, editing, and creative direction for brands and entrepreneurs.', '/media')}
+        jsonLd={[createServiceSchema('PureCreativity Media', 'AI-powered content creation, editing, and creative direction for brands and entrepreneurs.', '/media'), createFAQSchema(faqItems.map(f => ({ question: f.q, answer: f.a })))]}
       />
       <Navigation theme="media" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="media" />
@@ -89,7 +90,7 @@ const Media: React.FC = () => {
               </button>
             </div>
 
-            <Link to="/business" className="mt-6 text-xs text-zinc-600 hover:text-orange-400 transition-colors inline-flex items-center gap-1">
+            <Link to="/business" className="mt-6 text-xs text-zinc-600 hover:text-orange-400 transition-colors inline-flex items-center gap-1 py-3">
               Not sure where to start? Start with the Blueprint <ArrowRight size={12} />
             </Link>
           </div>
@@ -179,7 +180,7 @@ const Media: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[200px] md:auto-rows-[240px]">
             {/* AI Content Creation — Hero card */}
             <div className="group relative md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/30 transition-all duration-500 bg-zinc-900">
-              <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=60&w=800&auto=format&fit=crop" alt="Creative workspace" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=60&w=800&auto=format&fit=crop" alt="Creative workspace" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -265,6 +266,14 @@ const Media: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Testimonial */}
+      <TestimonialQuote
+        quote="We went from zero social presence to a full content library in 3 weeks. The quality blew us away — our engagement tripled."
+        author="K. Williams"
+        role="Brand Founder"
+        accentColor="orange"
+      />
 
       {/* FAQ — Accordion */}
       <div className="py-24 px-6">

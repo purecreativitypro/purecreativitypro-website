@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Search, PenTool, Target, TrendingUp, Lightbulb, Layers, Users, HelpCircle, ArrowRight, Rocket, BarChart3 } from 'lucide-react';
-import SEOHead, { createServiceSchema } from '../components/SEOHead';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import TestimonialQuote from '../components/TestimonialQuote';
 
 const Business: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -27,7 +28,7 @@ const Business: React.FC = () => {
         title="Business — Launch, Scale & Monetize"
         description="Turn your skills into income. PureCreativity Business helps entrepreneurs go from idea to offer to revenue with clear structure and real execution."
         path="/business"
-        jsonLd={createServiceSchema('PureCreativity Business', 'Business strategy, offer design, funnel building, and audience growth for entrepreneurs.', '/business')}
+        jsonLd={[createServiceSchema('PureCreativity Business', 'Business strategy, offer design, funnel building, and audience growth for entrepreneurs.', '/business'), createFAQSchema(faqItems.map(f => ({ question: f.q, answer: f.a })))]}
       />
       <Navigation theme="business" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="business" />
@@ -226,6 +227,14 @@ const Business: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Testimonial */}
+      <TestimonialQuote
+        quote="I had the idea for months but couldn't figure out the first step. After one session, I had a clear offer, a funnel, and my first 3 clients within 2 weeks."
+        author="T. Reeves"
+        role="Side Hustle → Full-Time"
+        accentColor="emerald"
+      />
 
       {/* FAQ — Accordion */}
       <div className="py-24 px-6">

@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { ArrowRight, Download, BookOpen, Star, Zap, MonitorPlay, Music, Cpu, BarChart3, Aperture, Check } from 'lucide-react';
-import SEOHead from '../components/SEOHead';
+import SEOHead, { createFAQSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import TestimonialQuote from '../components/TestimonialQuote';
 
 const Learn: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -17,6 +18,13 @@ const Learn: React.FC = () => {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const faqItems = [
+    { q: "Are the free guides really free?", a: "Yes — no email required for most guides. We want you to start learning immediately." },
+    { q: "Do I need experience?", a: "No. Everything is designed for beginners. If you can follow steps, you can use these." },
+    { q: "What tools do I need?", a: "Most guides use free tools. Any paid recommendations are clearly marked." },
+    { q: "Can I request a topic?", a: "Yes — reach out and let us know what you want to learn. We prioritize requests." },
+  ];
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans selection:bg-amber-500/30 selection:text-amber-100 relative overflow-x-hidden">
       <Navigation theme="learn" />
@@ -25,6 +33,7 @@ const Learn: React.FC = () => {
         title="Learn — Free Guides, Starter Kits & Mini Courses"
         description="Short, beginner-friendly guides to help you use AI, create better content, learn creative tools, and turn your skills into something real."
         path="/learn"
+        jsonLd={createFAQSchema(faqItems.map(f => ({ question: f.q, answer: f.a })))}
       />
 
       {/* Grid Background */}
@@ -247,6 +256,24 @@ const Learn: React.FC = () => {
           >
             START YOUR BLUEPRINT
           </a>
+        </div>
+      </div>
+
+      {/* Testimonial */}
+      <TestimonialQuote
+        quote="I downloaded the free AI guide thinking it would be basic — it wasn't. I implemented three automations that same weekend and saved myself 5 hours a week."
+        author="J. Rivera"
+        role="Content Creator"
+        accentColor="amber"
+      />
+
+      {/* FAQ — Accordion */}
+      <div className="py-24 px-6">
+        <div className="container mx-auto max-w-3xl">
+          <ScrollReveal direction="up" distance={20}>
+            <h2 className="text-3xl font-bold mb-12 text-center text-white">FAQ</h2>
+          </ScrollReveal>
+          <FAQAccordion items={faqItems} accentColor="amber" />
         </div>
       </div>
 

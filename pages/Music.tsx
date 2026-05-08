@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
 import { Disc, Radio, Play, Check, ArrowRight } from 'lucide-react';
-import SEOHead, { createServiceSchema } from '../components/SEOHead';
+import SEOHead, { createServiceSchema, createFAQSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import CaseStudyCard from '../components/CaseStudyCard';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import TestimonialQuote from '../components/TestimonialQuote';
 
 // Inline audio player component
 const AudioPlayer: React.FC<{ title: string; subtitle: string; accent: string }> = ({ title, subtitle, accent }) => (
@@ -46,7 +47,7 @@ const Music: React.FC = () => {
         title="Music — Production, Scoring & Sound Design"
         description="Custom music production, film scoring, and sound design. We create original compositions that elevate your brand, content, and artistic identity."
         path="/music"
-        jsonLd={createServiceSchema('PureCreativity Music', 'Custom music production, scoring, and sound design for artists, brands, and content creators.', '/music')}
+        jsonLd={[createServiceSchema('PureCreativity Music', 'Custom music production, scoring, and sound design for artists, brands, and content creators.', '/music'), createFAQSchema(faqItems.map(f => ({ question: f.q, answer: f.a })))]}
       />
       <Navigation theme="music" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="music" />
@@ -331,6 +332,14 @@ const Music: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Testimonial */}
+      <TestimonialQuote
+        quote="The score they wrote for my short film elevated the entire project. The judges specifically mentioned the music as a standout."
+        author="A. Chen"
+        role="Filmmaker"
+        accentColor="fuchsia"
+      />
 
       {/* FAQ — Accordion */}
       <div className="py-24 px-6">

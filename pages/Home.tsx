@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen, Check, Star, Compass, Briefcase, Sun, Moon } from 'lucide-react';
 import { useScroll, useTransform, motion } from 'framer-motion';
-import SEOHead, { organizationSchema, websiteSchema } from '../components/SEOHead';
+import SEOHead, { organizationSchema, websiteSchema, createFAQSchema } from '../components/SEOHead';
+import FAQAccordion from '../components/FAQAccordion';
 import Footer from '../components/Footer';
 import ScrollReveal, { StaggerContainer } from '../components/ScrollReveal';
 import AnimatedCounter from '../components/AnimatedCounter';
@@ -13,6 +14,14 @@ import EmailCapture from '../components/EmailCapture';
 
 // Centralized booking URL for easy updates
 const BOOKING_URL = "https://tidycal.com/purecreativitypro/purecreativity-blueprint-session";
+
+const homeFAQs = [
+  { q: "What is PureCreativity?", a: "PureCreativity is a convergence hub — five studios (Tech, Music, Media, Business, Learn) under one roof. We help side hustlers and entrepreneurs stop guessing and start building with clear direction." },
+  { q: "How do I know which studio I need?", a: "Book a free Blueprint Session. We'll assess your current situation and point you to the right studio — or a combination of them." },
+  { q: "What's a Blueprint Session?", a: "A 30-minute clarity call where we break down your goal, identify the gaps, and map out a concrete next step. No pitch, no pressure." },
+  { q: "Do you work with beginners?", a: "Absolutely. Most of our clients are starting from scratch or pivoting. We meet you where you are." },
+  { q: "How much does it cost?", a: "It depends on scope. We offer everything from free guides to full-service packages. The Blueprint Session helps us tailor a recommendation to your budget." },
+];
 
 const Home: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
@@ -199,7 +208,7 @@ const Home: React.FC = () => {
         title="PureCreativity"
         description="The Convergence Hub — Tech, Music, Media, and Business solutions for entrepreneurs and side hustlers. Stop guessing, get clear, and build momentum."
         path="/"
-        jsonLd={[organizationSchema, websiteSchema]}
+        jsonLd={[organizationSchema, websiteSchema, createFAQSchema(homeFAQs.map(f => ({ question: f.q, answer: f.a })))]}
       />
       
       {/* 1. HERO SECTION: "THE CONVERGENCE HUB" */}
@@ -604,7 +613,7 @@ const Home: React.FC = () => {
             {/* TECH — spans 3 cols, 2 rows */}
             <Link to="/tech" onMouseEnter={() => setHoveredSection('tech')} onMouseLeave={() => setHoveredSection(null)}
               className="group relative md:col-span-3 md:row-span-2 rounded-2xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=70&w=900&auto=format&fit=crop" alt="Code on a dark screen" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=70&w=900&auto=format&fit=crop" alt="Code on a dark screen" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -620,7 +629,7 @@ const Home: React.FC = () => {
             {/* MUSIC — spans 3 cols */}
             <Link to="/music" onMouseEnter={() => setHoveredSection('music')} onMouseLeave={() => setHoveredSection(null)}
               className="group relative md:col-span-3 rounded-2xl overflow-hidden border border-white/10 hover:border-fuchsia-500/40 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=900&auto=format&fit=crop" alt="Music studio with neon lighting" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=70&w=900&auto=format&fit=crop" alt="Music studio with neon lighting" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -636,7 +645,7 @@ const Home: React.FC = () => {
             {/* MEDIA — spans 3 cols */}
             <Link to="/media" onMouseEnter={() => setHoveredSection('media')} onMouseLeave={() => setHoveredSection(null)}
               className="group relative md:col-span-3 rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/40 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=70&w=900&auto=format&fit=crop" alt="Camera lens close-up with bokeh" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=70&w=900&auto=format&fit=crop" alt="Camera lens close-up with bokeh" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -652,7 +661,7 @@ const Home: React.FC = () => {
             {/* BUSINESS — spans 4 cols */}
             <Link to="/business" onMouseEnter={() => setHoveredSection('business')} onMouseLeave={() => setHoveredSection(null)}
               className="group relative md:col-span-4 rounded-2xl overflow-hidden border border-white/10 hover:border-emerald-500/40 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=70&w=900&auto=format&fit=crop" alt="Business analytics dashboard on screen" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=70&w=900&auto=format&fit=crop" alt="Business analytics dashboard on screen" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -668,7 +677,7 @@ const Home: React.FC = () => {
             {/* LEARN — spans 2 cols */}
             <Link to="/learn" onMouseEnter={() => setHoveredSection('learn')} onMouseLeave={() => setHoveredSection(null)}
               className="group relative md:col-span-2 rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/40 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=70&w=900&auto=format&fit=crop" alt="Open book with warm lighting" loading="lazy"
+              <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=70&w=900&auto=format&fit=crop" alt="Open book with warm lighting" loading="lazy" width="900" height="600"
                 className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
@@ -682,6 +691,19 @@ const Home: React.FC = () => {
             </Link>
 
           </div>
+        </div>
+      </section>
+
+      {/* FAQ SECTION */}
+      <section className="py-20 md:py-28 px-6 bg-[#050505] border-t border-white/10">
+        <div className="container mx-auto max-w-3xl">
+          <ScrollReveal direction="up" distance={20}>
+            <div className="text-center mb-14">
+              <div className="inline-block border border-white/10 bg-white/5 px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase text-zinc-400 mb-4">Questions?</div>
+              <h2 className="text-3xl md:text-4xl font-afro font-bold text-white">Frequently Asked</h2>
+            </div>
+          </ScrollReveal>
+          <FAQAccordion items={homeFAQs} accentColor="cyan" />
         </div>
       </section>
 

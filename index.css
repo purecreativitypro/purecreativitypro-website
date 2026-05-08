@@ -117,3 +117,19 @@ html {
 .cursor-custom [role="button"] {
   cursor: none;
 }
+
+/* ================================================================
+   Accessibility: Respect prefers-reduced-motion
+   Pauses all CSS animations and removes transitions for users
+   who have enabled "Reduce motion" in their OS settings.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
