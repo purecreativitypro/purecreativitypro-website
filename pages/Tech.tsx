@@ -2,11 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
-import { Terminal, Bot, Code2, Smartphone, Zap, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Terminal, Bot, Code2, Smartphone, Zap, ArrowRight, CheckCircle2 } from 'lucide-react';
 import SEOHead, { createServiceSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import CaseStudyCard from '../components/CaseStudyCard';
+import SocialProofBar from '../components/SocialProofBar';
+import FAQAccordion from '../components/FAQAccordion';
+import CrossStudioLinks from '../components/CrossStudioLinks';
 
 const Tech: React.FC = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -14,36 +17,37 @@ const Tech: React.FC = () => {
   const codeRef = useRef<HTMLDivElement>(null);
   const [startTyping, setStartTyping] = useState(false);
 
+  // Start typing on page load (hero is always visible)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-        ([entry]) => {
-            if (entry.isIntersecting) {
-                setStartTyping(true);
-            }
-        },
-        { threshold: 0.4 }
-    );
-    if (codeRef.current) observer.observe(codeRef.current);
-    return () => observer.disconnect();
+    const timer = setTimeout(() => setStartTyping(true), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (startTyping && codeStep < 8) { // Go to 8 to show final cursor state
-        const timeout = setTimeout(() => {
-            setCodeStep(prev => prev + 1);
-        }, 500); 
-        return () => clearTimeout(timeout);
+    if (startTyping && codeStep < 8) {
+      const timeout = setTimeout(() => {
+        setCodeStep(prev => prev + 1);
+      }, 500);
+      return () => clearTimeout(timeout);
     }
   }, [startTyping, codeStep]);
 
   const codeLines = [
-    { id: "01", content: <><span className="text-purple-400">const</span> <span className="text-blue-400">businessGrowth</span> = <span className="text-yellow-300">async</span> () ={'>'} {'{'}</> },
-    { id: "02", content: <><span className="ml-4 text-slate-300">await</span> <span className="text-green-400">PureCreativity</span>.optimize({'{'}</> },
+    { id: "01", content: <><span className="text-purple-400">const</span> <span className="text-blue-400">businessGrowth</span> = <span className="text-yellow-300">async</span> () ={">"} {"{"}</> },
+    { id: "02", content: <><span className="ml-4 text-slate-300">await</span> <span className="text-green-400">PureCreativity</span>.optimize({"{"}</> },
     { id: "03", content: <><span className="ml-8 text-cyan-300">efficiency</span>: <span className="text-orange-400">"MAXIMUM"</span>,</> },
     { id: "04", content: <><span className="ml-8 text-cyan-300">techStack</span>: <span className="text-orange-400">["AI", "React", "Cloud"]</span></> },
-    { id: "05", content: <><span className="ml-4">{'}'});</span></> },
+    { id: "05", content: <><span className="ml-4">{"}"});</span></> },
     { id: "06", content: <><span className="text-slate-300">return</span> <span className="text-green-400">profit</span>;</> },
-    { id: "07", content: <>{'}'}</> }
+    { id: "07", content: <>{"}"}</> }
+  ];
+
+  const faqItems = [
+    { q: "Do I need to be technical to work with you?", a: "Not at all. You describe the problem; we build the solution. We handle all the code, hosting, and deployment." },
+    { q: "How long does a typical project take?", a: "Most automations are live within 1-2 weeks. Larger apps (PWAs, SaaS) typically take 4-8 weeks depending on scope." },
+    { q: "What if I don't know what I need?", a: "Start with a free systems scan. We'll identify your biggest bottlenecks and recommend the simplest solution." },
+    { q: "Do you offer support after launch?", a: "Yes. Every build comes with a support window, and we offer ongoing maintenance plans for larger systems." },
+    { q: "What's the cost?", a: "Projects range from $500 (automations) to $5K+ (full apps). We scope everything upfront — no surprises." },
   ];
 
   return (
@@ -56,10 +60,10 @@ const Tech: React.FC = () => {
       />
       <Navigation theme="tech" />
       <ScannerModal isOpen={isScannerOpen} onClose={() => setIsScannerOpen(false)} theme="tech" />
-      
-      {/* Grid Background Effect - Optimized */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-20" 
+
+      {/* Grid Background Effect */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-20"
         style={{
           backgroundImage: 'linear-gradient(#083344 1px, transparent 1px), linear-gradient(90deg, #083344 1px, transparent 1px)',
           backgroundSize: '24px 24px',
@@ -68,232 +72,253 @@ const Tech: React.FC = () => {
         }}
       />
 
-      {/* Hero */}
+      {/* HERO — Split Layout: Text Left, Terminal Right */}
       <div className="relative pt-32 pb-16 container mx-auto px-6 max-w-6xl">
-        <div className="flex flex-col items-start border-l-2 border-cyan-500/30 pl-8 ml-4 md:ml-0">
-          <h4 className="text-cyan-600 mb-4 uppercase tracking-widest text-sm font-bold flex items-center gap-2">
-            <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full"></span>
-            SYSTEM ONLINE — YOUR OPERATIONS, SIMPLIFIED
-          </h4>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 text-white leading-tight tracking-tight break-words">
-            Stop Doing Busywork. <br />
-            {/* Mobile Glitch Effect via CSS animation keyframes defined in tailwind config or arbitrary values if needed, sticking to standard class composition here */}
-            <span className="text-cyan-400 animate-pulse md:animate-none">Run Your Business on Smart Systems.</span>
-          </h1>
-          <p className="text-slate-300 max-w-3xl text-lg md:text-2xl mb-8 leading-relaxed font-light">
-            You’re building something real — but your time is getting eaten by admin, follow-ups, and duct-taped tools.
-            PureCreativity Tech designs simple automations and lightweight web apps that remove friction, protect your data, and give you hours back every week.
-          </p>
-          
-          {/* Alignment Line */}
-          <p className="text-cyan-200/80 font-mono text-sm mb-10">
-             &gt; Already have an offer? We’ll build the system that runs it.
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col">
-                <a 
-                  href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95 cursor-pointer"
-                >
-                    <Terminal size={18} />
-                    <span>START A PROJECT</span>
-                    <span className="block w-2 h-4 bg-cyan-500 animate-pulse"></span>
-                </a>
-                <button 
-                  onClick={() => setIsScannerOpen(true)}
-                  className="text-xs text-slate-500 mt-2 font-mono ml-1 hover:text-cyan-400 transition-colors text-left"
-                >
-                  &gt; Initialize 10-minute systems scan
-                </button>
-            </div>
-            <a href="#" className="group text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 text-sm md:mt-3.5 pb-0.5">
-                <span className="border-b border-transparent group-hover:border-cyan-400 transition-colors">See what we build</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-          
-          {/* Secondary Blueprint CTA */}
-          <Link to="/business" className="mt-6 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-              Not sure where to start? Start with the Blueprint <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Services Matrix */}
-      <div className="container mx-auto px-6 max-w-6xl py-16">
-        {/* Best For Line */}
-        <div className="mb-10 text-xs font-mono text-slate-500 tracking-wide border-b border-cyan-900/30 pb-4 inline-block">
-            <span className="text-cyan-500 font-bold mr-2">&gt; BEST FOR:</span> 
-            automations, client portals, payments, internal workflows, lightweight SaaS/PWAs.
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          
-          <ScrollReveal key={0} direction="up" delay={0} blur={4} distance={25}>
-          <ServiceCard 
-            icon={<Bot className="text-cyan-300" size={32} />}
-            title="AI & Automation"
-            code="workflow.optimize()"
-            description="Stop repeating yourself. We automate the tasks that steal your focus — messages, data entry, follow-ups, file handling, and internal workflows — so your business runs even when you're offline."
-            delay={0}
-          />
-          </ScrollReveal>
-          
-          <ScrollReveal key={1} direction="up" delay={0.12} blur={4} distance={25}>
-          <ServiceCard 
-            icon={<Smartphone className="text-cyan-300" size={32} />}
-            title="PWA Development"
-            code="app.deploy({ mobile: true })"
-            description='Want an "app" without app-store headaches? We build fast, installable Progressive Web Apps that feel native, load instantly, and keep your team moving from any device.'
-            delay={1}
-          />
-          </ScrollReveal>
-
-          <ScrollReveal key={2} direction="up" delay={0.24} blur={4} distance={25}>
-          <ServiceCard 
-            icon={<Code2 className="text-cyan-300" size={32} />}
-            title="SaaS Solutions"
-            code="scale.up()"
-            description="Turn your process into a product. We build secure, scalable web platforms — from client portals to multi-tenant SaaS — designed to grow without complexity."
-            delay={2}
-          />
-          </ScrollReveal>
-
-        </div>
-      </div>
-
-      {/* Feature Section: Code is Leverage */}
-      <div className="border-t border-cyan-900/30 bg-slate-900/50 py-20 relative">
-        <div className="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center gap-12">
-          <div className="w-full md:w-1/2">
-             <div 
-                ref={codeRef}
-                className="bg-slate-950 border border-slate-800 rounded-lg p-4 shadow-2xl relative overflow-hidden group min-h-[220px]"
-             >
-                {/* Mobile scanline effect */}
-                <div className="absolute inset-0 bg-cyan-500/10 h-1 w-full animate-[float_3s_ease-in-out_infinite] md:hidden pointer-events-none opacity-50"></div>
-                
-                <div className="flex gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-
-                <div className="space-y-2 font-mono text-sm overflow-x-auto">
-                    {codeLines.map((line, i) => (
-                        <div key={line.id} className={`flex ${i < codeStep ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-                            <span className="text-slate-500 mr-4 select-none">{line.id}</span>
-                            <div className="relative">
-                                {line.content}
-                                {/* Cursor: Show on current typing line OR at end of last line if done */}
-                                {(i === codeStep - 1 && codeStep <= 7) && (
-                                    <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 align-middle animate-pulse"></span>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                    {/* Idle Cursor at end */}
-                    {codeStep > 7 && (
-                        <div className="flex">
-                            <span className="text-slate-500 mr-4 select-none">08</span>
-                            <span className="inline-block w-2 h-4 bg-cyan-500 animate-pulse"></span>
-                        </div>
-                    )}
-                </div>
-
-             </div>
-          </div>
-          <div className="w-full md:w-1/2">
-            <h3 className="text-2xl font-bold text-white mb-4">Code is Leverage.</h3>
-            <p className="text-slate-400 mb-6">
-              You don't need to be a developer to benefit from software.
-              We translate what you do manually into clean, reliable systems — so your business is easier to run, easier to scale, and harder to break.
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left: Text */}
+          <div className="border-l-2 border-cyan-500/30 pl-8">
+            <h4 className="text-cyan-600 mb-4 uppercase tracking-widest text-sm font-bold flex items-center gap-2">
+              <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full" />
+              SYSTEM ONLINE
+            </h4>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-white leading-tight tracking-tight break-words font-sans">
+              Stop Doing Busywork.<br />
+              <span className="text-cyan-400">Run Smart Systems.</span>
+            </h1>
+            <p className="text-slate-300 text-lg md:text-xl mb-4 leading-relaxed font-light font-sans">
+              Your time is getting eaten by admin, follow-ups, and duct-taped tools.
+              We design simple automations and lightweight web apps that give you hours back every week.
             </p>
-            <ul className="space-y-3 mb-8">
-              {[
-                "Client Portals & Admin Dashboards",
-                "Payments, Scheduling & Tool Integrations",
-                "Databases, Reporting & Clean Data Flow",
-                "Performance, Security & Long-Term Maintainability"
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-cyan-200">
-                  <Zap size={16} /> {item}
-                </li>
-              ))}
-            </ul>
-            <a 
-              href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-400 font-bold hover:text-white transition-colors flex items-center gap-2 cursor-pointer"
+
+            <p className="text-cyan-200/80 font-mono text-sm mb-10">
+              &gt; Already have an offer? We'll build the system that runs it.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              <a
+                href="https://tidycal.com/purecreativitypro/purecreativity-blueprint-session"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border border-cyan-500 text-cyan-500 px-8 py-3 hover:bg-cyan-500/10 transition-all flex items-center gap-3 active:scale-95 cursor-pointer"
+              >
+                <Terminal size={18} />
+                <span>START A PROJECT</span>
+                <span className="block w-2 h-4 bg-cyan-500 animate-pulse" />
+              </a>
+              <button
+                onClick={() => setIsScannerOpen(true)}
+                className="text-xs text-slate-500 mt-2 sm:mt-3 font-mono hover:text-cyan-400 transition-colors"
+              >
+                &gt; Initialize systems scan
+              </button>
+            </div>
+
+            <Link to="/business" className="mt-6 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              Not sure where to start? Start with the Blueprint <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Right: Floating Terminal Window — Always visible */}
+          <div className="hidden md:block">
+            <div
+              ref={codeRef}
+              className="bg-slate-950 border border-slate-800 rounded-lg p-5 shadow-[0_0_40px_rgba(8,145,178,0.15)] relative overflow-hidden"
             >
-                &gt; REQUEST A BUILD QUOTE
-            </a>
+              {/* Scanline effect */}
+              <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent h-1 w-full animate-[float_3s_ease-in-out_infinite] pointer-events-none opacity-50" />
+
+              <div className="flex gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <span className="text-[10px] text-slate-600 ml-2 mt-0.5">purecreativity.sh</span>
+              </div>
+
+              <div className="space-y-2 font-mono text-sm">
+                {codeLines.map((line, i) => (
+                  <div key={line.id} className={`flex ${i < codeStep ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+                    <span className="text-slate-500 mr-4 select-none">{line.id}</span>
+                    <div className="relative">
+                      {line.content}
+                      {(i === codeStep - 1 && codeStep <= 7) && (
+                        <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 align-middle animate-pulse" />
+                      )}
+                    </div>
+                  </div>
+                ))}
+                {codeStep > 7 && (
+                  <div className="flex">
+                    <span className="text-slate-500 mr-4 select-none">08</span>
+                    <span className="inline-block w-2 h-4 bg-cyan-500 animate-pulse" />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      {/* The Plan Section */}
-      <div className="container mx-auto px-6 max-w-6xl py-20 border-t border-cyan-900/30">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">The Plan</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-              {[
-                  { step: "01", title: "Describe the bottleneck", desc: "what’s slowing you down" },
-                  { step: "02", title: "We build the system", desc: "automation or app — simple + secure" },
-                  { step: "03", title: "You run lighter", desc: "launch + handoff + support" }
-              ].map((item, i) => (
-                  <div key={i} className="relative bg-slate-900/50 border border-slate-800 p-8 hover:bg-slate-900 transition-colors group">
-                      <div className="text-4xl font-bold text-slate-800 absolute top-4 right-4 font-mono group-hover:text-cyan-900/50 transition-colors">{item.step}</div>
-                      <div className="w-10 h-10 border border-cyan-500/50 flex items-center justify-center text-cyan-400 mb-6 rounded-full bg-cyan-950/30">
-                          {i === 0 && <Database size={18} />}
-                          {i === 1 && <Code2 size={18} />}
-                          {i === 2 && <Zap size={18} />}
-                      </div>
-                      <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                      <p className="text-slate-400 text-sm">({item.desc})</p>
-                  </div>
+
+      {/* SOCIAL PROOF BAR */}
+      <SocialProofBar
+        accentColor="cyan"
+        stats={[
+          { value: 500, suffix: '+', label: 'Automations Deployed' },
+          { value: 98, suffix: '%', label: 'Uptime' },
+          { value: 48, prefix: '<', suffix: 'hr', label: 'First Draft' },
+        ]}
+      />
+
+      {/* SERVICES BENTO GRID */}
+      <div className="container mx-auto px-6 max-w-6xl py-20">
+        <ScrollReveal direction="up" distance={20}>
+          <div className="mb-12">
+            <div className="text-xs font-mono text-slate-500 tracking-wide border-b border-cyan-900/30 pb-4 inline-block">
+              <span className="text-cyan-500 font-bold mr-2">&gt; BEST FOR:</span>
+              automations, client portals, payments, internal workflows, lightweight SaaS/PWAs.
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[200px] md:auto-rows-[260px]">
+          {/* AI & Automation — Large hero card */}
+          <div className="group relative md:col-span-4 md:row-span-2 rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/40 transition-all duration-500 bg-slate-900">
+            <img
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=50&w=800&auto=format&fit=crop"
+              alt="AI workspace"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover opacity-15 group-hover:opacity-25 group-hover:scale-105 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+            <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+              <div className="w-12 h-12 bg-cyan-950/50 border border-cyan-500/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500/10 transition-colors">
+                <Bot className="text-cyan-400" size={24} />
+              </div>
+              <div className="text-xs text-cyan-600 font-mono mb-2">workflow.optimize()</div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 font-sans">AI & Automation</h3>
+              <p className="text-slate-400 text-sm leading-relaxed max-w-md font-sans">
+                Stop repeating yourself. We automate messages, data entry, follow-ups, file handling, and internal workflows — so your business runs even when you're offline.
+              </p>
+            </div>
+          </div>
+
+          {/* PWA Development */}
+          <div className="group relative md:col-span-2 rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/40 transition-all duration-500 bg-slate-900 p-6 flex flex-col justify-end">
+            <Smartphone className="text-cyan-400 mb-3" size={24} />
+            <div className="text-xs text-cyan-600 font-mono mb-1">app.deploy({"{"} mobile: true {"}"})</div>
+            <h3 className="text-xl font-bold text-white mb-1 font-sans">PWA Development</h3>
+            <p className="text-slate-500 text-xs leading-relaxed font-sans">Fast, installable web apps that feel native — no app-store headaches.</p>
+          </div>
+
+          {/* SaaS Solutions */}
+          <div className="group relative md:col-span-2 rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/40 transition-all duration-500 bg-slate-900 p-6 flex flex-col justify-end">
+            <Code2 className="text-cyan-400 mb-3" size={24} />
+            <div className="text-xs text-cyan-600 font-mono mb-1">scale.up()</div>
+            <h3 className="text-xl font-bold text-white mb-1 font-sans">SaaS Solutions</h3>
+            <p className="text-slate-500 text-xs leading-relaxed font-sans">Turn your process into a product — secure, scalable web platforms.</p>
+          </div>
+
+          {/* Code is Leverage — Full-width */}
+          <div className="group relative md:col-span-6 rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/20 transition-all duration-500 bg-gradient-to-r from-cyan-950/30 to-slate-900 p-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <Zap className="text-cyan-400 shrink-0" size={24} />
+            <div className="font-sans">
+              <h3 className="text-xl font-bold text-white mb-1">Code is Leverage.</h3>
+              <p className="text-slate-400 text-sm">You don't need to be a developer to benefit from software. We translate what you do manually into clean, reliable systems.</p>
+            </div>
+            <div className="hidden md:flex flex-wrap gap-2 ml-auto shrink-0">
+              {["Client Portals", "Payments", "Scheduling", "Databases"].map((item, i) => (
+                <span key={i} className="text-xs bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-cyan-300">{item}</span>
               ))}
+            </div>
           </div>
-          <div className="mt-12 text-center">
-              <button 
-                onClick={() => setIsScannerOpen(true)}
-                className="group bg-cyan-600 text-white px-8 py-3 font-bold hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 inline-flex items-center gap-2"
-              >
-                  &gt; RUN SYSTEMS SCAN
-              </button>
-          </div>
+        </div>
       </div>
 
-      {/* What This Unlocks Section */}
-      <div className="bg-slate-900/30 border-t border-cyan-900/30 py-20">
-          <div className="container mx-auto px-6 max-w-4xl text-center">
-              <h2 className="text-3xl font-bold text-white mb-10">What This Unlocks</h2>
-              <div className="grid md:grid-cols-2 gap-x-12 gap-y-6 text-left">
-                  {[
-                      "Your operations stop living in your head",
-                      "Leads and customers get faster responses",
-                      "You spend more time selling, serving, and creating",
-                      "Your tools finally work together"
-                  ].map((item, i) => (
-                      <ScrollReveal key={i} direction="left" delay={i * 0.1} distance={20}>
-                        <div className="flex items-start gap-3">
-                            <CheckCircle2 className="text-cyan-500 mt-1 shrink-0" size={20} />
-                            <span className="text-slate-300 text-lg">{item}</span>
-                        </div>
-                      </ScrollReveal>
-                  ))}
-              </div>
+      {/* TECH STACK MARQUEE */}
+      <div className="w-full py-10 overflow-hidden border-y border-cyan-900/20">
+        <div className="flex whitespace-nowrap gap-12 animate-marquee w-max items-center text-sm tracking-[0.15em] font-bold text-cyan-500/30 will-change-transform">
+          {[1, 2, 3].map(i => (
+            <React.Fragment key={i}>
+              <span>REACT</span><span>•</span>
+              <span>FIREBASE</span><span>•</span>
+              <span>N8N</span><span>•</span>
+              <span>STRIPE</span><span>•</span>
+              <span>OPENAI</span><span>•</span>
+              <span>CLOUD FUNCTIONS</span><span>•</span>
+              <span>TYPESCRIPT</span><span>•</span>
+              <span>VITE</span><span>•</span>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
+      {/* THE PLAN */}
+      <div className="container mx-auto px-6 max-w-5xl py-24">
+        <ScrollReveal direction="up" distance={20}>
+          <h2 className="text-3xl font-bold text-white mb-16 text-center font-sans">The Plan</h2>
+        </ScrollReveal>
+
+        <div className="relative">
+          {/* Connector line */}
+          <div className="hidden md:block absolute top-8 left-[10%] right-[10%] h-px bg-slate-800" />
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { step: "01", title: "Describe the bottleneck", desc: "what's slowing you down" },
+              { step: "02", title: "We build the system", desc: "automation or app — simple + secure" },
+              { step: "03", title: "You run lighter", desc: "launch + handoff + support" }
+            ].map((item, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.1} distance={20}>
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-6 relative z-10 group-hover:border-cyan-500/50 group-hover:bg-cyan-950/20 transition-all">
+                    <span className="text-lg font-bold text-cyan-400">{item.step}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 font-sans">{item.title}</h3>
+                  <p className="text-slate-500 text-sm font-sans">({item.desc})</p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
+        </div>
+
+        <div className="mt-14 text-center">
+          <button
+            onClick={() => setIsScannerOpen(true)}
+            className="group bg-cyan-600 text-white px-8 py-3 font-bold hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 inline-flex items-center gap-2"
+          >
+            &gt; RUN SYSTEMS SCAN
+          </button>
+        </div>
+      </div>
+
+      {/* WHAT THIS UNLOCKS */}
+      <div className="bg-slate-900/30 border-t border-cyan-900/30 py-20">
+        <div className="container mx-auto px-6 max-w-4xl text-center">
+          <ScrollReveal direction="up" distance={20}>
+            <h2 className="text-3xl font-bold text-white mb-10 font-sans">What This Unlocks</h2>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-x-12 gap-y-6 text-left">
+            {[
+              "Your operations stop living in your head",
+              "Leads and customers get faster responses",
+              "You spend more time selling, serving, and creating",
+              "Your tools finally work together"
+            ].map((item, i) => (
+              <ScrollReveal key={i} direction="left" delay={i * 0.1} distance={20}>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="text-cyan-500 mt-1 shrink-0" size={20} />
+                  <span className="text-slate-300 text-lg font-sans">{item}</span>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* RECENT WORK */}
       <div className="py-24 px-6 bg-slate-950">
         <div className="container mx-auto max-w-5xl">
           <ScrollReveal direction="up" distance={20}>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-12 text-center">Recent Work</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-12 text-center font-sans">Recent Work</h2>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-6">
             <ScrollReveal direction="left" delay={0} distance={20}>
@@ -320,22 +345,23 @@ const Tech: React.FC = () => {
         </div>
       </div>
 
+      {/* FAQ — Accordion */}
+      <div className="py-24 px-6 border-t border-cyan-900/30">
+        <div className="container mx-auto max-w-3xl">
+          <ScrollReveal direction="up" distance={20}>
+            <h2 className="text-3xl font-bold text-white mb-12 text-center font-sans">FAQ</h2>
+          </ScrollReveal>
+          <FAQAccordion items={faqItems} accentColor="cyan" />
+        </div>
+      </div>
+
+      {/* CROSS-STUDIO LINKS */}
+      <CrossStudioLinks />
+
+      {/* SHARED FOOTER */}
       <Footer theme="tech" />
     </div>
   );
 };
-
-const ServiceCard: React.FC<{ icon: React.ReactNode; title: string; code: string; description: string; delay: number }> = ({ icon, title, code, description, delay }) => (
-  // Added conditional animation for mobile: animate-pulse on the border-color to simulate scanning
-  <div 
-    className="bg-slate-900 border border-slate-800 p-6 hover:border-cyan-500/50 transition-colors group cursor-default md:animate-none animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
-    style={{ animationDelay: `${delay * 1}s` }}
-  >
-    <div className="mb-4 p-3 bg-slate-950 inline-block rounded border border-slate-800 group-hover:text-cyan-400 transition-colors">{icon}</div>
-    <div className="font-mono text-xs text-slate-500 mb-2">{code}</div>
-    <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-    <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
-  </div>
-);
 
 export default Tech;
