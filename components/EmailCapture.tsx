@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, CheckCircle, Loader2 } from 'lucide-react';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { app } from '../lib/firebase';
+import { sendSubscriber } from '../lib/webhookService';
 
 const db = getFirestore(app);
 
@@ -20,6 +21,10 @@ const EmailCapture: React.FC = () => {
         createdAt: serverTimestamp(),
         source: 'website-email-capture',
       });
+
+      // Fire webhook via Cloud Function proxy (non-blocking)
+      sendSubscriber({ email }, 'home');
+
       setStatus('success');
       setEmail('');
     } catch {

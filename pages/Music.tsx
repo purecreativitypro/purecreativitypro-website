@@ -10,6 +10,7 @@ import CaseStudyCard from '../components/CaseStudyCard';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import ContactForm from '../components/ContactForm';
 import TestimonialQuote from '../components/TestimonialQuote';
 
 // Inline audio player component
@@ -350,6 +351,18 @@ const Music: React.FC = () => {
           <FAQAccordion items={faqItems} accentColor="fuchsia" />
         </div>
       </div>
+
+      {/* CONTACT FORM */}
+      <section className="relative py-24 px-4 sm:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 text-fuchsia-400 text-[11px] font-mono tracking-[0.2em] uppercase mb-4">
+            <Disc size={14} /> Get In Touch
+          </div>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Ready to Sound Different?</h2>
+          <p className="text-zinc-400 text-sm mb-10 max-w-md mx-auto">Tell us about your sonic vision and we'll compose the soundtrack.</p>
+          <ContactForm defaultService="music" accentColor="fuchsia" source="music" />
+        </div>
+      </section>
 
       {/* CROSS-STUDIO LINKS */}
       <CrossStudioLinks />

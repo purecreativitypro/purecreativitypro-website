@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, Loader2, Terminal, BarChart3, Wand2, AlertTriangle, ArrowRight, BrainCircuit, Scan, BookOpen } from 'lucide-react';
+import { X, Check, Loader2, Terminal, BarChart3, Wand2, AlertTriangle, ArrowRight, BrainCircuit, Scan, BookOpen, Music2, Mail } from 'lucide-react';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { app } from '../lib/firebase';
+import { sendScanResult } from '../lib/webhookService';
 
-export type ScannerTheme = 'tech' | 'media' | 'business' | 'learn';
+const db = getFirestore(app);
+
+export type ScannerTheme = 'tech' | 'media' | 'business' | 'learn' | 'music';
 
 interface ScannerModalProps {
   isOpen: boolean;
@@ -10,10 +15,14 @@ interface ScannerModalProps {
 }
 
 const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) => {
-  const [step, setStep] = useState<'intro' | 'questions' | 'processing' | 'result'>('intro');
+  const [step, setStep] = useState<'intro' | 'questions' | 'processing' | 'email' | 'result'>('intro');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [processingLog, setProcessingLog] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   
   // Reset state when opening
   useEffect(() => {
@@ -21,6 +30,10 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
       setStep('intro');
       setCurrentQuestion(0);
       setAnswers([]);
+      setEmail('');
+      setName('');
+      setEmailError('');
+      setIsSaving(false);
     }
   }, [isOpen]);
 
@@ -56,6 +69,22 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         { q: 'How consistent is your posting schedule?', options: ['Daily / Systematized', 'Weekly', 'Sporadic / Random', 'Non-existent'] },
         { q: 'Do you have a clear visual identity?', options: ['Yes, a full brand guide', 'Sort of, I stick to colors', 'No, it varies every time', 'I use random templates'] },
         { q: 'What is your biggest content blocker?', options: ['Idea Generation', 'Editing & Production', 'Posting & Scheduling', 'ROI / Conversion'] }
+      ]
+    },
+    music: {
+      color: 'fuchsia',
+      bg: 'bg-neutral-950',
+      border: 'border-fuchsia-500',
+      text: 'text-fuchsia-400',
+      button: 'bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-bold',
+      icon: <Music2 size={48} />,
+      title: 'SONIC IDENTITY SCAN',
+      desc: 'Assess your audio branding, production needs, and creative direction.',
+      processingSteps: ['Analyzing sonic palette...', 'Scanning frequency spectrum...', 'Evaluating brand audio assets...', 'Composing direction report...'],
+      questions: [
+        { q: 'What do you need music or audio for?', options: ['Content / Social Media', 'Film / Video Project', 'Brand / Podcast Intro', 'Personal / Artistic'] },
+        { q: 'Do you have existing audio branding?', options: ['Yes, a full sonic identity', 'A jingle or intro', 'Just stock music', 'Nothing yet'] },
+        { q: "What's your production timeline?", options: ['ASAP (< 1 week)', '2-4 Weeks', 'Flexible / No Rush', 'Ongoing Retainer'] }
       ]
     },
     business: {
@@ -116,24 +145,23 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         setProcessingLog(config.processingSteps[stepIndex]);
       } else {
         clearInterval(interval);
-        setStep('result');
+        // Go to email gate instead of directly to result
+        setStep('email');
       }
-    }, 800); // 800ms per step
+    }, 800);
   };
 
   // Determine result copy based on answers
   const getResult = () => {
     const score = answers.reduce((a, b) => a + b, 0);
-    const maxScore = (config.questions.length * 3); // Max index is 3
+    const maxScore = (config.questions.length * 3);
     const percentage = Math.round(((maxScore - score) / maxScore) * 100);
 
     let diagnosis = "";
     let action = "";
 
     if (theme === 'learn') {
-      // Special logic for Learn: Recommendation based on Interest (Question 2 / Index 1)
       const interest = answers[1];
-      
       if (interest === 0) {
         diagnosis = "PATH: AI & AUTOMATION";
         action = "Recommended Kit: AI Starter Workflow + 10 Prompts Guide";
@@ -157,6 +185,11 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         else if (percentage > 40) diagnosis = "INCONSISTENT SIGNAL.";
         else diagnosis = "BRAND INVISIBILITY DETECTED.";
         action = "Let's build a content engine that runs without you.";
+    } else if (theme === 'music') {
+        if (percentage > 70) diagnosis = "SONIC IDENTITY: STRONG.";
+        else if (percentage > 40) diagnosis = "AUDIO GAPS DETECTED.";
+        else diagnosis = "NO SONIC IDENTITY FOUND.";
+        action = "Let's craft a sound that makes your brand unforgettable.";
     } else {
         if (percentage > 70) diagnosis = "HIGH SCALABILITY POTENTIAL.";
         else if (percentage > 40) diagnosis = "OFFER BOTTLENECK DETECTED.";
@@ -167,9 +200,72 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
     return { percentage, diagnosis, action };
   };
 
+  // Handle email submission — writes to Firestore + fires webhook
+  const handleEmailSubmit = async () => {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+    setEmailError('');
+    setIsSaving(true);
+
+    const result = getResult();
+
+    // Build structured answers for the payload
+    const structuredAnswers = config.questions.map((q, i) => ({
+      question: q.q,
+      answer: q.options[answers[i]] || 'N/A',
+    }));
+
+    try {
+      // 1. Write to Firestore (source of truth)
+      await addDoc(collection(db, 'scan_results'), {
+        email,
+        name: name || null,
+        studio: theme,
+        answers: structuredAnswers,
+        diagnosis: result.diagnosis,
+        score: result.percentage,
+        action: result.action,
+        createdAt: serverTimestamp(),
+        source: `scanner-${theme}`,
+      });
+
+      // 2. Fire webhook via Cloud Function proxy (non-blocking)
+      sendScanResult(
+        {
+          email,
+          name: name || undefined,
+          studio: theme,
+          questions: structuredAnswers,
+          diagnosis: result.diagnosis,
+          score: result.percentage,
+          action: result.action,
+        },
+        `scanner-${theme}`,
+      );
+
+      setStep('result');
+    } catch (err) {
+      console.error('Scan save error:', err);
+      setEmailError('Something went wrong. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   const result = step === 'result' ? getResult() : null;
+
+  // Color mapping for dynamic classes
+  const colorHex: Record<string, string> = {
+    cyan: '#22d3ee',
+    orange: '#f97316',
+    fuchsia: '#d946ef',
+    emerald: '#10b981',
+    amber: '#f59e0b',
+  };
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -187,7 +283,7 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
            <div className={`text-xs font-bold tracking-[0.2em] uppercase flex items-center gap-2 ${config.text}`}>
               <Scan size={14} /> {config.title}
            </div>
-           <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
+           <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors py-2">
               <X size={20} />
            </button>
         </div>
@@ -198,7 +294,8 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
             {/* STEP: INTRO */}
             {step === 'intro' && (
                 <div className="space-y-6 animate-fade-in">
-                    <div className={`w-20 h-20 rounded-full ${config.border} border-2 flex items-center justify-center mx-auto text-${config.color}-500 bg-${config.color}-500/10`}>
+                    <div className={`w-20 h-20 rounded-full ${config.border} border-2 flex items-center justify-center mx-auto`}
+                      style={{ color: colorHex[config.color], backgroundColor: `${colorHex[config.color]}15` }}>
                         {config.icon}
                     </div>
                     <h2 className="text-2xl font-bold text-white">{config.title}</h2>
@@ -227,7 +324,8 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
                             <button
                                 key={idx}
                                 onClick={() => handleAnswer(idx)}
-                                className={`w-full text-left p-4 rounded border border-zinc-700 hover:${config.border} hover:bg-white/5 transition-all text-zinc-300 hover:text-white flex justify-between group`}
+                                className={`w-full text-left p-4 rounded border border-zinc-700 hover:border-current transition-all text-zinc-300 hover:text-white flex justify-between group hover:bg-white/5`}
+                                style={{ '--tw-border-opacity': 1 } as React.CSSProperties}
                             >
                                 {option}
                                 <span className="opacity-0 group-hover:opacity-100 transition-opacity text-current">
@@ -243,18 +341,81 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
             {step === 'processing' && (
                 <div className="w-full h-full flex flex-col items-center justify-center space-y-6">
                     <div className="relative">
-                        <div className={`w-16 h-16 border-4 border-zinc-800 border-t-${config.color}-500 rounded-full animate-spin`}></div>
+                        <div className="w-16 h-16 border-4 border-zinc-800 rounded-full animate-spin"
+                          style={{ borderTopColor: colorHex[config.color] }} />
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <BrainCircuit size={24} className={`text-${config.color}-500`} />
+                            <BrainCircuit size={24} style={{ color: colorHex[config.color] }} />
                         </div>
                     </div>
                     <div className={`font-mono text-sm ${config.text} animate-pulse`}>
                         {processingLog}
                     </div>
-                    {/* Fake Progress Bar */}
+                    {/* Progress Bar */}
                     <div className="w-64 h-1 bg-zinc-800 rounded-full overflow-hidden">
-                        <div className={`h-full bg-${config.color}-500 animate-[beam-right_2s_infinite]`}></div>
+                        <div className="h-full animate-[beam-right_2s_infinite]"
+                          style={{ backgroundColor: colorHex[config.color] }} />
                     </div>
+                </div>
+            )}
+
+            {/* STEP: EMAIL GATE */}
+            {step === 'email' && (
+                <div className="w-full space-y-6 animate-fade-in">
+                    <div className="w-16 h-16 rounded-full border-2 flex items-center justify-center mx-auto"
+                      style={{ borderColor: colorHex[config.color], color: colorHex[config.color], backgroundColor: `${colorHex[config.color]}15` }}>
+                        <Mail size={32} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-white mb-2">Your Results Are Ready</h2>
+                      <p className="text-zinc-400 text-sm">Enter your email to unlock your personalized scan report.</p>
+                    </div>
+
+                    <div className="space-y-3 text-left">
+                      <div>
+                        <label className="block text-[11px] font-bold tracking-[0.15em] uppercase text-zinc-500 mb-1.5">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+                          placeholder="you@example.com"
+                          className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-all"
+                          onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold tracking-[0.15em] uppercase text-zinc-500 mb-1.5">
+                          Name <span className="text-zinc-700">(optional)</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Your name"
+                          className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-all"
+                          onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
+                        />
+                      </div>
+                    </div>
+
+                    {emailError && (
+                      <p className="text-red-400 text-xs">{emailError}</p>
+                    )}
+
+                    <button 
+                        onClick={handleEmailSubmit}
+                        disabled={isSaving}
+                        className={`${config.button} w-full px-8 py-4 rounded-lg tracking-widest font-bold uppercase text-sm transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                    >
+                        {isSaving ? (
+                          <><Loader2 size={16} className="animate-spin" /> Saving...</>
+                        ) : (
+                          <>Unlock Results <ArrowRight size={16} /></>
+                        )}
+                    </button>
+
+                    <p className="text-zinc-600 text-[10px]">We respect your privacy. No spam, ever.</p>
                 </div>
             )}
 
@@ -294,7 +455,7 @@ const ScannerModal: React.FC<ScannerModalProps> = ({ isOpen, onClose, theme }) =
         <div 
             className="absolute inset-0 pointer-events-none opacity-10" 
             style={{
-                backgroundImage: `linear-gradient(${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : config.color === 'amber' ? '#f59e0b' : '#10b981'} 1px, transparent 1px), linear-gradient(90deg, ${config.color === 'cyan' ? '#22d3ee' : config.color === 'orange' ? '#f97316' : config.color === 'amber' ? '#f59e0b' : '#10b981'} 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(${colorHex[config.color]} 1px, transparent 1px), linear-gradient(90deg, ${colorHex[config.color]} 1px, transparent 1px)`,
                 backgroundSize: '20px 20px',
             }}
         />

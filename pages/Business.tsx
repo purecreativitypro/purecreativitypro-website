@@ -9,6 +9,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import ContactForm from '../components/ContactForm';
 import TestimonialQuote from '../components/TestimonialQuote';
 
 const Business: React.FC = () => {
@@ -266,6 +267,18 @@ const Business: React.FC = () => {
           <p className="mt-6 text-zinc-600 text-xs tracking-widest uppercase">Free discovery session included.</p>
         </div>
       </div>
+
+      {/* CONTACT FORM */}
+      <section className="relative py-24 px-4 sm:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 text-emerald-400 text-[11px] font-mono tracking-[0.2em] uppercase mb-4">
+            <Target size={14} /> Get In Touch
+          </div>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Ready for Clarity?</h2>
+          <p className="text-zinc-400 text-sm mb-10 max-w-md mx-auto">Tell us about your business goals and we'll map the path forward.</p>
+          <ContactForm defaultService="business" accentColor="emerald" source="business" />
+        </div>
+      </section>
 
       {/* CROSS-STUDIO LINKS */}
       <CrossStudioLinks />

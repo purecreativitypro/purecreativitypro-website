@@ -2,6 +2,9 @@
   "firestore": {
     "rules": "firestore.rules"
   },
+  "functions": {
+    "source": "functions"
+  },
   "hosting": {
     "public": "dist",
     "ignore": [
@@ -10,6 +13,13 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      {
+        "source": "/api/webhook",
+        "function": {
+          "functionId": "n8nProxy",
+          "region": "us-central1"
+        }
+      },
       {
         "source": "**",
         "destination": "/index.html"

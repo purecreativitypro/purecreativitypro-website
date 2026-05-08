@@ -8,6 +8,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import SocialProofBar from '../components/SocialProofBar';
 import FAQAccordion from '../components/FAQAccordion';
 import CrossStudioLinks from '../components/CrossStudioLinks';
+import ContactForm from '../components/ContactForm';
 import TestimonialQuote from '../components/TestimonialQuote';
 
 const Learn: React.FC = () => {
@@ -276,6 +277,18 @@ const Learn: React.FC = () => {
           <FAQAccordion items={faqItems} accentColor="amber" />
         </div>
       </div>
+
+      {/* CONTACT FORM */}
+      <section className="relative py-24 px-4 sm:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 text-amber-400 text-[11px] font-mono tracking-[0.2em] uppercase mb-4">
+            <BookOpen size={14} /> Get In Touch
+          </div>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Have Questions?</h2>
+          <p className="text-zinc-400 text-sm mb-10 max-w-md mx-auto">Not sure where to start? Reach out and we'll help you find the right path.</p>
+          <ContactForm defaultService="not-sure" accentColor="amber" source="learn" />
+        </div>
+      </section>
 
       {/* CROSS-STUDIO LINKS */}
       <CrossStudioLinks />
