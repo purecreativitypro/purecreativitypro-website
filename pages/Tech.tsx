@@ -81,7 +81,7 @@ const Tech: React.FC = () => {
           <div className="border-l-2 border-cyan-500/30 pl-8">
             <h4 className="text-cyan-600 mb-4 uppercase tracking-widest text-sm font-bold flex items-center gap-2">
               <span className="animate-pulse w-2 h-2 bg-cyan-500 rounded-full" />
-              SYSTEM ONLINE
+              PureCreativity Tech
             </h4>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-white leading-tight tracking-tight break-words font-sans">
               Stop Doing Busywork.<br />
