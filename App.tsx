@@ -1,23 +1,21 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import { AnimatePresence } from 'framer-motion';
-import PageTransition from './components/PageTransition';
 import { ThemeProvider } from './components/ThemeContext';
 import SplashScreen from './components/SplashScreen';
 import CustomCursor from './components/CustomCursor';
 import { logPageView } from './lib/firebase';
 
-// Lazy load pages to improve initial load performance
-const Home = React.lazy(() => import('./pages/Home'));
-const Tech = React.lazy(() => import('./pages/Tech'));
-const Music = React.lazy(() => import('./pages/Music'));
-const Media = React.lazy(() => import('./pages/Media'));
-const Business = React.lazy(() => import('./pages/Business'));
-const Learn = React.lazy(() => import('./pages/Learn'));
-const Blog = React.lazy(() => import('./pages/Blog'));
-const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+// Direct imports — all pages load with the bundle, no lazy/Suspense flash
+import Home from './pages/Home';
+import Tech from './pages/Tech';
+import Music from './pages/Music';
+import Media from './pages/Media';
+import Business from './pages/Business';
+import Learn from './pages/Learn';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 const ScrollToTopNav = () => {
   const { pathname } = useLocation();
@@ -68,39 +66,6 @@ const FloatingScrollToTop = () => {
   );
 };
 
-// Simple loading indicator
-const SkeletonPulse = ({ className = '' }: { className?: string }) => (
-  <div className={`bg-white/[0.04] rounded-lg animate-pulse ${className}`} />
-);
-
-const PageLoader = () => (
-  <div className="min-h-screen w-full bg-[var(--bg-primary)] px-6">
-    {/* Fake nav */}
-    <div className="container mx-auto max-w-6xl pt-6 flex items-center justify-between">
-      <SkeletonPulse className="w-32 h-5" />
-      <div className="flex gap-4">
-        <SkeletonPulse className="w-12 h-4 hidden md:block" />
-        <SkeletonPulse className="w-12 h-4 hidden md:block" />
-        <SkeletonPulse className="w-12 h-4 hidden md:block" />
-      </div>
-    </div>
-    {/* Fake hero */}
-    <div className="container mx-auto max-w-4xl pt-32 flex flex-col items-center gap-6">
-      <SkeletonPulse className="w-24 h-5 rounded-full" />
-      <SkeletonPulse className="w-3/4 h-12 md:h-16" />
-      <SkeletonPulse className="w-2/3 h-6" />
-      <SkeletonPulse className="w-40 h-12 rounded-full mt-4" />
-    </div>
-    {/* Fake content blocks */}
-    <div className="container mx-auto max-w-5xl pt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <SkeletonPulse className="h-48 md:col-span-2" />
-      <SkeletonPulse className="h-48" />
-      <SkeletonPulse className="h-48" />
-      <SkeletonPulse className="h-48 md:col-span-2" />
-    </div>
-  </div>
-);
-
 // 404 Not Found
 const NotFound = () => (
   <div className="min-h-screen w-full bg-[var(--bg-primary)] flex flex-col items-center justify-center px-6 text-center">
@@ -119,27 +84,6 @@ const NotFound = () => (
   </div>
 );
 
-// Animated routes wrapper — needs useLocation so must be inside BrowserRouter
-const AnimatedRoutes: React.FC = () => {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode="sync">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/tech" element={<PageTransition><Tech /></PageTransition>} />
-        <Route path="/music" element={<PageTransition><Music /></PageTransition>} />
-        <Route path="/media" element={<PageTransition><Media /></PageTransition>} />
-        <Route path="/business" element={<PageTransition><Business /></PageTransition>} />
-        <Route path="/learn" element={<PageTransition><Learn /></PageTransition>} />
-        <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
-        <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-      </Routes>
-    </AnimatePresence>
-  );
-};
-
 const App: React.FC = () => {
   return (
     <ThemeProvider>
@@ -149,9 +93,17 @@ const App: React.FC = () => {
           <FloatingScrollToTop />
           <CustomCursor />
           <main id="main-content">
-            <Suspense fallback={<PageLoader />}>
-              <AnimatedRoutes />
-            </Suspense>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/tech" element={<Tech />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/media" element={<Media />} />
+              <Route path="/business" element={<Business />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </main>
         </BrowserRouter>
       </SplashScreen>
