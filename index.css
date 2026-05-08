@@ -104,12 +104,18 @@
    ================================================================ */
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
+html,
 body,
 #root {
   background-color: var(--bg-primary);
   min-height: 100vh;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
 }
 
 /* ================================================================

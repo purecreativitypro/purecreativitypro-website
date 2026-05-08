@@ -33,11 +33,14 @@
         var t = localStorage.getItem('pc-theme');
         if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', t);
+        // Set background on html element (body isn't parsed yet in <head>)
+        document.documentElement.style.backgroundColor = t === 'dark' ? '#050505' : '#f5f5f5';
         var m = document.querySelector('meta[name="theme-color"]');
         if (m) m.setAttribute('content', t === 'dark' ? '#050505' : '#f5f5f5');
-        document.body.style.backgroundColor = t === 'dark' ? '#050505' : '#f5f5f5';
       })();
     </script>
+    <!-- Inline critical style: prevent any white flash before CSS loads -->
+    <style>html,body,#root{background-color:#050505;min-height:100vh}[data-theme="light"],[data-theme="light"] body,[data-theme="light"] #root{background-color:#f5f5f5}</style>
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
