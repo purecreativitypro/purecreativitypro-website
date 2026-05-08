@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,77 +10,52 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { theme: currentMode, toggleTheme, isDark } = useTheme();
 
-  // STYLES CONFIGURATION
-  const themes = {
-    tech: {
-      background: "bg-slate-950/90 border-b border-cyan-900/50 backdrop-blur-md shadow-[0_0_20px_rgba(8,51,68,0.5)]",
-      logo: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-cyan-100 to-cyan-500 bg-[length:200%_auto] animate-shine font-mono tracking-tighter font-bold",
-      link: "font-mono text-xs tracking-widest uppercase text-slate-500 hover:text-cyan-400",
-      active: "text-cyan-400 border-b border-cyan-500 pb-1",
-      container: "gap-4 md:gap-8",
-      icon: "text-cyan-500",
-      mobileMenu: "bg-slate-950",
-      mobileLinkColor: "text-cyan-400",
-      mobileActiveGlow: "drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]",
-    },
-    music: {
-      background: "bg-indigo-950/80 border-b border-fuchsia-500/20 backdrop-blur-md shadow-[0_0_30px_rgba(192,38,211,0.2)]",
-      logo: "text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-white to-purple-500 bg-[length:200%_auto] animate-shine font-display font-black tracking-tighter text-xl md:text-2xl",
-      link: "font-display text-sm font-bold tracking-wider uppercase text-indigo-300 hover:text-white hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]",
-      active: "text-white drop-shadow-[0_0_5px_rgba(232,121,249,0.8)] border-b-2 border-fuchsia-500 pb-1",
-      container: "gap-6 md:gap-10",
-      icon: "text-fuchsia-400",
-      mobileMenu: "bg-indigo-950",
-      mobileLinkColor: "text-fuchsia-100",
-      mobileActiveGlow: "drop-shadow-[0_0_8px_rgba(232,121,249,0.6)]",
-    },
-    media: {
-      background: "bg-white/90 border-b border-zinc-200 backdrop-blur-md shadow-sm", 
-      logo: "text-transparent bg-clip-text bg-gradient-to-r from-black via-zinc-400 to-black bg-[length:200%_auto] animate-shine font-serif font-bold tracking-widest text-lg md:text-xl",
-      link: "font-sans text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-zinc-400 hover:text-orange-600",
-      active: "text-black border-b-2 border-orange-500 pb-1",
-      container: "gap-4 md:gap-8",
-      icon: "text-black",
-      mobileMenu: "bg-white",
-      mobileLinkColor: "text-black",
-      mobileActiveGlow: "text-orange-500",
-    },
-    business: {
-      background: "bg-zinc-950/95 border-b border-emerald-900/30 backdrop-blur-md",
-      logo: "text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-200 to-white bg-[length:200%_auto] animate-shine font-sans tracking-tight font-black uppercase text-lg md:text-xl",
-      link: "font-sans text-[10px] md:text-xs font-bold tracking-wide uppercase text-zinc-500 hover:text-emerald-400",
-      active: "text-emerald-400 bg-emerald-500/10 rounded px-3 py-1",
-      container: "gap-4 md:gap-8",
-      icon: "text-emerald-500",
-      mobileMenu: "bg-zinc-950",
-      mobileLinkColor: "text-white",
-      mobileActiveGlow: "text-emerald-400",
-    },
-    learn: {
-      background: "bg-neutral-950/90 border-b border-amber-500/20 backdrop-blur-md",
-      logo: "text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-amber-400 bg-[length:200%_auto] animate-shine font-display font-bold tracking-tight text-xl md:text-2xl",
-      link: "font-display text-xs font-bold tracking-widest uppercase text-neutral-500 hover:text-amber-400",
-      active: "text-amber-400 border-b border-amber-500 pb-1",
-      container: "gap-4 md:gap-8",
-      icon: "text-amber-400",
-      mobileMenu: "bg-neutral-950",
-      mobileLinkColor: "text-amber-100",
-      mobileActiveGlow: "text-amber-400",
-    }
+  // Track scroll to add background when user scrolls down
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Per-theme accent colors — used for hover glows, active states, and mobile highlights
+  const accents = {
+    tech:     { color: 'cyan',    glow: 'rgba(34,211,238,0.8)',  bg: 'bg-slate-950/90 border-cyan-900/50',    mobile: 'bg-[#050505]' },
+    music:    { color: 'fuchsia', glow: 'rgba(232,121,249,0.8)', bg: 'bg-indigo-950/90 border-fuchsia-500/20', mobile: 'bg-indigo-950' },
+    media:    { color: 'orange',  glow: 'rgba(251,146,60,0.8)',  bg: 'bg-zinc-950/90 border-orange-500/20',   mobile: 'bg-[#050505]' },
+    business: { color: 'emerald', glow: 'rgba(52,211,153,0.8)',  bg: 'bg-zinc-950/90 border-emerald-900/30',  mobile: 'bg-zinc-950'  },
+    learn:    { color: 'amber',   glow: 'rgba(251,191,36,0.8)',  bg: 'bg-neutral-950/90 border-amber-500/20', mobile: 'bg-neutral-950' },
   };
 
-  const currentTheme = themes[theme];
-  
+  const accent = accents[theme];
+
   const links = [
-    { label: 'Tech', path: '/tech' },
-    { label: 'Music', path: '/music' },
-    { label: 'Media', path: '/media' },
-    { label: 'Business', path: '/business' },
-    { label: 'Learn', path: '/learn' },
+    { label: 'Tech', path: '/tech', dept: 'tech' },
+    { label: 'Music', path: '/music', dept: 'music' },
+    { label: 'Media', path: '/media', dept: 'media' },
+    { label: 'Business', path: '/business', dept: 'business' },
+    { label: 'Learn', path: '/learn', dept: 'learn' },
   ];
+
+  // Per-link glow colors (matching the home page exactly)
+  const linkGlows: Record<string, string> = {
+    tech:     'group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]',
+    music:    'group-hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]',
+    media:    'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]',
+    business: 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]',
+    learn:    'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]',
+  };
+
+  const linkUnderlines: Record<string, string> = {
+    tech:     'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]',
+    music:    'bg-fuchsia-400 shadow-[0_0_10px_rgba(232,121,249,1)]',
+    media:    'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]',
+    business: 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]',
+    learn:    'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]',
+  };
 
   // Framer Motion variants for mobile overlay
   const overlayVariants = {
@@ -105,38 +80,59 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-4 transition-all duration-300">
-      {/* Dynamic Background Layer */}
-      <div className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} ${currentTheme.background}`} />
+    <nav className="fixed top-0 left-0 w-full z-[100] pointer-events-auto">
+      {/* Background — transparent by default, fades in on scroll */}
+      <div
+        className={`absolute inset-0 transition-all duration-500 ${
+          scrolled
+            ? `${accent.bg} backdrop-blur-md border-b shadow-[0_4px_30px_rgba(0,0,0,0.3)]`
+            : 'bg-transparent border-b border-transparent'
+        } ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      />
 
-      <div className="flex justify-between items-center w-full relative z-50">
-        <Link to="/" className={`transition-transform hover:scale-105 ${currentTheme.logo}`}>
-          PureCreativity
-          {theme !== 'music' && (
-            <span className="hidden md:inline-block ml-2 text-sm font-light opacity-60 text-current">
-               / {theme.charAt(0).toUpperCase() + theme.slice(1)}
-            </span>
-          )}
+      {/* Header Bar — matches Home page: p-6 md:p-12, mix-blend when transparent */}
+      <div className={`relative z-50 flex justify-between items-center p-6 md:p-12 ${
+        !scrolled && !isOpen ? 'mix-blend-plus-lighter' : ''
+      }`}>
+        {/* Logo Lockup — same style as home page */}
+        <Link
+          to="/"
+          className="flex items-center group cursor-pointer select-none transition-transform hover:scale-105"
+        >
+          <span className="text-xl md:text-xl font-afro font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white bg-[length:200%_auto] animate-shine drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
+            PureCreativity
+          </span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className={`hidden md:flex items-center ${currentTheme.container}`}>
+        {/* Desktop Nav Links — same style as home page */}
+        <div className="hidden md:flex items-center gap-12">
           {links.map((link) => {
             const isActive = location.pathname === link.path;
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`transition-all duration-300 ${currentTheme.link} ${isActive ? currentTheme.active : ''}`}
+                className="group relative py-2"
               >
-                {link.label}
+                <span className={`text-[11px] font-bold uppercase tracking-[0.3em] transition-all duration-300
+                  group-hover:text-white group-hover:animate-pulse-fast
+                  ${linkGlows[link.dept]}
+                  ${isActive ? 'text-white' : 'text-zinc-300'}
+                `}>
+                  {link.label}
+                </span>
+                {/* Animated underline — shows on hover OR when active */}
+                <span className={`absolute -bottom-1 left-0 w-full h-[1px] transition-transform duration-300 origin-right group-hover:origin-left
+                  ${linkUnderlines[link.dept]}
+                  ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}
+                `}></span>
               </Link>
             );
           })}
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-lg transition-all duration-300 hover:scale-110 active:scale-90 ${currentTheme.link}`}
+            className="p-2 rounded-lg text-zinc-300 hover:text-white transition-all duration-300 hover:scale-110 active:scale-90"
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
@@ -144,8 +140,8 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
         </div>
 
         {/* Mobile Hamburger — 44px minimum touch target */}
-        <button 
-          className={`md:hidden p-2.5 -mr-2 focus:outline-none transition-transform active:scale-90 ${currentTheme.icon}`}
+        <button
+          className="md:hidden text-white p-2.5 -mr-2 focus:outline-none z-50 relative transition-transform active:scale-90"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -162,13 +158,13 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 ${currentTheme.mobileMenu}`}
+            className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 ${accent.mobile}`}
           >
             {/* Close zone for tap-outside-to-close */}
             <div className="absolute inset-0 z-0" onClick={() => setIsOpen(false)} />
 
             {/* Animated links */}
-            <div className="flex flex-col items-center gap-6 relative z-10">
+            <div className="flex flex-col items-center gap-10 relative z-10 text-center">
               {links.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -176,7 +172,9 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
                     <Link
                       to={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`text-2xl font-bold tracking-widest uppercase transition-colors ${currentTheme.mobileLinkColor} ${isActive ? currentTheme.mobileActiveGlow : 'opacity-60'}`}
+                      className={`text-4xl font-afro font-bold uppercase tracking-tight transition-all duration-500 hover:scale-110
+                        ${isActive ? 'text-white' : 'text-zinc-400 hover:text-white'}
+                      `}
                     >
                       {link.label}
                     </Link>
@@ -184,12 +182,12 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
                 );
               })}
             </div>
-            
+
             {/* Theme Toggle (Mobile) */}
             <motion.div variants={linkVariants} className="relative z-10">
               <button
                 onClick={toggleTheme}
-                className={`p-3 rounded-full border border-white/20 transition-all duration-300 hover:bg-white/10 active:scale-90 ${currentTheme.mobileLinkColor}`}
+                className="p-3 rounded-full border border-white/20 text-white transition-all duration-300 hover:bg-white/10 active:scale-90"
                 aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -201,16 +199,16 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
               <Link
                 to="/"
                 onClick={() => setIsOpen(false)}
-                className="px-6 py-3 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase font-bold transition-all hover:bg-white/10"
+                className="px-6 py-3 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase font-bold text-white transition-all hover:bg-white/10"
               >
                 ← Back to Hub
               </Link>
             </motion.div>
 
             {/* Mobile Menu Footer Branding */}
-            <motion.div 
+            <motion.div
               variants={linkVariants}
-              className="absolute bottom-10 text-xs opacity-30 tracking-[0.3em] uppercase"
+              className="absolute bottom-10 text-xs opacity-30 tracking-[0.3em] uppercase text-white"
             >
               PureCreativity / {theme}
             </motion.div>
