@@ -106,6 +106,12 @@ html {
   scroll-behavior: smooth;
 }
 
+body,
+#root {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
 /* ================================================================
    Custom Cursor (desktop only, hide default when custom is active)
    ================================================================ */
