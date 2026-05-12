@@ -98,6 +98,7 @@ const navLinks = [
   { to: '/media', label: 'Media' },
   { to: '/business', label: 'Business' },
   { to: '/learn', label: 'Learn' },
+  { to: '/ai-advantage', label: 'A.I.' },
   { to: '/blog', label: 'Blog' },
 ];
 

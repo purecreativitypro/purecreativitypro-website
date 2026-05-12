@@ -87,7 +87,14 @@ const Home: React.FC = () => {
     departmentRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const navLinks = ['tech', 'music', 'media', 'business', 'learn'];
+  const navLinks = [
+    { label: 'tech', path: '/tech', dept: 'tech' },
+    { label: 'music', path: '/music', dept: 'music' },
+    { label: 'media', path: '/media', dept: 'media' },
+    { label: 'business', path: '/business', dept: 'business' },
+    { label: 'learn', path: '/learn', dept: 'learn' },
+    { label: 'A.I.', path: '/ai-advantage', dept: 'ai' },
+  ];
 
   // Calculate 3D Tilt for Hero based on mouse position
   // We reduce the multiplier to make it more subtle but keeping the interactive feel
@@ -230,10 +237,10 @@ const Home: React.FC = () => {
 
                     {/* Desktop Nav Links */}
                     <div className="hidden md:flex items-center gap-12">
-                       {navLinks.map((dept) => (
+                       {navLinks.map(({ label, path, dept }) => (
                           <Link 
                             key={dept}
-                            to={`/${dept}`}
+                            to={path}
                             className="group relative py-2"
                           >
                              <span className={`text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-300 transition-all duration-300
@@ -244,8 +251,9 @@ const Home: React.FC = () => {
                                 ${dept === 'media' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' : ''}
                                 ${dept === 'business' ? 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]' : ''}
                                 ${dept === 'learn' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : ''}
+                                ${dept === 'ai' ? 'group-hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.8)]' : ''}
                              `}>
-                               {dept}
+                               {label}
                              </span>
                              <span className={`absolute -bottom-1 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right group-hover:origin-left
                                 ${dept === 'tech' ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]' : ''}
@@ -253,6 +261,7 @@ const Home: React.FC = () => {
                                 ${dept === 'media' ? 'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]' : ''}
                                 ${dept === 'business' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]' : ''}
                                 ${dept === 'learn' ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]' : ''}
+                                ${dept === 'ai' ? 'bg-violet-400 shadow-[0_0_10px_rgba(139,92,246,1)]' : ''}
                              `}></span>
                           </Link>
                        ))}
@@ -284,14 +293,14 @@ const Home: React.FC = () => {
              </button>
 
              <div className="flex flex-col gap-10 text-center">
-                {navLinks.map((dept) => (
+                {navLinks.map(({ label, path, dept }) => (
                   <Link 
                     key={dept}
-                    to={`/${dept}`}
+                    to={path}
                     onClick={() => setIsMenuOpen(false)}
                     className="text-4xl font-afro font-bold uppercase tracking-tight text-zinc-400 hover:text-white transition-all duration-500 hover:scale-110"
                   >
-                    {dept}
+                    {label}
                   </Link>
                 ))}
              </div>
