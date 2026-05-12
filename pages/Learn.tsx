@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import ScannerModal from '../components/ScannerModal';
-import { ArrowRight, Download, BookOpen, Star, Zap, MonitorPlay, Music, Cpu, BarChart3, Aperture, Check } from 'lucide-react';
+import { ArrowRight, Download, BookOpen, Star, Zap, MonitorPlay, Music, Cpu, BarChart3, Aperture, Check, Lock, Sparkles } from 'lucide-react';
 import SEOHead, { createFAQSchema } from '../components/SEOHead';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
@@ -85,27 +85,67 @@ const Learn: React.FC = () => {
         ]}
       />
 
-      {/* AI ADVANTAGE FEATURED BANNER */}
-      <ScrollReveal>
-        <div className="container mx-auto px-6 max-w-6xl pt-16">
-          <a href="/ai-advantage" className="block p-6 md:p-8 rounded-2xl border border-violet-500/20 bg-gradient-to-r from-blue-950/30 via-violet-950/20 to-purple-950/30 hover:border-violet-500/40 transition-all group">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div>
-                <div className="text-xs font-mono tracking-[0.2em] uppercase text-violet-400 mb-2 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" /> New
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-1">What Type of AI User Are You?</h3>
-                <p className="text-zinc-400 text-sm">Take the free quiz and discover your AI advantage path →</p>
+      {/* AI ADVANTAGE — PRODUCT LADDER */}
+      <div className="py-24 border-t border-violet-500/10">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-mono tracking-widest uppercase mb-6">
+                <Sparkles size={12} /> AI Advantage
               </div>
-              <div className="shrink-0">
-                <span className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-xs tracking-widest uppercase group-hover:scale-105 transition-transform inline-block">
-                  Take the Quiz
-                </span>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Your Path to AI Mastery</h2>
+              <p className="text-neutral-400 max-w-lg mx-auto">Stop chasing tools. Follow a clear path from overwhelmed to irreplaceable.</p>
             </div>
-          </a>
+          </ScrollReveal>
+
+          {/* Quiz CTA — The Entry Point */}
+          <ScrollReveal>
+            <a href="/ai-advantage" className="block p-6 md:p-8 rounded-2xl border border-violet-500/20 bg-gradient-to-r from-blue-950/30 via-violet-950/20 to-purple-950/30 hover:border-violet-500/40 transition-all group mb-8">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                  <div className="text-xs font-mono tracking-[0.2em] uppercase text-violet-400 mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" /> Free
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1">What Type of AI User Are You?</h3>
+                  <p className="text-zinc-400 text-sm">Take the free quiz, discover your AI advantage type, and get your personalized action plan.</p>
+                </div>
+                <div className="shrink-0">
+                  <span className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-xs tracking-widest uppercase group-hover:scale-105 transition-transform inline-flex items-center gap-2">
+                    Take the Quiz <ArrowRight size={14} />
+                  </span>
+                </div>
+              </div>
+            </a>
+          </ScrollReveal>
+
+          {/* Product Ladder Cards */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { step: '01', title: 'AI Confidence & Capability Kit', subtitle: 'Starter Product', desc: 'Everything you need to stop feeling overwhelmed and start using AI with clarity and confidence.', topBar: 'from-amber-500/40 to-transparent', subtitleColor: 'text-amber-400' },
+              { step: '02', title: 'Skill Before the Prompt', subtitle: 'Skill Product', desc: 'Learn to direct AI with the depth of your own craft, not just copied prompts.', topBar: 'from-cyan-500/40 to-transparent', subtitleColor: 'text-cyan-400' },
+              { step: '03', title: 'Prompt Chain Playbook', subtitle: 'Workflow Product', desc: 'Repeatable prompt sequences that turn single questions into complete workflows.', topBar: 'from-fuchsia-500/40 to-transparent', subtitleColor: 'text-fuchsia-400' },
+              { step: '04', title: 'AI Advantage OS', subtitle: 'System Product', desc: 'The full operating system — templates, automations, and repeatable processes for maximum output.', topBar: 'from-emerald-500/40 to-transparent', subtitleColor: 'text-emerald-400' },
+            ].map((product, i) => (
+              <ScrollReveal key={i} delay={i * 0.08}>
+                <div className="group p-6 rounded-2xl border border-neutral-800 bg-neutral-900/50 hover:border-violet-500/20 transition-all duration-500 hover:-translate-y-1 relative overflow-hidden">
+                  <div className={`absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r ${product.topBar}`} />
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-neutral-600 tracking-widest">{product.step}</span>
+                      <span className={`text-xs font-bold uppercase tracking-widest ${product.subtitleColor}`}>{product.subtitle}</span>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-neutral-800 text-neutral-500 px-2 py-0.5 rounded">
+                      <Lock size={10} /> Coming Soon
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-violet-300 transition-colors">{product.title}</h3>
+                  <p className="text-neutral-500 text-sm leading-relaxed">{product.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* 2) CATEGORY TILES — Visual cards with images */}
       <div className="container mx-auto px-6 max-w-6xl py-20">
