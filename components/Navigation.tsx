@@ -39,6 +39,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
     { label: 'Media', path: '/media', dept: 'media' },
     { label: 'Business', path: '/business', dept: 'business' },
     { label: 'Learn', path: '/learn', dept: 'learn' },
+    { label: 'A.I.', path: '/ai-advantage', dept: 'ai' },
   ];
 
   // Per-link glow colors (matching the home page exactly)
@@ -48,6 +49,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
     media:    'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]',
     business: 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]',
     learn:    'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]',
+    ai:       'group-hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.8)]',
   };
 
   const linkUnderlines: Record<string, string> = {
@@ -56,6 +58,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme }) => {
     media:    'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]',
     business: 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]',
     learn:    'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]',
+    ai:       'bg-violet-400 shadow-[0_0_10px_rgba(139,92,246,1)]',
   };
 
   // Framer Motion variants for mobile overlay
