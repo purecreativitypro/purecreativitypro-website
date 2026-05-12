@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Cpu, Music, Aperture, TrendingUp, Menu, X, ArrowRight, Zap, Play, BookOpen, Check, Star, Compass, Briefcase, Sun, Moon } from 'lucide-react';
 import { useScroll, useTransform, motion } from 'framer-motion';
@@ -216,71 +217,92 @@ const Home: React.FC = () => {
         
         {/* TOP NAVIGATION */}
         <nav className="absolute top-0 left-0 w-full z-[100] pointer-events-auto">
-            {/* Header Bar with Blend Mode */}
-            <div className="relative z-50 flex justify-between items-center p-6 md:p-12 mix-blend-plus-lighter">
-                {/* Logo Lockup */}
-                <div className="flex items-center group cursor-default select-none">
-                    <span className="text-xl md:text-xl font-afro font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white bg-[length:200%_auto] animate-shine drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
-                        PureCreativity
-                    </span>
+            {/* Header Bar */}
+            <div className="relative z-50 flex justify-between items-center p-6 md:p-12">
+                {/* Logo + Desktop links — blend mode for the glow effect but NOT applied to hamburger */}
+                <div className={`flex items-center flex-1 justify-between ${!isMenuOpen ? 'mix-blend-plus-lighter' : ''}`}>
+                    {/* Logo Lockup */}
+                    <div className="flex items-center group cursor-default select-none">
+                        <span className="text-xl md:text-xl font-afro font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white bg-[length:200%_auto] animate-shine drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
+                            PureCreativity
+                        </span>
+                    </div>
+
+                    {/* Desktop Nav Links */}
+                    <div className="hidden md:flex items-center gap-12">
+                       {navLinks.map((dept) => (
+                          <Link 
+                            key={dept}
+                            to={`/${dept}`}
+                            className="group relative py-2"
+                          >
+                             <span className={`text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-300 transition-all duration-300
+                                group-hover:text-white
+                                group-hover:animate-pulse-fast
+                                ${dept === 'tech' ? 'group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : ''}
+                                ${dept === 'music' ? 'group-hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]' : ''}
+                                ${dept === 'media' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' : ''}
+                                ${dept === 'business' ? 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]' : ''}
+                                ${dept === 'learn' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : ''}
+                             `}>
+                               {dept}
+                             </span>
+                             <span className={`absolute -bottom-1 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right group-hover:origin-left
+                                ${dept === 'tech' ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]' : ''}
+                                ${dept === 'music' ? 'bg-fuchsia-400 shadow-[0_0_10px_rgba(232,121,249,1)]' : ''}
+                                ${dept === 'media' ? 'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]' : ''}
+                                ${dept === 'business' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]' : ''}
+                                ${dept === 'learn' ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]' : ''}
+                             `}></span>
+                          </Link>
+                       ))}
+                    </div>
                 </div>
 
-                {/* Desktop Nav Links */}
-                <div className="hidden md:flex items-center gap-12">
-                   {navLinks.map((dept) => (
-                      <Link 
-                        key={dept}
-                        to={`/${dept}`}
-                        className="group relative py-2"
-                      >
-                         <span className={`text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-300 transition-all duration-300
-                            group-hover:text-white
-                            group-hover:animate-pulse-fast
-                            ${dept === 'tech' ? 'group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : ''}
-                            ${dept === 'music' ? 'group-hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]' : ''}
-                            ${dept === 'media' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' : ''}
-                            ${dept === 'business' ? 'group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]' : ''}
-                            ${dept === 'learn' ? 'group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : ''}
-                         `}>
-                           {dept}
-                         </span>
-                         <span className={`absolute -bottom-1 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right group-hover:origin-left
-                            ${dept === 'tech' ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]' : ''}
-                            ${dept === 'music' ? 'bg-fuchsia-400 shadow-[0_0_10px_rgba(232,121,249,1)]' : ''}
-                            ${dept === 'media' ? 'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,1)]' : ''}
-                            ${dept === 'business' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]' : ''}
-                            ${dept === 'learn' ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,1)]' : ''}
-                         `}></span>
-                      </Link>
-                   ))}
-                </div>
-
-                {/* Mobile Hamburger */}
+                {/* Mobile Hamburger — outside blend-mode div so z-index works globally */}
                 <button 
-                  className="md:hidden text-white p-2.5 -mr-2 focus:outline-none z-50 relative"
+                  className="md:hidden text-white p-2.5 -mr-2 focus:outline-none relative transition-transform active:scale-90"
+                  style={{ zIndex: 200 }}
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   aria-label="Toggle navigation menu"
                 >
                    {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </div>
-
-            {/* Mobile Menu Overlay */}
-            <div className={`fixed inset-0 z-40 bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-               <div className="flex flex-col gap-10 text-center">
-                  {navLinks.map((dept) => (
-                    <Link 
-                      key={dept}
-                      to={`/${dept}`}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="text-4xl font-afro font-bold uppercase tracking-tight text-zinc-400 hover:text-white transition-all duration-500 hover:scale-110"
-                    >
-                      {dept}
-                    </Link>
-                  ))}
-               </div>
-            </div>
         </nav>
+
+        {/* Mobile Menu Overlay — Portal to body to escape perspective/transform containing blocks */}
+        {ReactDOM.createPortal(
+          <div className={`fixed inset-0 z-[150] bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+             {/* Close button inside the portal */}
+             <button
+               className="absolute top-6 right-4 text-white p-2.5 z-10 transition-transform active:scale-90"
+               onClick={() => setIsMenuOpen(false)}
+               aria-label="Close menu"
+             >
+               <X size={28} />
+             </button>
+
+             <div className="flex flex-col gap-10 text-center">
+                {navLinks.map((dept) => (
+                  <Link 
+                    key={dept}
+                    to={`/${dept}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-4xl font-afro font-bold uppercase tracking-tight text-zinc-400 hover:text-white transition-all duration-500 hover:scale-110"
+                  >
+                    {dept}
+                  </Link>
+                ))}
+             </div>
+
+             {/* Branding Footer */}
+             <div className="absolute bottom-10 text-xs opacity-30 tracking-[0.3em] uppercase text-white">
+               PureCreativity
+             </div>
+          </div>,
+          document.body
+        )}
 
         {/* --- VIBRANT BACKGROUND CORE (with parallax) --- */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">

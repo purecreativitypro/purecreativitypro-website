@@ -28,11 +28,19 @@ export interface SubscriberData {
   email: string;
 }
 
+export interface QuizData {
+  email: string;
+  name?: string;
+  userType: string;
+  answers: { question: string; answer: string }[];
+  recommendedProduct: string;
+}
+
 interface WebhookPayload {
-  event: 'scan_completed' | 'inquiry_submitted' | 'email_subscribed';
+  event: 'scan_completed' | 'inquiry_submitted' | 'email_subscribed' | 'quiz_completed';
   timestamp: string;
   source: string;
-  data: ScanData | InquiryData | SubscriberData;
+  data: ScanData | InquiryData | SubscriberData | QuizData;
 }
 
 // ─── Core Dispatcher ───────────────────────────────────────────
@@ -75,6 +83,15 @@ export function sendInquiry(data: InquiryData, source: string): void {
 export function sendSubscriber(data: SubscriberData, source: string): void {
   dispatchWebhook({
     event: 'email_subscribed',
+    timestamp: new Date().toISOString(),
+    source,
+    data,
+  });
+}
+
+export function sendQuizResult(data: QuizData, source: string): void {
+  dispatchWebhook({
+    event: 'quiz_completed',
     timestamp: new Date().toISOString(),
     source,
     data,

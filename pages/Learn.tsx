@@ -85,6 +85,28 @@ const Learn: React.FC = () => {
         ]}
       />
 
+      {/* AI ADVANTAGE FEATURED BANNER */}
+      <ScrollReveal>
+        <div className="container mx-auto px-6 max-w-6xl pt-16">
+          <a href="/ai-advantage" className="block p-6 md:p-8 rounded-2xl border border-violet-500/20 bg-gradient-to-r from-blue-950/30 via-violet-950/20 to-purple-950/30 hover:border-violet-500/40 transition-all group">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <div className="text-xs font-mono tracking-[0.2em] uppercase text-violet-400 mb-2 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" /> New
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-1">What Type of AI User Are You?</h3>
+                <p className="text-zinc-400 text-sm">Take the free quiz and discover your AI advantage path →</p>
+              </div>
+              <div className="shrink-0">
+                <span className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-xs tracking-widest uppercase group-hover:scale-105 transition-transform inline-block">
+                  Take the Quiz
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </ScrollReveal>
+
       {/* 2) CATEGORY TILES — Visual cards with images */}
       <div className="container mx-auto px-6 max-w-6xl py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

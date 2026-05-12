@@ -14,6 +14,7 @@ const Music = React.lazy(() => import('./pages/Music'));
 const Media = React.lazy(() => import('./pages/Media'));
 const Business = React.lazy(() => import('./pages/Business'));
 const Learn = React.lazy(() => import('./pages/Learn'));
+const AIAdvantage = React.lazy(() => import('./pages/AIAdvantage'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 
@@ -29,6 +30,7 @@ function usePrefetchPages() {
       import('./pages/Media');
       import('./pages/Business');
       import('./pages/Learn');
+      import('./pages/AIAdvantage');
       import('./pages/Blog');
       import('./pages/BlogPost');
     }, 1000); // wait 1s after mount so we don't compete with initial render
@@ -190,6 +192,7 @@ const App: React.FC = () => {
                   <Route path="/media" element={<Media />} />
                   <Route path="/business" element={<Business />} />
                   <Route path="/learn" element={<Learn />} />
+                  <Route path="/ai-advantage" element={<AIAdvantage />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="*" element={<NotFound />} />
