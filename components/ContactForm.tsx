@@ -115,7 +115,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           required
           value={form.name}
           onChange={handleChange}
-          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all"
+          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all"
           placeholder="Your name"
         />
       </div>
@@ -132,7 +132,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           required
           value={form.email}
           onChange={handleChange}
-          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all"
+          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all"
           placeholder="you@example.com"
         />
       </div>
@@ -147,7 +147,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           name="service"
           value={form.service}
           onChange={handleChange}
-          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all appearance-none"
+          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-base text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all appearance-none"
         >
           <option value="" className="bg-zinc-900">Select a service...</option>
           <option value="tech" className="bg-zinc-900">Tech — Systems &amp; Automation</option>
@@ -170,7 +170,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           rows={4}
           value={form.message}
           onChange={handleChange}
-          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all resize-none"
+          className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all resize-none"
           placeholder="Tell us about your project or question..."
         />
       </div>

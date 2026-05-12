@@ -324,11 +324,11 @@ const AIAdvantage: React.FC = () => {
                 <div className="space-y-3 text-left max-w-sm mx-auto">
                   <div>
                     <label className="block text-[11px] font-bold tracking-[0.15em] uppercase text-zinc-500 mb-1.5">Email *</label>
-                    <input type="email" value={email} onChange={e => { setEmail(e.target.value); setEmailError(''); }} placeholder="you@example.com" className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-violet-500/50 transition-all" onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()} />
+                    <input type="email" value={email} onChange={e => { setEmail(e.target.value); setEmailError(''); }} placeholder="you@example.com" className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-violet-500/50 transition-all" onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()} />
                   </div>
                   <div>
                     <label className="block text-[11px] font-bold tracking-[0.15em] uppercase text-zinc-500 mb-1.5">Name <span className="text-zinc-700">(optional)</span></label>
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-violet-500/50 transition-all" onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()} />
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" className="w-full bg-white/[0.03] border border-zinc-700 rounded-lg px-4 py-3 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-violet-500/50 transition-all" onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()} />
                   </div>
                 </div>
                 {emailError && <p className="text-red-400 text-xs">{emailError}</p>}
