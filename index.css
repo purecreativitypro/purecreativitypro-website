@@ -158,6 +158,35 @@ body,
 }
 
 /* ================================================================
+   Ambient Floating Orbs — Hero Background
+   ================================================================ */
+.animate-float-slow {
+  animation: floatSlow 20s ease-in-out infinite;
+}
+.animate-float-slower {
+  animation: floatSlower 25s ease-in-out infinite;
+}
+.animate-float-reverse {
+  animation: floatReverse 22s ease-in-out infinite;
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+@keyframes floatSlower {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 30px) scale(1.08); }
+  66% { transform: translate(25px, -25px) scale(0.92); }
+}
+@keyframes floatReverse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, 30px) scale(0.96); }
+  66% { transform: translate(-30px, -20px) scale(1.04); }
+}
+
+/* ================================================================
    Accessibility: Respect prefers-reduced-motion
    Pauses all CSS animations and removes transitions for users
    who have enabled "Reduce motion" in their OS settings.

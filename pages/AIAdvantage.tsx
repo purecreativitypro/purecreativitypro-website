@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ArrowRight, Mail, Loader2, CheckCircle, XCircle, Sparkles } from 'lucide-react';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { app } from '../lib/firebase';
@@ -32,6 +32,34 @@ const userTypes: Record<UserType, { title: string; tagline: string; description:
   chaser: { title: 'The Tool Chaser', tagline: 'Movement without momentum.', description: 'You are interested in AI, but you spend more time exploring tools than building repeatable results. You need outcome-first thinking and workflow discipline.', product: 'The AI Advantage OS', cta: 'Join the Waitlist', color: 'from-violet-500/20 to-violet-500/5', borderC: 'border-violet-500/30', textC: 'text-violet-400' },
   skilled: { title: 'The Skilled but Underleveraged Creator', tagline: 'Real skill, but limited leverage.', description: 'You already have skill and expertise. You do not need AI to replace your craft. You need AI to help you expand it, practice it, refine it, and produce more from it.', product: 'Skill Before the Prompt', cta: 'Join the Waitlist', color: 'from-fuchsia-500/20 to-fuchsia-500/5', borderC: 'border-fuchsia-500/30', textC: 'text-fuchsia-400' },
   multiplier: { title: 'The Strategic Multiplier', tagline: 'Potential without full systemization.', description: 'You already see the potential of AI and may be using it regularly. Now you need better systems — workflows, templates, automations, and repeatable processes that improve your output.', product: 'The AI Advantage OS', cta: 'Join the Waitlist', color: 'from-emerald-500/20 to-emerald-500/5', borderC: 'border-emerald-500/30', textC: 'text-emerald-400' },
+};
+
+const processingSteps = ['Analyzing your responses...', 'Identifying patterns...', 'Building your profile...'];
+
+const ProcessingAnimation: React.FC = () => {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setStep(s => Math.min(s + 1, processingSteps.length - 1)), 800);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="flex flex-col items-center justify-center py-20 gap-8 animate-fade-in">
+      <div className="relative">
+        <div className="absolute inset-0 w-20 h-20 bg-violet-500/20 rounded-full blur-xl animate-pulse" />
+        <div className="relative w-20 h-20 border-[3px] border-zinc-800 rounded-full animate-spin" style={{ borderTopColor: '#8b5cf6', borderRightColor: '#3b82f6' }} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Sparkles size={20} className="text-violet-400" />
+        </div>
+      </div>
+      <div className="space-y-2 text-center">
+        {processingSteps.map((s, i) => (
+          <p key={i} className={`font-mono text-sm transition-all duration-500 ${i <= step ? 'text-violet-400 opacity-100' : 'text-zinc-700 opacity-0'}`}>
+            {i < step ? '✓' : i === step ? '›' : ''} {s}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const AIAdvantage: React.FC = () => {
@@ -102,7 +130,18 @@ const AIAdvantage: React.FC = () => {
         {/* ─── SECTION 1: THE HEADER (THE HOOK) ─── */}
         <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/30 via-neutral-950 to-neutral-950" />
+          {/* Ambient floating orbs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/[0.04] rounded-full blur-[120px] animate-float-slow" />
+            <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-violet-500/[0.05] rounded-full blur-[100px] animate-float-slower" />
+            <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-purple-500/[0.03] rounded-full blur-[80px] animate-float-reverse" />
+          </div>
+          {/* Grain overlay */}
+          <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%270 0 256 256%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noise%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.65%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noise)%27/%3E%3C/svg%3E")' }} />
           <div className="relative z-10 max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-mono tracking-widest uppercase mb-8 animate-fade-in">
+              <Sparkles size={12} /> The AI Advantage
+            </div>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.15] mb-8">
               Trying to get ahead using AI is exhausting when every "expert" just tells you to{' '}
               <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
@@ -114,16 +153,20 @@ const AIAdvantage: React.FC = () => {
             </p>
             <a
               href="#quiz"
-              className="inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-sm tracking-widest uppercase hover:scale-105 transition-transform shadow-[0_0_30px_rgba(139,92,246,0.3)]"
+              className="group inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-sm tracking-widest uppercase hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)]"
             >
-              Discover Your AI Type <ArrowRight size={16} />
+              Discover Your AI Type <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <p className="text-zinc-600 text-xs mt-4">Takes 2 minutes</p>
           </div>
+          {/* Bottom fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-950 to-transparent" />
         </section>
 
         {/* ─── SECTION 2: THE PIVOT (DANGER VS. ESCAPE ROUTE) ─── */}
-        <section className="py-24 md:py-32 px-6">
+        <section className="py-24 md:py-32 px-6 relative">
+          {/* Subtle top divider */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-violet-500/20 to-transparent" />
           <ScrollReveal>
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-16">
@@ -134,7 +177,7 @@ const AIAdvantage: React.FC = () => {
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 {/* The Trap */}
-                <div className="p-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 relative overflow-hidden">
+                <div className="p-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-red-500/20 hover:shadow-[0_0_40px_rgba(239,68,68,0.05)]">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500/50 to-transparent" />
                   <div className="text-red-400/60 text-xs font-mono tracking-widest uppercase mb-6 flex items-center gap-2">
                     <XCircle size={14} /> The Trap
@@ -150,7 +193,7 @@ const AIAdvantage: React.FC = () => {
                   </div>
                 </div>
                 {/* The Advantage */}
-                <div className="p-8 rounded-2xl border border-violet-500/20 bg-violet-950/10 relative overflow-hidden">
+                <div className="p-8 rounded-2xl border border-violet-500/20 bg-violet-950/10 relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)]">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-violet-500" />
                   <div className="text-violet-400 text-xs font-mono tracking-widest uppercase mb-6 flex items-center gap-2">
                     <Sparkles size={14} /> The Advantage
@@ -171,18 +214,23 @@ const AIAdvantage: React.FC = () => {
         </section>
 
         {/* ─── SECTION 3: THE GUIDE & AUTHORITY ─── */}
-        <section className="py-24 md:py-32 px-6 bg-zinc-950/50">
+        <section className="py-24 md:py-32 px-6 relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-violet-500/20 to-transparent" />
           <ScrollReveal>
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
-                AI should make you more capable,{' '}
-                <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
-                  not dependent.
-                </span>
-              </h2>
-              <p className="text-zinc-400 text-lg leading-relaxed">
-                You shouldn't have to rely on shallow shortcuts just to keep up. We spent years testing and failing so you don't have to. We built a practical path to help you turn random AI use into a repeatable advantage for your real life, business, or craft.
-              </p>
+            <div className="max-w-2xl mx-auto text-center relative">
+              {/* Subtle glow behind the card */}
+              <div className="absolute -inset-8 bg-gradient-to-r from-blue-500/[0.03] via-violet-500/[0.05] to-purple-500/[0.03] rounded-3xl blur-xl" />
+              <div className="relative p-10 md:p-14 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
+                  AI should make you more capable,{' '}
+                  <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
+                    not dependent.
+                  </span>
+                </h2>
+                <p className="text-zinc-400 text-lg leading-relaxed">
+                  You shouldn't have to rely on shallow shortcuts just to keep up. We spent years testing and failing so you don't have to. We built a practical path to help you turn random AI use into a repeatable advantage for your real life, business, or craft.
+                </p>
+              </div>
             </div>
           </ScrollReveal>
         </section>
@@ -203,9 +251,9 @@ const AIAdvantage: React.FC = () => {
                   </p>
                   <button
                     onClick={handleQuizStart}
-                    className="px-10 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-sm tracking-widest uppercase hover:scale-105 transition-transform inline-flex items-center gap-2 shadow-[0_0_30px_rgba(139,92,246,0.3)]"
+                    className="group px-10 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold text-sm tracking-widest uppercase hover:scale-105 transition-all duration-300 inline-flex items-center gap-2 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)]"
                   >
-                    Start the Free Quiz <ArrowRight size={16} />
+                    Start the Free Quiz <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                   <p className="text-zinc-500 text-sm mt-6 max-w-md mx-auto italic leading-relaxed">
                     If you want to stop chasing tools and start using AI to build real freedom and income, discovering your AI User Type is the right decision.
@@ -263,12 +311,7 @@ const AIAdvantage: React.FC = () => {
 
             {/* PROCESSING */}
             {quizStep === 'processing' && (
-              <div className="flex flex-col items-center justify-center py-20 gap-6 animate-fade-in">
-                <div className="relative">
-                  <div className="w-16 h-16 border-4 border-zinc-800 rounded-full animate-spin" style={{ borderTopColor: '#8b5cf6' }} />
-                </div>
-                <p className="font-mono text-sm text-violet-400 animate-pulse">Analyzing your responses...</p>
-              </div>
+              <ProcessingAnimation />
             )}
 
             {/* EMAIL GATE */}
